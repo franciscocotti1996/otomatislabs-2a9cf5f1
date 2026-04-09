@@ -1,4 +1,5 @@
 import { Bot, Layers, Zap, BarChart3, MessageSquare, Brain } from "lucide-react";
+import teamCollab from "@/assets/team-collab.jpg";
 
 const services = [
   {
@@ -37,13 +38,28 @@ const ServicesSection = () => {
   return (
     <section id="diferencial" className="py-20 md:py-28">
       <div className="container">
-        <div className="text-center mb-14">
-          <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-            Por qué elegirnos
-          </p>
-          <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl mx-auto">
-            Lo que hace diferente a Otomatis Labs
-          </h2>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
+          <div>
+            <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
+              Por qué elegirnos
+            </p>
+            <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl">
+              Lo que hace diferente a Otomatis Labs
+            </h2>
+          </div>
+          <div className="hidden lg:block">
+            <div className="relative">
+              <div className="absolute -inset-3 bg-primary/10 rounded-2xl blur-xl" />
+              <img
+                src={teamCollab}
+                alt="Equipo colaborando en soluciones de IA"
+                width={1280}
+                height={720}
+                loading="lazy"
+                className="relative rounded-2xl shadow-lg object-cover w-full h-64 object-center"
+              />
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
