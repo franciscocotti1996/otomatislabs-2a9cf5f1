@@ -1,5 +1,6 @@
 import { Bot, Layers, Zap, BarChart3, MessageSquare, Brain } from "lucide-react";
 import teamCollab from "@/assets/team-collab.jpg";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const services = [
   {
@@ -35,8 +36,10 @@ const services = [
 ];
 
 const ServicesSection = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="diferencial" className="py-20 md:py-28 bg-gradient-hero">
+    <section ref={ref} id="diferencial" className={`py-20 md:py-28 bg-gradient-hero transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
           <div>
