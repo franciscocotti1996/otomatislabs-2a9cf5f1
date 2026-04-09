@@ -35,7 +35,7 @@ const solutions = [
 
 const SolutionsSection = () => {
   return (
-    <section id="servicios" className="py-20 md:py-28 bg-muted/50">
+    <section id="servicios" className="py-20 md:py-28">
       <div className="container">
         <div className="text-center mb-14">
           <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
