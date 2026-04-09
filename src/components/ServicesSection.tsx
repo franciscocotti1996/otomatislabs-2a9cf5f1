@@ -36,14 +36,14 @@ const services = [
 
 const ServicesSection = () => {
   return (
-    <section id="diferencial" className="py-20 md:py-28">
+    <section id="diferencial" className="py-20 md:py-28 bg-gradient-hero">
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
           <div>
-            <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
+            <p className="text-teal-light font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
               Por qué elegirnos
             </p>
-            <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl">
+            <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl text-primary-foreground">
               Lo que hace diferente a Otomatis Labs
             </h2>
           </div>
@@ -66,13 +66,13 @@ const ServicesSection = () => {
           {services.map((service) => (
             <div
               key={service.title}
-              className="glass-card rounded-xl p-7 hover:shadow-xl transition-shadow group"
+              className="rounded-xl p-7 hover:shadow-xl transition-shadow group bg-primary-foreground/5 border border-primary-foreground/10 backdrop-blur-md"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
-                <service.icon className="w-6 h-6 text-primary" />
+              <div className="w-12 h-12 rounded-lg bg-teal/20 flex items-center justify-center mb-5 group-hover:bg-teal/30 transition-colors">
+                <service.icon className="w-6 h-6 text-teal-light" />
               </div>
-              <h3 className="font-heading font-semibold text-lg mb-3">{service.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
+              <h3 className="font-heading font-semibold text-lg mb-3 text-primary-foreground">{service.title}</h3>
+              <p className="text-sm text-primary-foreground/70 leading-relaxed">{service.description}</p>
             </div>
           ))}
         </div>
