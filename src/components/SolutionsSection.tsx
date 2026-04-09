@@ -50,13 +50,19 @@ const SolutionsSection = () => {
           {solutions.map((solution) => (
             <div
               key={solution.title}
-              className="glass-card rounded-xl p-7 hover:shadow-xl transition-shadow group"
+              className="glass-card rounded-xl p-7 hover:shadow-xl transition-shadow group relative overflow-hidden"
             >
               <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
                 <solution.icon className="w-6 h-6 text-primary" />
               </div>
-              <h3 className="font-heading font-semibold text-lg mb-3">{solution.title}</h3>
-              <p className="text-sm text-muted-foreground leading-relaxed">{solution.description}</p>
+              <h3 className="font-heading font-semibold text-lg">{solution.title}</h3>
+
+              {/* Overlay que aparece al hacer hover */}
+              <div className="absolute inset-0 bg-primary/95 rounded-xl p-7 flex flex-col justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <solution.icon className="w-8 h-8 text-primary-foreground mb-4" />
+                <h3 className="font-heading font-semibold text-lg text-primary-foreground mb-2">{solution.title}</h3>
+                <p className="text-sm text-primary-foreground/90 leading-relaxed">{solution.description}</p>
+              </div>
             </div>
           ))}
         </div>
