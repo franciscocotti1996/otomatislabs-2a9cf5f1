@@ -1,9 +1,12 @@
 import { ArrowRight } from "lucide-react";
 import ctaPerson from "@/assets/cta-person.jpg";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const CTASection = () => {
+  const { ref, isVisible } = useScrollAnimation();
+
   return (
-    <section id="contacto" className="py-20 md:py-28">
+    <section ref={ref} id="contacto" className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
       <div className="container">
         <div className="bg-gradient-hero rounded-2xl overflow-hidden relative">
           <div className="grid grid-cols-1 lg:grid-cols-2">

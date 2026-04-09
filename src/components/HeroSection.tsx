@@ -1,5 +1,6 @@
 import { ArrowRight, MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
 import heroPerson from "@/assets/hero-person.jpg";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const channels = [
   { icon: MessageCircle, label: "WhatsApp" },
@@ -10,8 +11,10 @@ const channels = [
 ];
 
 const HeroSection = () => {
+  const { ref, isVisible } = useScrollAnimation(0.1);
+
   return (
-    <section className="pt-28 md:pt-36 pb-16 md:pb-24 relative overflow-hidden">
+    <section ref={ref} className={`pt-28 md:pt-36 pb-16 md:pb-24 relative overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
       {/* Decorative circle */}
       <div className="absolute top-20 right-0 w-64 h-64 md:w-96 md:h-96 rounded-full border border-primary/10 opacity-50 translate-x-1/3" />
 
