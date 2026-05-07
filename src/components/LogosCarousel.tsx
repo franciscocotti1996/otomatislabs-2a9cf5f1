@@ -1,8 +1,8 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const logos = [
-  "TechCorp", "FinServ Latam", "RetailMax", "LogiTech", "CloudBank",
-  "MediSalud", "AutoDrive", "EduPlus",
+  "BullMarket", "Respaldar", "Inviu", "Capital Markets",
+  "Keko", "Legión Extranjera", "nocnoc",
 ];
 
 const LogosCarousel = () => {
