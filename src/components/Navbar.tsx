@@ -14,9 +14,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border/50">
-      <div className="container flex items-center justify-between h-16 md:h-20">
+      <div className="container flex items-center justify-between h-20 md:h-28">
         <a href="#" className="flex items-center">
-          <img src={logoHorizontal} alt="Otomatis Labs" className="h-8 md:h-10" />
+          <img src={logoHorizontal} alt="Otomatis Labs" className="h-14 md:h-20" />
         </a>
 
         {/* Desktop */}
