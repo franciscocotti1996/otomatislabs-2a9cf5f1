@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
+import { MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
 import heroPerson from "@/assets/hero-person.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
