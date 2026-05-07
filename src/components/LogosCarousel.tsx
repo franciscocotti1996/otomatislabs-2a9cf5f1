@@ -1,9 +1,42 @@
+import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import bullMarket from "@/assets/logos/bull-market.png";
+import capitalMarkets from "@/assets/logos/capital-markets.png";
+import inviu from "@/assets/logos/inviu.avif";
+import legion from "@/assets/logos/legion.png";
+import nocnoc from "@/assets/logos/nocnoc.png";
 
-const logos = [
-  "BullMarket", "Respaldar", "Inviu", "Capital Markets",
-  "Keko", "Legión Extranjera", "nocnoc",
+type Logo = { name: string; src?: string };
+
+const logos: Logo[] = [
+  { name: "BullMarket", src: bullMarket },
+  { name: "Respaldar" },
+  { name: "Inviu", src: inviu },
+  { name: "Capital Markets", src: capitalMarkets },
+  { name: "Keko" },
+  { name: "Legión Extranjera", src: legion },
+  { name: "nocnoc", src: nocnoc },
 ];
+
+const LogoItem = ({ logo }: { logo: Logo }) => {
+  const [errored, setErrored] = useState(false);
+  if (logo.src && !errored) {
+    return (
+      <img
+        src={logo.src}
+        alt={logo.name}
+        onError={() => setErrored(true)}
+        className="h-12 md:h-16 w-auto max-w-[180px] object-contain opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all px-4"
+        loading="lazy"
+      />
+    );
+  }
+  return (
+    <span className="text-xl md:text-2xl font-heading font-bold text-muted-foreground/40 hover:text-primary/70 transition-colors px-4 select-none">
+      {logo.name}
+    </span>
+  );
+};
 
 const LogosCarousel = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -22,13 +55,8 @@ const LogosCarousel = () => {
       {/* Infinite scroll track */}
       <div className="relative flex overflow-hidden">
         <div className="flex animate-scroll-left gap-12 items-center whitespace-nowrap">
-          {[...logos, ...logos].map((name, i) => (
-            <span
-              key={i}
-              className="text-xl md:text-2xl font-heading font-bold text-muted-foreground/30 hover:text-primary/60 transition-colors px-4 select-none"
-            >
-              {name}
-            </span>
+          {[...logos, ...logos].map((logo, i) => (
+            <LogoItem key={i} logo={logo} />
           ))}
         </div>
       </div>
