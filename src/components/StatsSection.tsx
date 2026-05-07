@@ -1,9 +1,9 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const stats = [
-  { value: "+10K", label: "conversaciones gestionadas", highlight: "por mes" },
-  { value: "+15", label: "chatbots productivos en operación", highlight: "" },
-  { value: "3+", label: "años impulsando soluciones", highlight: "" },
+  { value: "+50K", label: "conversaciones gestionadas", highlight: "por mes" },
+  { value: "+30", label: "chatbots productivos en operación", highlight: "" },
+  { value: "8+", label: "años impulsando soluciones", highlight: "" },
 ];
 
 const StatsSection = () => {
