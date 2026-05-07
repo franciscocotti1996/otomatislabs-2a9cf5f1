@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import bullMarket from "@/assets/logos/bull-market.png";
 import capitalMarkets from "@/assets/logos/capital-markets.png";
-import inviu from "@/assets/logos/inviu.avif";
+import inviu from "@/assets/logos/inviu.png";
+import keko from "@/assets/logos/keko.webp";
 import legion from "@/assets/logos/legion.png";
 import nocnoc from "@/assets/logos/nocnoc.png";
 
@@ -13,7 +14,7 @@ const logos: Logo[] = [
   { name: "Respaldar" },
   { name: "Inviu", src: inviu },
   { name: "Capital Markets", src: capitalMarkets },
-  { name: "Keko" },
+  { name: "Keko", src: keko },
   { name: "Legión Extranjera", src: legion },
   { name: "nocnoc", src: nocnoc },
 ];
