@@ -1,4 +1,4 @@
-import { ArrowRight, MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
+import { MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
 import heroPerson from "@/assets/hero-person.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
@@ -40,22 +40,7 @@ const HeroSection = () => {
               En Otomatis Labs desarrollamos tecnologías de chatbots de vanguardia que permiten a las empresas automatizar interacciones y mejorar sus servicios.
             </p>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row items-center lg:items-start gap-4 mb-12">
-              <a
-                href="#servicios"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:opacity-90 transition-opacity"
-              >
-                Nuestros servicios
-                <ArrowRight className="w-4 h-4" />
-              </a>
-              <a
-                href="#proceso"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-lg border border-primary text-primary font-semibold text-sm hover:bg-primary/5 transition-colors"
-              >
-                Metodología
-              </a>
-            </div>
+            <div className="mb-12" />
 
             {/* Channel icons */}
             <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap">
