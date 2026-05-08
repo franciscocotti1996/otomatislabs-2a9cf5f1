@@ -47,7 +47,7 @@ const PartnersSection = () => {
   return (
     <section
       ref={ref}
-      className={`py-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      className={`py-16 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}
     >
       <div className="container">
         <div className="flex flex-col items-center text-center gap-6">
