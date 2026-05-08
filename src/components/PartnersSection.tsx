@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { ShieldCheck, MessageCircle, Bot } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import metaLogo from "@/assets/logos/meta.png";
+import botmakerLogo from "@/assets/logos/botmaker.png";
 
 type Partner = {
   name: string;
@@ -10,8 +12,8 @@ type Partner = {
 };
 
 const partners: Partner[] = [
-  { name: "Meta", tag: "WhatsApp Business Partner", Icon: MessageCircle },
-  { name: "Botmaker", tag: "Official Partner", Icon: Bot },
+  { name: "Meta", tag: "WhatsApp Business Partner", src: metaLogo, Icon: MessageCircle },
+  { name: "Botmaker", tag: "Official Partner", src: botmakerLogo, Icon: Bot },
 ];
 
 const PartnerCard = ({ partner }: { partner: Partner }) => {
