@@ -39,7 +39,7 @@ const ServicesSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} id="diferencial" className={`py-20 md:py-28 bg-gradient-hero transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+    <section ref={ref} id="diferencial" className={`py-20 md:py-28 bg-gradient-hero transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
           <div>

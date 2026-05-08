@@ -37,7 +37,7 @@ const SolutionsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} id="servicios" className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
+    <section ref={ref} id="servicios" className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
       <div className="container">
         <div className="text-center mb-14">
           <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">

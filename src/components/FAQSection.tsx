@@ -39,7 +39,7 @@ const FAQSection = () => {
   return (
     <section
       ref={ref}
-      className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}
     >
       <div className="container max-w-3xl">
         <div className="text-center mb-14">

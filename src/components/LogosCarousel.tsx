@@ -45,7 +45,7 @@ const LogosCarousel = () => {
   return (
     <section
       ref={ref}
-      className={`py-14 border-y border-border/50 overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}
+      className={`py-14 border-y border-border/50 overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}
     >
       <div className="container mb-6">
         <p className="text-center text-sm text-muted-foreground font-medium font-heading uppercase tracking-wide">
