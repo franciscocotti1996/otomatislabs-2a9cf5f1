@@ -6,7 +6,6 @@ const navLinks = [
   { label: "Servicios", href: "#servicios" },
   { label: "Por qué nosotros", href: "#diferencial" },
   { label: "Proceso", href: "#proceso" },
-  { label: "Contacto", href: "#contacto" },
 ];
 
 const Navbar = () => {
