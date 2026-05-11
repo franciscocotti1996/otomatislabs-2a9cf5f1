@@ -66,9 +66,8 @@ const ProcessSection = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-8 lg:gap-2 items-start">
             {steps.map((step, i) => (
-              <>
+              <React.Fragment key={step.number}>
                 <div
-                  key={step.number}
                   className="lg:col-span-1 flex flex-col items-center text-center group"
                 >
                   <div className="relative">
@@ -89,13 +88,12 @@ const ProcessSection = () => {
 
                 {i < steps.length - 1 && (
                   <div
-                    key={`arrow-${i}`}
                     className="hidden lg:flex lg:col-span-1 items-start justify-center pt-[3.5rem]"
                   >
                     <ArrowRight className="w-6 h-6 text-primary/70" strokeWidth={2} />
                   </div>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>
