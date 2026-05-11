@@ -1,3 +1,4 @@
+import React from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Search, PenLine, Cpu, TrendingUp, ArrowRight } from "lucide-react";
 
