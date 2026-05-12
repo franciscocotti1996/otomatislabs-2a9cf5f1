@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import {
   Search,
   PenLine,
@@ -78,6 +79,7 @@ const clamp = (n: number, min = 0, max = 1) => Math.max(min, Math.min(max, n));
 const ProcessSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const [progress, setProgress] = useState(0);
+  const { ref: visibilityRef, isVisible: sectionVisible } = useScrollAnimation(0.1);
 
   useEffect(() => {
     let raf = 0;
@@ -215,9 +217,14 @@ const ProcessSection = () => {
 
   return (
     <section
-      ref={sectionRef}
+      ref={(node) => {
+        sectionRef.current = node;
+        (visibilityRef as React.MutableRefObject<HTMLElement | null>).current = node;
+      }}
       id="proceso"
-      className="relative py-20 md:py-28 overflow-hidden"
+      className={`relative py-20 md:py-28 overflow-hidden transition-all duration-700 ${
+        sectionVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"
+      }`}
     >
       {/* Soft backdrop */}
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-muted/40 to-background" />
