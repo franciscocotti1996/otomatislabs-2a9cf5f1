@@ -281,7 +281,9 @@ const ProcessSection = () => {
               <div key={step.number} className="contents">
                 <div
                   className="col-span-1"
-                  ref={(el) => (cardRefs.current[i] = el)}
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
                 >
                   <StepCard step={step} index={i} />
                 </div>
