@@ -6,7 +6,6 @@ import {
   Cpu,
   TrendingUp,
   ArrowRight,
-  ArrowDown,
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
