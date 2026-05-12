@@ -80,6 +80,8 @@ const ProcessSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isProgrammaticScroll = useRef(false);
+  const programmaticTimeout = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasEntered, setHasEntered] = useState(false);
   const { ref: visibilityRef, isVisible: sectionVisible } = useScrollAnimation(0.1);
@@ -127,8 +129,49 @@ const ProcessSection = () => {
     if (scroller.scrollWidth <= scroller.clientWidth + 4) return;
     const target =
       card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    // Skip if already close enough to avoid loops with manual scroll sync.
+    if (Math.abs(scroller.scrollLeft - Math.max(0, target)) < 4) return;
+    isProgrammaticScroll.current = true;
+    if (programmaticTimeout.current) window.clearTimeout(programmaticTimeout.current);
+    programmaticTimeout.current = window.setTimeout(() => {
+      isProgrammaticScroll.current = false;
+    }, 600);
     scroller.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
   }, [activeIndex]);
+
+  // Sync active step to manual horizontal scrolling (touch/trackpad).
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    let raf = 0;
+    const handle = () => {
+      if (isProgrammaticScroll.current) return;
+      if (scroller.scrollWidth <= scroller.clientWidth + 4) return;
+      const center = scroller.scrollLeft + scroller.clientWidth / 2;
+      let bestIdx = 0;
+      let bestDist = Infinity;
+      cardRefs.current.forEach((card, i) => {
+        if (!card) return;
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const d = Math.abs(cardCenter - center);
+        if (d < bestDist) {
+          bestDist = d;
+          bestIdx = i;
+        }
+      });
+      setHasEntered(true);
+      setActiveIndex((prev) => (prev === bestIdx ? prev : bestIdx));
+    };
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(handle);
+    };
+    scroller.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      scroller.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   const goTo = useCallback(
     (i: number) => setActiveIndex(clamp(i, 0, steps.length - 1) as number),
