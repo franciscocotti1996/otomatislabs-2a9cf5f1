@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import {
   Search,
@@ -6,6 +6,7 @@ import {
   Cpu,
   TrendingUp,
   ArrowRight,
+  ArrowLeft,
   FileText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -77,7 +78,10 @@ const clamp = (n: number, min = 0, max = 1) => Math.max(min, Math.min(max, n));
 
 const ProcessSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const [progress, setProgress] = useState(0);
+  const scrollerRef = useRef<HTMLDivElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hasEntered, setHasEntered] = useState(false);
   const { ref: visibilityRef, isVisible: sectionVisible } = useScrollAnimation(0.1);
 
   useEffect(() => {
@@ -87,12 +91,13 @@ const ProcessSection = () => {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const vh = window.innerHeight;
-      // Start when top of section reaches 75% of viewport,
-      // finish when bottom reaches 25% of viewport.
       const start = vh * 0.75;
       const end = -rect.height + vh * 0.25;
       const p = (start - rect.top) / (start - end);
-      setProgress(clamp(p));
+      const progress = clamp(p);
+      if (progress > 0.01) setHasEntered(true);
+      const idx = clamp(Math.floor(progress * steps.length), 0, steps.length - 1);
+      setActiveIndex((prev) => (prev === idx ? prev : idx));
     };
     const onScroll = () => {
       cancelAnimationFrame(raf);
@@ -108,13 +113,29 @@ const ProcessSection = () => {
     };
   }, []);
 
-  const N = steps.length;
-  const isVisible = progress > 0.01;
-  // Active step follows scroll progress through the flow.
-  const activeIndex = clamp(Math.floor(progress * N), 0, N - 1);
-  // Per-segment fill: segment i fills from progress (i+0.5)/N to (i+1.5)/N.
-  const segmentFill = (i: number) =>
-    clamp((progress - (i + 0.5) / N) / (1 / N));
+  const isVisible = hasEntered;
+  // Discrete fills synced to active step: segments before active are full,
+  // the segment right after the active step animates to full as we advance.
+  const segmentFill = (i: number) => (isVisible && i < activeIndex ? 1 : 0);
+
+  // Keep the active card visible inside the horizontal scroller.
+  useEffect(() => {
+    const scroller = scrollerRef.current;
+    const card = cardRefs.current[activeIndex];
+    if (!scroller || !card) return;
+    // Only auto-scroll when the scroller is actually scrollable.
+    if (scroller.scrollWidth <= scroller.clientWidth + 4) return;
+    const target =
+      card.offsetLeft - (scroller.clientWidth - card.offsetWidth) / 2;
+    scroller.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
+  }, [activeIndex]);
+
+  const goTo = useCallback(
+    (i: number) => setActiveIndex(clamp(i, 0, steps.length - 1) as number),
+    []
+  );
+  const canPrev = activeIndex > 0;
+  const canNext = activeIndex < steps.length - 1;
 
   const StepCard = ({
     step,
@@ -248,14 +269,22 @@ const ProcessSection = () => {
         </div>
 
         {/* Horizontal flow (scrollable on small screens) */}
-        <div className="-mx-4 px-4 overflow-x-auto lg:overflow-visible">
+        <div
+          ref={scrollerRef}
+          className="-mx-4 px-4 overflow-x-auto lg:overflow-visible scroll-smooth"
+        >
           <div className="grid grid-cols-7 gap-2 items-start min-w-[900px] lg:min-w-0">
           {steps.map((step, i) => {
             const fill = segmentFill(i);
             const arrowActive = fill > 0.85;
             return (
               <div key={step.number} className="contents">
-                <div className="col-span-1">
+                <div
+                  className="col-span-1"
+                  ref={(el) => {
+                    cardRefs.current[i] = el;
+                  }}
+                >
                   <StepCard step={step} index={i} />
                 </div>
                 {i < steps.length - 1 && (
@@ -265,11 +294,11 @@ const ProcessSection = () => {
                       <div className="absolute inset-x-0 h-px bg-border" />
                       {/* Fill */}
                       <div
-                        className="relative h-px bg-gradient-to-r from-primary/60 to-primary origin-left transition-transform duration-300 ease-out flex-1"
+                        className="relative h-px bg-gradient-to-r from-primary/60 to-primary origin-left transition-transform duration-500 ease-out flex-1"
                         style={{ transform: `scaleX(${fill})` }}
                       />
                       <ArrowRight
-                        className="w-5 h-5 -ml-2 transition-all duration-300"
+                        className="w-5 h-5 -ml-2 transition-all duration-500"
                         strokeWidth={2.25}
                         style={{
                           opacity: 0.3 + 0.7 * fill,
@@ -287,6 +316,57 @@ const ProcessSection = () => {
           })}
           </div>
         </div>
+
+        {/* Prev / Next controls + step indicator */}
+        <div className="mt-10 flex items-center justify-center gap-4">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => goTo(activeIndex - 1)}
+            disabled={!canPrev}
+            aria-label="Paso anterior"
+            className="rounded-full"
+          >
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
+
+          <div className="flex items-center gap-2">
+            {steps.map((s, i) => (
+              <button
+                key={s.number}
+                type="button"
+                onClick={() => goTo(i)}
+                aria-label={`Ir al paso ${s.number} ${s.title}`}
+                aria-current={i === activeIndex ? "step" : undefined}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  i === activeIndex
+                    ? "w-8 bg-primary"
+                    : i < activeIndex
+                    ? "w-2 bg-primary/60"
+                    : "w-2 bg-border hover:bg-muted-foreground/40"
+                }`}
+              />
+            ))}
+          </div>
+
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={() => goTo(activeIndex + 1)}
+            disabled={!canNext}
+            aria-label="Paso siguiente"
+            className="rounded-full"
+          >
+            <ArrowRight className="w-4 h-4" />
+          </Button>
+        </div>
+
+        <p className="mt-4 text-center text-sm text-muted-foreground font-heading">
+          <span className="text-primary font-semibold">
+            {steps[activeIndex].number}
+          </span>{" "}
+          · {steps[activeIndex].title}
+        </p>
       </div>
     </section>
   );
