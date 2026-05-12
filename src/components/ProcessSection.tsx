@@ -248,8 +248,9 @@ const ProcessSection = () => {
           </p>
         </div>
 
-        {/* Desktop horizontal flow */}
-        <div className="hidden lg:grid grid-cols-7 gap-2 items-start">
+        {/* Horizontal flow (scrollable on small screens) */}
+        <div className="-mx-4 px-4 overflow-x-auto lg:overflow-visible">
+          <div className="grid grid-cols-7 gap-2 items-start min-w-[900px] lg:min-w-0">
           {steps.map((step, i) => {
             const fill = segmentFill(i);
             const arrowActive = fill > 0.85;
@@ -285,43 +286,7 @@ const ProcessSection = () => {
               </div>
             );
           })}
-        </div>
-
-        {/* Mobile / tablet vertical flow */}
-        <div className="lg:hidden flex flex-col items-center gap-2">
-          {steps.map((step, i) => {
-            const fill = segmentFill(i);
-            const arrowActive = fill > 0.85;
-            return (
-              <div key={step.number} className="w-full flex flex-col items-center">
-                <StepCard step={step} index={i} />
-                {i < steps.length - 1 && (
-                  <div className="relative flex flex-col items-center my-6">
-                    {/* Track */}
-                    <div className="absolute top-0 bottom-0 w-px bg-border" />
-                    {/* Fill */}
-                    <div
-                      className="w-px bg-gradient-to-b from-primary/60 to-primary origin-top transition-transform duration-300 ease-out"
-                      style={{
-                        height: "3.5rem",
-                        transform: `scaleY(${fill})`,
-                      }}
-                    />
-                    <ArrowDown
-                      className="w-5 h-5 -mt-1 transition-all duration-300"
-                      strokeWidth={2.25}
-                      style={{
-                        opacity: 0.3 + 0.7 * fill,
-                        color: arrowActive
-                          ? "hsl(var(--primary))"
-                          : "hsl(var(--muted-foreground))",
-                      }}
-                    />
-                  </div>
-                )}
-              </div>
-            );
-          })}
+          </div>
         </div>
       </div>
     </section>
