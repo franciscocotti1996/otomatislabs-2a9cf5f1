@@ -82,7 +82,7 @@ const ProcessSection = () => {
       ref={ref}
       id="proceso"
       className={`relative py-20 md:py-28 overflow-hidden transition-all duration-700 ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+        isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"
       }`}
     >
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-background via-muted/40 to-background" />
