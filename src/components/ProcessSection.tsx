@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import {
   Search,
@@ -108,11 +109,8 @@ const ProcessSection = () => {
         {/* Flow: all steps visible on one screen */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1fr_auto_1fr_auto_1fr_auto_1fr] gap-x-3 gap-y-10 items-start">
           {steps.map((step, i) => (
-            <>
-              <div
-                key={step.number}
-                className="flex flex-col items-center text-center px-2"
-              >
+            <Fragment key={step.number}>
+              <div className="flex flex-col items-center text-center px-2">
                 <div className="relative">
                   <div className="absolute inset-0 rounded-3xl bg-primary/10 blur-xl opacity-0 hover:opacity-100 transition-opacity" />
                   <div className="relative w-24 h-24 md:w-28 md:h-28 rounded-3xl bg-card border border-primary/30 shadow-md flex flex-col items-center justify-center gap-1.5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg">
@@ -176,10 +174,7 @@ const ProcessSection = () => {
               </div>
 
               {i < steps.length - 1 && (
-                <div
-                  key={`sep-${step.number}`}
-                  className="hidden lg:flex items-center justify-center pt-12"
-                >
+                <div className="hidden lg:flex items-center justify-center pt-12">
                   <div className="relative flex items-center w-full min-w-[40px]">
                     <div className="h-px flex-1 bg-primary/40" />
                     <ArrowRight
@@ -189,7 +184,7 @@ const ProcessSection = () => {
                   </div>
                 </div>
               )}
-            </>
+            </Fragment>
           ))}
         </div>
 
