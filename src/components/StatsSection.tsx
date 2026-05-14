@@ -1,7 +1,7 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 
 const stats = [
-  { value: "+50K", label: "conversaciones gestionadas", highlight: "por mes" },
+  { value: "+100K", label: "conversaciones gestionadas", highlight: "por mes" },
   { value: "+30", label: "chatbots productivos en operación", highlight: "" },
   { value: "8+", label: "años impulsando soluciones", highlight: "" },
 ];
