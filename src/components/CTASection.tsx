@@ -186,6 +186,24 @@ const CTASection = () => {
                   </>
                 )}
               </Button>
+
+              {lastSubmissionId && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm"
+                >
+                  <p className="font-heading font-semibold text-foreground">
+                    ¡Mensaje enviado con éxito!
+                  </p>
+                  <p className="text-muted-foreground mt-1">
+                    Guardá tu ID de seguimiento:{" "}
+                    <span className="font-mono font-semibold text-foreground">
+                      {lastSubmissionId}
+                    </span>
+                  </p>
+                </div>
+              )}
             </form>
           </div>
         </div>
