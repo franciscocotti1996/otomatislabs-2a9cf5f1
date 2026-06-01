@@ -34,6 +34,7 @@ const CTASection = () => {
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,14 +56,19 @@ const CTASection = () => {
     }
     setErrors({});
     setSubmitting(true);
+    const submissionId = `OTL-${Date.now().toString(36).toUpperCase()}-${Math.random()
+      .toString(36)
+      .slice(2, 7)
+      .toUpperCase()}`;
     try {
       const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: parsed.data,
+        body: { ...parsed.data, submissionId },
       });
       if (error) throw error;
+      setLastSubmissionId(submissionId);
       toast({
         title: "¡Mensaje enviado!",
-        description: "Te respondemos a la brevedad.",
+        description: `Te respondemos a la brevedad. ID de seguimiento: ${submissionId}`,
       });
       setValues({ name: "", company: "", comments: "" });
     } catch (err) {
@@ -180,6 +186,24 @@ const CTASection = () => {
                   </>
                 )}
               </Button>
+
+              {lastSubmissionId && (
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm"
+                >
+                  <p className="font-heading font-semibold text-foreground">
+                    ¡Mensaje enviado con éxito!
+                  </p>
+                  <p className="text-muted-foreground mt-1">
+                    Guardá tu ID de seguimiento:{" "}
+                    <span className="font-mono font-semibold text-foreground">
+                      {lastSubmissionId}
+                    </span>
+                  </p>
+                </div>
+              )}
             </form>
           </div>
         </div>
