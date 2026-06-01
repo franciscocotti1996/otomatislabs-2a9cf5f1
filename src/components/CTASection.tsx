@@ -34,6 +34,7 @@ const CTASection = () => {
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -55,14 +56,19 @@ const CTASection = () => {
     }
     setErrors({});
     setSubmitting(true);
+    const submissionId = `OTL-${Date.now().toString(36).toUpperCase()}-${Math.random()
+      .toString(36)
+      .slice(2, 7)
+      .toUpperCase()}`;
     try {
       const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: parsed.data,
+        body: { ...parsed.data, submissionId },
       });
       if (error) throw error;
+      setLastSubmissionId(submissionId);
       toast({
         title: "¡Mensaje enviado!",
-        description: "Te respondemos a la brevedad.",
+        description: `Te respondemos a la brevedad. ID de seguimiento: ${submissionId}`,
       });
       setValues({ name: "", company: "", comments: "" });
     } catch (err) {
