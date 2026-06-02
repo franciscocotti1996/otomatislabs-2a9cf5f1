@@ -1,6 +1,6 @@
-import { Linkedin } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Button } from "@/components/ui/button";
+import linkedinLogo from "@/assets/logo-linkedin.webp.asset.json";
 
 const LinkedInSection = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -14,8 +14,8 @@ const LinkedInSection = () => {
     >
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-[#0077b5]/10 mb-6">
-            <Linkedin className="w-8 h-8 text-[#0077b5]" />
+          <div className="inline-flex items-center justify-center mb-6">
+            <img src={linkedinLogo.url} alt="LinkedIn" className="w-16 h-16" />
           </div>
 
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
@@ -37,7 +37,7 @@ const LinkedInSection = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Linkedin className="w-5 h-5 mr-2" />
+              <img src={linkedinLogo.url} alt="" className="w-5 h-5 mr-2" />
               Visitar LinkedIn
             </a>
           </Button>
