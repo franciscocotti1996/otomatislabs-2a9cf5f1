@@ -15,7 +15,11 @@ const LinkedInSection = () => {
       <div className="container">
         <div className="max-w-3xl mx-auto text-center">
           <div className="inline-flex items-center justify-center mb-6">
-            <img src={linkedinLogo.url} alt="LinkedIn" className="w-16 h-16" />
+            <img
+              src={linkedinLogo.url}
+              alt="LinkedIn"
+              className="w-14 h-14 md:w-20 md:h-20 object-contain"
+            />
           </div>
 
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
@@ -36,9 +40,15 @@ const LinkedInSection = () => {
               href="https://www.linkedin.com/company/otomatis-labs/?viewAsMember=true"
               target="_blank"
               rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 leading-none"
             >
-              <img src={linkedinLogo.url} alt="" className="w-5 h-5 mr-2" />
-              Visitar LinkedIn
+              <img
+                src={linkedinLogo.url}
+                alt=""
+                aria-hidden="true"
+                className="w-5 h-5 object-contain shrink-0"
+              />
+              <span>Visitar LinkedIn</span>
             </a>
           </Button>
         </div>
