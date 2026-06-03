@@ -34,7 +34,7 @@ const LinkedInSection = () => {
           <Button
             asChild
             size="lg"
-            className="bg-[#0077b5] hover:bg-[#005f90] text-white font-heading font-semibold px-8"
+            className="bg-[#0077b5] hover:bg-[#005285] text-white font-heading font-semibold px-8"
           >
             <a
               href="https://www.linkedin.com/company/otomatis-labs/?viewAsMember=true"
