@@ -7,6 +7,7 @@ import SolutionsSection from "@/components/SolutionsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ConversationalCommerceSection from "@/components/ConversationalCommerceSection";
 import ProcessSection from "@/components/ProcessSection";
+import UseCasesSection from "@/components/UseCasesSection";
 
 import FAQSection from "@/components/FAQSection";
 import CTASection from "@/components/CTASection";
@@ -25,7 +26,7 @@ const Index = () => {
       <ServicesSection />
       <ConversationalCommerceSection />
       <ProcessSection />
-      
+      <UseCasesSection />
       <FAQSection />
       <CTASection />
       <LinkedInSection />
