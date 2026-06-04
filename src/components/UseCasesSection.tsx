@@ -211,39 +211,68 @@ const UseCasesSection = () => {
                   </span>
                 </div>
                 <DialogTitle className="font-heading text-2xl">{selected.title}</DialogTitle>
-                <DialogDescription className="text-base leading-relaxed pt-2">
-                  {selected.detail}
-                </DialogDescription>
               </DialogHeader>
 
-              <div className="mt-2">
-                <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
-                  Beneficios
-                </h4>
-                <ul className="space-y-2">
-                  {selected.benefits.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <div className="space-y-5 mt-2">
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                    El problema
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{selected.problem}</p>
+                </div>
 
-              <div className="mt-4">
-                <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3 flex items-center gap-2">
-                  <Plug className="w-4 h-4 text-primary" />
-                  Integraciones de ejemplo
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selected.integrations.map((i) => (
-                    <span
-                      key={i}
-                      className="text-xs font-medium text-foreground bg-muted border border-border rounded-full px-3 py-1"
-                    >
-                      {i}
-                    </span>
-                  ))}
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    La solución
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{selected.solution}</p>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-primary" />
+                    Beneficios clave
+                  </h4>
+                  <ul className="space-y-2">
+                    {selected.benefits.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
+                    Casos reales
+                  </h4>
+                  <ul className="space-y-2">
+                    {selected.examples.map((ex) => (
+                      <li key={ex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                        <span>{ex}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
+                    Integraciones disponibles
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selected.integrations.map((i) => (
+                      <span
+                        key={i}
+                        className="text-xs font-medium text-foreground bg-muted border border-border rounded-full px-3 py-1"
+                      >
+                        {i}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </>
