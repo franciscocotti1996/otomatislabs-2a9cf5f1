@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ShoppingCart, HeadphonesIcon, CalendarCheck, CreditCard, UserPlus, Truck, Check, Plug } from "lucide-react";
+import { ShoppingCart, HeadphonesIcon, CalendarCheck, CreditCard, UserPlus, Truck, Check, Zap, AlertTriangle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import {
   Dialog,
@@ -15,13 +15,20 @@ const useCases = [
     title: "Ventas conversacionales",
     description: "Agentes IA que asesoran, recomiendan productos y cierran ventas dentro del chat.",
     benefit: "+30% conversión en WhatsApp",
-    detail:
-      "Diseñamos agentes que entienden la intención del cliente, recomiendan productos del catálogo y guían toda la compra sin salir del chat. Integramos catálogo, carrito y pago para cerrar la venta en un solo flujo.",
+    problem:
+      "Los clientes abandonan la compra por falta de asesoramiento inmediato. El 70% de los carritos en e-commerce se pierde por dudas sin resolver.",
+    solution:
+      "Implementamos agentes IA que entienden la intención de compra, recomiendan productos del catálogo en tiempo real y guían todo el proceso de checkout sin que el cliente salga del chat.",
     benefits: [
-      "Recomendaciones personalizadas en tiempo real",
-      "Carrito y checkout dentro de WhatsApp",
-      "Recupero automático de carritos abandonados",
-      "Trazabilidad completa de cada venta",
+      "Recomendaciones personalizadas basadas en preferencias del usuario",
+      "Carrito y checkout integrado dentro de WhatsApp",
+      "Recupero automático de carritos abandonados con seguimiento",
+      "Trazabilidad completa de cada venta con métricas en tiempo real",
+    ],
+    examples: [
+      "Tienda de moda: +35% de conversión en campañas de WhatsApp",
+      "Supermercado online: checkout conversacional con lista de compras",
+      "Electrónica: recomendación cruzada de accesorios por IA",
     ],
     integrations: ["WhatsApp Business API", "Shopify / VTEX / Tiendanube", "Mercado Pago / Stripe", "HubSpot / Salesforce"],
   },
@@ -30,13 +37,20 @@ const useCases = [
     title: "Atención al cliente 24/7",
     description: "Resolvemos consultas frecuentes al instante y derivamos solo lo crítico a un humano.",
     benefit: "-40% consultas repetitivas",
-    detail:
-      "Combinamos IA generativa con tu base de conocimiento para responder consultas con precisión. Lo que requiere intervención humana se deriva con todo el contexto al agente correcto.",
+    problem:
+      "El equipo de soporte se satura con preguntas repetitivas sobre horarios, precios y políticas. Los clientes esperan horas por respuestas simples.",
+    solution:
+      "Desplegamos IA generativa entrenada con tu base de conocimiento para responder al instante. Lo que requiere intervención humana se deriva con todo el contexto al agente correcto.",
     benefits: [
-      "Respuesta inmediata 24/7 en todos los canales",
-      "Hand-off al humano con historial completo",
-      "Reducción de tickets repetitivos",
-      "Mejora continua basada en métricas",
+      "Respuesta inmediata 24/7 en todos los canales (WhatsApp, web, Instagram)",
+      "Hand-off al humano con historial completo de la conversación",
+      "Reducción drástica de tickets repetitivos en el help desk",
+      "Mejora continua del bot basada en métricas de satisfacción",
+    ],
+    examples: [
+      "Clínica médica: turnos, prepagas y coberturas resueltos por IA",
+      "EdTech: consultas sobre cursos, precios y contenido automatizadas",
+      "Gimnasio: horarios, planes y reservas gestionadas sin operador",
     ],
     integrations: ["Zendesk / Freshdesk", "Intercom", "Notion / Confluence (KB)", "Slack / Teams"],
   },
@@ -45,13 +59,20 @@ const useCases = [
     title: "Gestión de turnos y reservas",
     description: "Reservas, recordatorios y confirmaciones automatizadas desde el canal favorito del cliente.",
     benefit: "-60% ausencias",
-    detail:
-      "El cliente reserva, reprograma o cancela su turno en segundos vía chat. Enviamos recordatorios automáticos y sincronizamos con tu calendario en tiempo real.",
+    problem:
+      "Las ausencias y cancelaciones de último momento dejan huecos improductivos. Los clientes olvidan sus turnos y no hay sistema de recordatorio efectivo.",
+    solution:
+      "El cliente reserva, reprograma o cancela su turno en segundos vía chat conversacional. Enviamos recordatorios automáticos con confirmación y sincronizamos con tu calendario en tiempo real.",
     benefits: [
-      "Reservas conversacionales sin formularios",
-      "Recordatorios automáticos con confirmación",
-      "Reprogramación en un clic",
-      "Sincronización con tu agenda",
+      "Reservas conversacionales sin formularios ni apps adicionales",
+      "Recordatorios automáticos con confirmación por parte del cliente",
+      "Reprogramación o cancelación en un solo clic desde el chat",
+      "Sincronización bidireccional con tu agenda y calendario",
+    ],
+    examples: [
+      "Consultorio médico: reservas 24/7 con recordatorios vía WhatsApp",
+      "Estética y spa: agenda completa gestionada por IA",
+      "Restaurante: reservas de mesa con confirmación automática",
     ],
     integrations: ["Google Calendar / Outlook", "Calendly", "Sistemas de turnos propios vía API"],
   },
@@ -60,13 +81,20 @@ const useCases = [
     title: "Cobranzas inteligentes",
     description: "Recordatorios de pago contextualizados, links de pago y conciliación dentro del chat.",
     benefit: "+25% recupero",
-    detail:
-      "Segmentamos por comportamiento y enviamos recordatorios con el tono adecuado para cada cliente. Generamos links de pago dinámicos y conciliamos automáticamente.",
+    problem:
+      "Las cobranzas tradicionales generan fricción con el cliente. Los recordatorios genéricos no se personalizan y los links de pago se pierden en el spam.",
+    solution:
+      "Segmentamos por comportamiento de pago y enviamos recordatorios con el tono adecuado para cada cliente. Generamos links de pago dinámicos y conciliamos automáticamente al confirmar.",
     benefits: [
-      "Segmentación inteligente de morosidad",
-      "Links de pago personalizados",
-      "Conciliación automática en el chat",
-      "Reportes en tiempo real",
+      "Segmentación inteligente de morosidad por perfil de cliente",
+      "Links de pago personalizados con montos y vencimientos",
+      "Conciliación automática en el chat al recibir la confirmación",
+      "Reportes en tiempo real de recupero y cartera",
+    ],
+    examples: [
+      "Fintech: recupero de préstamos con planes de pago conversacionales",
+      "Servicios de suscripción: renovaciones automatizadas con descuentos",
+      "Colegios: cobro de cuotas con recordatorios personalizados a padres",
     ],
     integrations: ["Mercado Pago / Stripe / dLocal", "ERP / Core bancario", "Google Sheets / BI"],
   },
@@ -75,13 +103,20 @@ const useCases = [
     title: "Onboarding y calificación de leads",
     description: "Capturamos, calificamos y nutrimos leads automáticamente antes de pasarlos a ventas.",
     benefit: "Leads listos para vender",
-    detail:
-      "Cada lead que entra es calificado con preguntas inteligentes, scoreado y enviado al CRM con todo el contexto. Ventas solo recibe oportunidades reales.",
+    problem:
+      "El 80% de los leads que llegan no están calificados. Ventas pierde tiempo en seguimientos fríos y oportunidades reales se escapan por falta de velocidad.",
+    solution:
+      "Cada lead que entra es recibido por un agente IA que califica con preguntas inteligentes, asigna un score y enriquece el perfil antes de pasarlo al equipo de ventas con todo el contexto.",
     benefits: [
-      "Captura desde web, ads y redes",
-      "Calificación BANT/SQL automatizada",
-      "Asignación inteligente al vendedor",
-      "Nurturing automático del lead frío",
+      "Captura multicanal desde web, ads y redes sociales",
+      "Calificación BANT/SQL automatizada en la conversación",
+      "Asignación inteligente al vendedor según región o producto",
+      "Nurturing automático del lead frío con seguimiento programado",
+    ],
+    examples: [
+      "Inmobiliaria: calificación de compradores con presupuesto y zona",
+      "Seguros: cotización conversacional con asesoramiento de coberturas",
+      "Agencia de viajes: armado de itinerario según preferencias del lead",
     ],
     integrations: ["HubSpot / Salesforce / Pipedrive", "Meta Ads / Google Ads", "Webhooks y APIs propias"],
   },
@@ -90,13 +125,20 @@ const useCases = [
     title: "Logística y postventa",
     description: "Seguimiento de pedidos, gestión de cambios y encuestas de satisfacción sin fricción.",
     benefit: "NPS más alto",
-    detail:
-      "Tus clientes consultan el estado de su pedido, gestionan cambios o devoluciones y completan encuestas NPS directamente en el chat, sin esperar a un operador.",
+    problem:
+      "Los clientes consultan repetidamente el estado de sus pedidos saturando al equipo. Los cambios y devoluciones son lentos y las encuestas de NPS tienen baja respuesta.",
+    solution:
+      "Tus clientes consultan el estado de su pedido, gestionan cambios o devoluciones y completan encuestas NPS directamente en el chat, sin esperar a un operador humano.",
     benefits: [
-      "Tracking en tiempo real conversacional",
-      "Gestión de cambios y devoluciones",
-      "Encuestas NPS automáticas",
-      "Detección temprana de incidencias",
+      "Tracking de envíos en tiempo real con respuesta conversacional",
+      "Gestión completa de cambios y devoluciones desde el chat",
+      "Encuestas NPS automáticas tras la entrega",
+      "Detección temprana de incidencias con alertas proactivas",
+    ],
+    examples: [
+      "E-commerce de indumentaria: tracking y cambios vía WhatsApp",
+      "Farmacia online: seguimiento de recetas y entregas programadas",
+      "Mueblería: coordinación de entrega con reprogramación por chat",
     ],
     integrations: ["ERP / WMS", "Couriers (Andreani, DHL, OCA)", "Typeform / Encuestas propias"],
   },
@@ -169,39 +211,68 @@ const UseCasesSection = () => {
                   </span>
                 </div>
                 <DialogTitle className="font-heading text-2xl">{selected.title}</DialogTitle>
-                <DialogDescription className="text-base leading-relaxed pt-2">
-                  {selected.detail}
-                </DialogDescription>
               </DialogHeader>
 
-              <div className="mt-2">
-                <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
-                  Beneficios
-                </h4>
-                <ul className="space-y-2">
-                  {selected.benefits.map((b) => (
-                    <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-                      <span>{b}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <div className="space-y-5 mt-2">
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-amber-500" />
+                    El problema
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{selected.problem}</p>
+                </div>
 
-              <div className="mt-4">
-                <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3 flex items-center gap-2">
-                  <Plug className="w-4 h-4 text-primary" />
-                  Integraciones de ejemplo
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selected.integrations.map((i) => (
-                    <span
-                      key={i}
-                      className="text-xs font-medium text-foreground bg-muted border border-border rounded-full px-3 py-1"
-                    >
-                      {i}
-                    </span>
-                  ))}
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    La solución
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{selected.solution}</p>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3 flex items-center gap-2">
+                    <Check className="w-4 h-4 text-primary" />
+                    Beneficios clave
+                  </h4>
+                  <ul className="space-y-2">
+                    {selected.benefits.map((b) => (
+                      <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
+                        <span>{b}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
+                    Casos reales
+                  </h4>
+                  <ul className="space-y-2">
+                    {selected.examples.map((ex) => (
+                      <li key={ex} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 shrink-0" />
+                        <span>{ex}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
+                    Integraciones disponibles
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selected.integrations.map((i) => (
+                      <span
+                        key={i}
+                        className="text-xs font-medium text-foreground bg-muted border border-border rounded-full px-3 py-1"
+                      >
+                        {i}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </>
