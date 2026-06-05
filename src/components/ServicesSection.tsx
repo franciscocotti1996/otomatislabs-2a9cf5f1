@@ -1,42 +1,14 @@
 import { Bot, Layers, Zap, BarChart3, MessageSquare, Brain } from "lucide-react";
 import teamCollab from "@/assets/team-collab.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const services = [
-  {
-    icon: Layers,
-    title: "End to End",
-    description: "Acompañamos todo el ciclo de vida del canal conversacional: desde la estrategia hasta la mejora continua.",
-  },
-  {
-    icon: Bot,
-    title: "Chatbots Multicanal",
-    description: "Diseñamos chatbots que operan en WhatsApp, Web, Instagram y más, con una experiencia unificada.",
-  },
-  {
-    icon: Zap,
-    title: "Time-to-Market Acelerado",
-    description: "Nuestra experiencia multi-industria nos permite acelerar la implementación y garantizar soluciones sólidas.",
-  },
-  {
-    icon: BarChart3,
-    title: "Data & Performance",
-    description: "Cada solución se diseña con foco en métricas de negocio. Medimos, iteramos y optimizamos continuamente.",
-  },
-  {
-    icon: MessageSquare,
-    title: "Expertos en WhatsApp",
-    description: "Conocemos el canal más relevante de la región. Diseñamos soluciones pensadas para cómo interactúan los usuarios.",
-  },
-  {
-    icon: Brain,
-    title: "Agentes de IA",
-    description: "Integramos agentes de inteligencia artificial que resuelven problemas concretos de negocio de forma autónoma.",
-  },
-];
+const ICONS = [Layers, Bot, Zap, BarChart3, MessageSquare, Brain];
 
 const ServicesSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const services = t.services.items.map((it, i) => ({ ...it, icon: ICONS[i] }));
 
   return (
     <section ref={ref} id="diferencial" className={`py-20 md:py-28 bg-gradient-hero transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
@@ -44,10 +16,10 @@ const ServicesSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-14">
           <div>
             <p className="text-teal-light font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-              Por qué elegirnos
+              {t.services.eyebrow}
             </p>
             <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl text-primary-foreground">
-              Lo que hace diferente a Otomatis Labs
+              {t.services.title}
             </h2>
           </div>
           <div className="hidden lg:block">
@@ -55,7 +27,7 @@ const ServicesSection = () => {
               <div className="absolute -inset-3 bg-primary/10 rounded-2xl blur-xl" />
               <img
                 src={teamCollab}
-                alt="Equipo colaborando en soluciones de IA"
+                alt={t.services.imgAlt}
                 width={1280}
                 height={720}
                 loading="lazy"

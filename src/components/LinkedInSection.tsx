@@ -1,9 +1,11 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Button } from "@/components/ui/button";
 import linkedinLogo from "@/assets/logo-linkedin.webp.asset.json";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const LinkedInSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section
@@ -23,12 +25,11 @@ const LinkedInSection = () => {
           </div>
 
           <h2 className="font-heading font-bold text-3xl md:text-4xl text-foreground mb-4">
-            Conectemos en LinkedIn
+            {t.linkedin.title}
           </h2>
 
           <p className="text-muted-foreground max-w-xl mx-auto leading-relaxed mb-8">
-            Seguinos en LinkedIn para enterarte de las últimas novedades sobre
-            chatbots, agentes de IA y transformación digital.
+            {t.linkedin.sub}
           </p>
 
           <Button
@@ -48,7 +49,7 @@ const LinkedInSection = () => {
                 aria-hidden="true"
                 className="w-5 h-5 object-contain shrink-0"
               />
-              <span>Visitar LinkedIn</span>
+              <span>{t.linkedin.cta}</span>
             </a>
           </Button>
         </div>

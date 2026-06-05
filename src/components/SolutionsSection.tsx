@@ -1,50 +1,23 @@
 import { Bot, Globe, Smartphone, Cpu, Workflow, HeadphonesIcon } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-const solutions = [
-  {
-    icon: Bot,
-    title: "Chatbots Inteligentes",
-    description: "Chatbots con IA que entienden el contexto, resuelven consultas y escalan cuando es necesario.",
-  },
-  {
-    icon: Globe,
-    title: "Integración Multicanal",
-    description: "WhatsApp, Web, Instagram, Messenger y más. Una experiencia consistente en todos los canales.",
-  },
-  {
-    icon: Cpu,
-    title: "Agentes de IA Autónomos",
-    description: "Agentes inteligentes que ejecutan tareas complejas de negocio de forma autónoma y eficiente.",
-  },
-  {
-    icon: Workflow,
-    title: "Automatización de Procesos",
-    description: "Automatizamos flujos de atención, ventas y soporte para reducir costos y tiempos de respuesta.",
-  },
-  {
-    icon: Smartphone,
-    title: "Comercio Conversacional",
-    description: "Lleva toda la experiencia de compra a canales de mensajería con catálogo, carrito y pago integrado.",
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "Atención al Cliente IA",
-    description: "Soluciones de atención 24/7 que mejoran la satisfacción y reducen la carga operativa.",
-  },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
+
+const ICONS = [Bot, Globe, Cpu, Workflow, Smartphone, HeadphonesIcon];
 
 const SolutionsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const solutions = t.solutions.items.map((it, i) => ({ ...it, icon: ICONS[i] }));
 
   return (
     <section ref={ref} id="servicios" className={`py-20 md:py-28 transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
       <div className="container">
         <div className="text-center mb-14">
           <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-            Soluciones
+            {t.solutions.eyebrow}
           </p>
           <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl mx-auto">
-            Soluciones que transforman la interacción con tus clientes
+            {t.solutions.title}
           </h2>
         </div>
 

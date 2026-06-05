@@ -1,17 +1,18 @@
 import { MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
 import heroPerson from "@/assets/hero-person.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-
-const channels = [
-  { icon: MessageCircle, label: "WhatsApp" },
-  { icon: Globe, label: "Webchat" },
-  { icon: Smartphone, label: "Chat in App" },
-  { icon: Instagram, label: "Instagram" },
-  { icon: Send, label: "Messenger" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const HeroSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
+  const channels = [
+    { icon: MessageCircle, label: t.hero.channels.whatsapp },
+    { icon: Globe, label: t.hero.channels.web },
+    { icon: Smartphone, label: t.hero.channels.app },
+    { icon: Instagram, label: t.hero.channels.ig },
+    { icon: Send, label: t.hero.channels.msg },
+  ];
 
   return (
     <section ref={ref} className={`pt-28 md:pt-36 pb-16 md:pb-24 relative overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
@@ -25,19 +26,19 @@ const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-sm font-medium text-primary font-heading">Chatbots & Agentes de IA</span>
+              <span className="text-sm font-medium text-primary font-heading">{t.hero.badge}</span>
             </div>
 
             {/* Headline */}
             <h1 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl leading-tight mb-6">
-              Automatiza la relación con tus clientes con{" "}
-              <span className="text-gradient">chatbots multicanal</span>{" "}
-              potenciados por IA.
+              {t.hero.titleA}{" "}
+              <span className="text-gradient">{t.hero.titleB}</span>{" "}
+              {t.hero.titleC}
             </h1>
 
             {/* Subtitle */}
             <p className="text-muted-foreground text-base md:text-lg max-w-2xl mb-10 leading-relaxed">
-              En Otomatis Labs desarrollamos tecnologías de chatbots de vanguardia que permiten a las empresas automatizar interacciones y mejorar sus servicios.
+              {t.hero.subtitle}
             </p>
 
             <div className="mb-12" />
@@ -59,7 +60,7 @@ const HeroSection = () => {
               <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-2xl" />
               <img
                 src={heroPerson}
-                alt="Profesional usando chatbot en smartphone"
+                alt={t.hero.imgAlt}
                 width={1024}
                 height={1024}
                 className="relative rounded-2xl shadow-2xl object-cover w-full max-w-md"

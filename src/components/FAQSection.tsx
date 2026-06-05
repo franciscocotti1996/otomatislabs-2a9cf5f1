@@ -1,4 +1,5 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/i18n/LanguageContext";
 import {
   Accordion,
   AccordionContent,
@@ -6,35 +7,10 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-const faqs = [
-  {
-    question: "¿En qué canales pueden funcionar los chatbots?",
-    answer: "Nuestros chatbots operan en WhatsApp, Webchat, Instagram, Facebook Messenger, Telegram y aplicaciones móviles nativas. Todos los canales comparten la misma lógica conversacional para una experiencia unificada.",
-  },
-  {
-    question: "¿Cuánto tiempo toma implementar una solución?",
-    answer: "Dependiendo de la complejidad, un chatbot puede estar en producción en 4 a 8 semanas. Proyectos con agentes de IA o integraciones avanzadas pueden tomar entre 8 y 12 semanas.",
-  },
-  {
-    question: "¿Qué tipo de inteligencia artificial utilizan?",
-    answer: "Trabajamos con modelos de lenguaje de última generación (LLMs), procesamiento de lenguaje natural (NLP) y agentes autónomos que se integran con las APIs y sistemas de tu empresa.",
-  },
-  {
-    question: "¿Puedo integrar el chatbot con mi CRM o ERP?",
-    answer: "Sí. Diseñamos integraciones con sistemas como Salesforce, HubSpot, SAP y cualquier plataforma que exponga APIs REST o webhooks.",
-  },
-  {
-    question: "¿Cómo miden el éxito de una implementación?",
-    answer: "Definimos KPIs desde el inicio: tasa de resolución autónoma, NPS, tiempo de respuesta, conversión y reducción de carga operativa. Iteramos en base a datos reales.",
-  },
-  {
-    question: "¿Ofrecen soporte y mejora continua después del lanzamiento?",
-    answer: "Sí. Ofrecemos planes de mejora continua que incluyen monitoreo, análisis de conversaciones, reentrenamiento de modelos y evolución del canal.",
-  },
-];
-
 const FAQSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const faqs = t.faq.items;
 
   return (
     <section
@@ -44,10 +20,10 @@ const FAQSection = () => {
       <div className="container max-w-3xl">
         <div className="text-center mb-14">
           <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-            FAQ
+            {t.faq.eyebrow}
           </p>
           <h2 className="font-heading font-bold text-3xl md:text-4xl">
-            Preguntas frecuentes
+            {t.faq.title}
           </h2>
         </div>
 

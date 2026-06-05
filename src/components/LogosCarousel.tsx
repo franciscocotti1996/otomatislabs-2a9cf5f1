@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/i18n/LanguageContext";
 import bullMarket from "@/assets/logos/bull-market.png";
 import capitalMarkets from "@/assets/logos/capital-markets.png";
 import inviu from "@/assets/logos/inviu.png";
@@ -41,6 +42,7 @@ const LogoItem = ({ logo }: { logo: Logo }) => {
 
 const LogosCarousel = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
 
   return (
     <section
@@ -49,7 +51,7 @@ const LogosCarousel = () => {
     >
       <div className="container mb-6">
         <p className="text-center text-sm text-muted-foreground font-medium font-heading uppercase tracking-wide">
-          Empresas que confían en nosotros
+          {t.logos.trust}
         </p>
       </div>
 

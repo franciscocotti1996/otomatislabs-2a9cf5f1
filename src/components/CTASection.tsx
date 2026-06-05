@@ -8,29 +8,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const contactSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, { message: "Ingresá tu nombre" })
-    .max(100, { message: "Máximo 100 caracteres" }),
-  company: z
-    .string()
-    .trim()
-    .min(2, { message: "Ingresá tu empresa" })
-    .max(120, { message: "Máximo 120 caracteres" }),
-  comments: z
-    .string()
-    .trim()
-    .min(5, { message: "Contanos un poco más" })
-    .max(1000, { message: "Máximo 1000 caracteres" }),
-});
-
-type ContactValues = z.infer<typeof contactSchema>;
+type ContactValues = { name: string; company: string; comments: string };
 
 const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const contactSchema = z.object({
+    name: z.string().trim().min(2, { message: t.cta.err.name }).max(100, { message: t.cta.err.nameMax }),
+    company: z.string().trim().min(2, { message: t.cta.err.company }).max(120, { message: t.cta.err.companyMax }),
+    comments: z.string().trim().min(5, { message: t.cta.err.comments }).max(1000, { message: t.cta.err.commentsMax }),
+  });
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
@@ -67,15 +56,15 @@ const CTASection = () => {
       if (error) throw error;
       setLastSubmissionId(submissionId);
       toast({
-        title: "¡Mensaje enviado!",
-        description: `Te respondemos a la brevedad. ID de seguimiento: ${submissionId}`,
+        title: t.cta.successTitle,
+        description: `${t.cta.successDesc} ${submissionId}`,
       });
       setValues({ name: "", company: "", comments: "" });
     } catch (err) {
       console.error(err);
       toast({
-        title: "No pudimos enviar tu mensaje",
-        description: "Por favor intentá nuevamente en unos minutos.",
+        title: t.cta.errorTitle,
+        description: t.cta.errorDesc,
         variant: "destructive",
       });
     } finally {
@@ -99,12 +88,10 @@ const CTASection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 p-8 md:p-12 lg:p-16 relative z-10">
             <div>
               <h2 className="font-heading font-bold text-3xl md:text-4xl text-primary-foreground mb-4">
-                ¿Listo para automatizar tu negocio?
+                {t.cta.title}
               </h2>
               <p className="text-primary-foreground/70 max-w-lg leading-relaxed">
-                Contanos sobre tu proyecto y nuestro equipo se pondrá en contacto a la brevedad
-                para conversar cómo los chatbots y agentes de IA pueden transformar la relación
-                con tus clientes.
+                {t.cta.sub}
               </p>
             </div>
 
@@ -115,7 +102,7 @@ const CTASection = () => {
             >
               <div className="space-y-2">
                 <Label htmlFor="contact-name" className="font-heading">
-                  Nombre
+                  {t.cta.name}
                 </Label>
                 <Input
                   id="contact-name"
@@ -125,7 +112,7 @@ const CTASection = () => {
                   onChange={handleChange("name")}
                   maxLength={100}
                   aria-invalid={!!errors.name}
-                  placeholder="Tu nombre"
+                  placeholder={t.cta.namePh}
                 />
                 {errors.name && (
                   <p className="text-sm text-destructive">{errors.name}</p>
@@ -134,7 +121,7 @@ const CTASection = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="contact-company" className="font-heading">
-                  Empresa
+                  {t.cta.company}
                 </Label>
                 <Input
                   id="contact-company"
@@ -144,7 +131,7 @@ const CTASection = () => {
                   onChange={handleChange("company")}
                   maxLength={120}
                   aria-invalid={!!errors.company}
-                  placeholder="Nombre de tu empresa"
+                  placeholder={t.cta.companyPh}
                 />
                 {errors.company && (
                   <p className="text-sm text-destructive">{errors.company}</p>
@@ -153,7 +140,7 @@ const CTASection = () => {
 
               <div className="space-y-2">
                 <Label htmlFor="contact-comments" className="font-heading">
-                  Comentarios
+                  {t.cta.comments}
                 </Label>
                 <Textarea
                   id="contact-comments"
@@ -163,7 +150,7 @@ const CTASection = () => {
                   maxLength={1000}
                   rows={5}
                   aria-invalid={!!errors.comments}
-                  placeholder="Contanos brevemente qué necesitás"
+                  placeholder={t.cta.commentsPh}
                 />
                 {errors.comments && (
                   <p className="text-sm text-destructive">{errors.comments}</p>
@@ -178,11 +165,11 @@ const CTASection = () => {
               >
                 {submitting ? (
                   <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> Enviando...
+                    <Loader2 className="w-4 h-4 animate-spin" /> {t.cta.sending}
                   </>
                 ) : (
                   <>
-                    Enviar mensaje <Send className="w-4 h-4" />
+                    {t.cta.send} <Send className="w-4 h-4" />
                   </>
                 )}
               </Button>
@@ -194,10 +181,10 @@ const CTASection = () => {
                   className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm"
                 >
                   <p className="font-heading font-semibold text-foreground">
-                    ¡Mensaje enviado con éxito!
+                    {t.cta.successBoxTitle}
                   </p>
                   <p className="text-muted-foreground mt-1">
-                    Guardá tu ID de seguimiento:{" "}
+                    {t.cta.successBoxDesc}{" "}
                     <span className="font-mono font-semibold text-foreground">
                       {lastSubmissionId}
                     </span>

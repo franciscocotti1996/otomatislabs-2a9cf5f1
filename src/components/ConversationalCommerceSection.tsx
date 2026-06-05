@@ -13,66 +13,19 @@ import {
   MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const WHATSAPP_URL =
   "https://wa.me/5491100000000?text=Hola%2C%20quiero%20hablar%20sobre%20conversational%20commerce";
 
-const cycle = [
-  {
-    title: "Marketing",
-    description:
-      "Campañas y captación que inician la conversación en el canal correcto.",
-    Icon: Megaphone,
-  },
-  {
-    title: "Commerce",
-    description:
-      "Catálogo, asesoramiento con IA, carrito y pago dentro del mismo chat.",
-    Icon: ShoppingBag,
-  },
-  {
-    title: "Care",
-    description:
-      "Postventa, soporte y fidelización en un solo hilo conversacional.",
-    Icon: HeartHandshake,
-  },
-];
-
-const aspects = [
-  {
-    title: "Funcionalidades del canal",
-    description: "Capacidades nativas de WhatsApp aplicadas a ventas.",
-    Icon: Layers,
-    cta: "Activar mi canal",
-  },
-  {
-    title: "Mensajería y publicidad",
-    description: "Click-to-chat, plantillas y campañas pagas integradas.",
-    Icon: MessageSquare,
-    cta: "Lanzar mi campaña",
-  },
-  {
-    title: "Medición e integración",
-    description: "Eventos, CRM y stack de datos conectados end-to-end.",
-    Icon: BarChart3,
-    cta: "Integrar mi stack",
-  },
-  {
-    title: "Estacionalidad y eventos",
-    description: "Picos de demanda y lanzamientos orquestados sin fricción.",
-    Icon: CalendarRange,
-    cta: "Planear mi evento",
-  },
-  {
-    title: "Modelo de atribución",
-    description: "Visibilidad real del aporte del canal al revenue.",
-    Icon: Target,
-    cta: "Medir mi revenue",
-  },
-];
+const CYCLE_ICONS = [Megaphone, ShoppingBag, HeartHandshake];
+const ASPECT_ICONS = [Layers, MessageSquare, BarChart3, CalendarRange, Target];
 
 const ConversationalCommerceSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
+  const cycle = t.cc.cycle.map((c, i) => ({ ...c, Icon: CYCLE_ICONS[i] }));
+  const aspects = t.cc.aspects.map((a, i) => ({ ...a, Icon: ASPECT_ICONS[i] }));
 
   return (
     <section
@@ -88,19 +41,18 @@ const ConversationalCommerceSection = () => {
       <div className="container px-4 sm:px-6">
         <div className="text-center mb-12 sm:mb-16 md:mb-20 max-w-3xl mx-auto">
           <p className="text-primary font-semibold text-xs sm:text-sm tracking-[0.2em] uppercase mb-3 sm:mb-4 font-heading">
-            Conversational Commerce
+            {t.cc.eyebrow}
           </p>
           <h2 className="font-heading font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight">
-            El ciclo del usuario es{" "}
-            <span className="text-gradient">conversacional</span>
+            {t.cc.titleA}{" "}
+            <span className="text-gradient">{t.cc.titleB}</span>
           </h2>
           <p className="mt-4 sm:mt-6 text-muted-foreground text-base sm:text-lg md:text-xl leading-relaxed">
-            Unificamos{" "}
+            {t.cc.sub}{" "}
             <span className="text-foreground font-semibold">
-              marketing, ventas y atención
+              {t.cc.subHighlight}
             </span>{" "}
-            en un único canal: del primer mensaje a la recompra, sin saltos
-            entre apps ni equipos.
+            {t.cc.subEnd}
           </p>
         </div>
 
@@ -139,8 +91,8 @@ const ConversationalCommerceSection = () => {
         <div className="mt-16 sm:mt-20 md:mt-28 lg:mt-32">
           <div className="text-center mb-10 sm:mb-12 md:mb-14 max-w-2xl mx-auto">
             <h3 className="font-heading font-bold text-2xl sm:text-3xl md:text-4xl leading-tight tracking-tight">
-              Aspectos a desarrollar para usar{" "}
-              <span className="text-gradient">WhatsApp como canal de ventas</span>
+              {t.cc.aspectsTitleA}{" "}
+              <span className="text-gradient">{t.cc.aspectsTitleB}</span>
             </h3>
           </div>
 
@@ -163,7 +115,7 @@ const ConversationalCommerceSection = () => {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${a.cta} por WhatsApp`}
+                  aria-label={`${a.cta} ${t.cc.waAria}`}
                   className="mt-4 sm:mt-5 inline-flex items-center justify-center gap-1.5 rounded-full border border-primary/30 bg-primary/5 px-3.5 py-2 text-xs font-heading font-semibold text-primary transition-colors hover:bg-primary hover:text-primary-foreground hover:border-primary"
                 >
                   <MessageCircle className="w-3.5 h-3.5" strokeWidth={2.25} />
@@ -181,7 +133,7 @@ const ConversationalCommerceSection = () => {
             className="font-heading font-semibold rounded-full w-full sm:w-auto"
           >
             <a href="#contacto">
-              Hablemos de tu caso
+              {t.cc.ctaButton}
               <ArrowRight className="ml-1.5 w-4 h-4" />
             </a>
           </Button>
