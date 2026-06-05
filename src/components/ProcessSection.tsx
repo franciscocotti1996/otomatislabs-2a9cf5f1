@@ -10,6 +10,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/i18n/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -19,63 +20,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-const steps = [
-  {
-    number: "01",
-    title: "Discovery",
-    description:
-      "Entendemos tu negocio, definimos objetivos y priorizamos casos de uso de alto impacto.",
-    Icon: Search,
-    deliverables: [
-      "Workshop de descubrimiento con stakeholders",
-      "Mapa de casos de uso priorizados",
-      "Definición de KPIs y métricas de éxito",
-      "Roadmap inicial y estimación de esfuerzo",
-    ],
-  },
-  {
-    number: "02",
-    title: "Diseño",
-    description:
-      "Diseñamos la experiencia conversacional y la arquitectura técnica del canal.",
-    Icon: PenLine,
-    deliverables: [
-      "Flujos conversacionales y guion del bot",
-      "Arquitectura técnica e integraciones",
-      "Prototipo navegable del canal",
-      "Plan de pruebas y criterios de aceptación",
-    ],
-  },
-  {
-    number: "03",
-    title: "Desarrollo e Implementación",
-    description:
-      "Construimos, integramos y ponemos en producción soluciones listas para operar a escala.",
-    Icon: Cpu,
-    deliverables: [
-      "Canal desplegado en producción",
-      "Integraciones con CRM, ERP y APIs internas",
-      "Panel de monitoreo y observabilidad",
-      "Documentación técnica y handover",
-    ],
-  },
-  {
-    number: "04",
-    title: "Growth y Mejora continua",
-    description:
-      "Medimos, iteramos y evolucionamos el canal en función de datos reales.",
-    Icon: TrendingUp,
-    deliverables: [
-      "Reportes mensuales de performance",
-      "Optimización continua de flujos e IA",
-      "Nuevos casos de uso e iteraciones",
-      "Revisiones estratégicas trimestrales",
-    ],
-  },
-];
+const STEP_ICONS = [Search, PenLine, Cpu, TrendingUp];
+const STEP_NUMBERS = ["01", "02", "03", "04"];
 
 const ProcessSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
+  const { t } = useLanguage();
+  const steps = t.process.steps.map((s, i) => ({
+    ...s,
+    Icon: STEP_ICONS[i],
+    number: STEP_NUMBERS[i],
+  }));
 
   return (
     <section
@@ -91,18 +46,18 @@ const ProcessSection = () => {
       <div className="container">
         <div className="text-center mb-14 md:mb-16 max-w-3xl mx-auto">
           <p className="text-primary font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-            Proceso
+            {t.process.eyebrow}
           </p>
           <h2 className="font-heading font-bold text-3xl md:text-5xl leading-tight">
-            Un proceso probado para entornos{" "}
-            <span className="text-gradient">de alta complejidad</span>
+            {t.process.titleA}{" "}
+            <span className="text-gradient">{t.process.titleB}</span>
           </h2>
           <p className="mt-5 text-muted-foreground text-base md:text-lg">
-            Trabajamos con un enfoque iterativo que combina{" "}
+            {t.process.sub}{" "}
             <span className="text-foreground font-semibold">
-              estrategia, implementación y mejora continua
+              {t.process.subHighlight}
             </span>
-            , reduciendo riesgos y acelerando resultados.
+            {t.process.subEnd}
           </p>
         </div>
 
@@ -138,7 +93,7 @@ const ProcessSection = () => {
                       size="sm"
                       className="mt-3 text-primary hover:text-primary hover:bg-primary/10 font-heading font-medium group/btn"
                     >
-                      Ver entregables
+                      {t.process.seeDeliverables}
                       <ArrowRight className="ml-1 w-4 h-4 transition-transform group-hover/btn:translate-x-0.5" />
                     </Button>
                   </DialogTrigger>
@@ -158,7 +113,7 @@ const ProcessSection = () => {
                         </div>
                       </div>
                       <DialogDescription className="text-left pt-2">
-                        Entregables incluidos en esta etapa:
+                        {t.process.deliverablesHeader}
                       </DialogDescription>
                     </DialogHeader>
                     <ul className="mt-2 space-y-3">
@@ -192,7 +147,7 @@ const ProcessSection = () => {
           <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full border border-primary/30 bg-card shadow-sm">
             <RefreshCw className="w-4 h-4 text-primary" />
             <span className="font-heading font-semibold text-xs md:text-sm tracking-widest uppercase text-primary">
-              Ciclo iterativo continuo
+              {t.process.cycleBadge}
             </span>
           </div>
         </div>

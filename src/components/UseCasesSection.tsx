@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ShoppingCart, HeadphonesIcon, CalendarCheck, CreditCard, UserPlus, Truck, Check, Zap, AlertTriangle } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/i18n/LanguageContext";
 import {
   Dialog,
   DialogContent,
@@ -9,145 +10,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const useCases = [
-  {
-    icon: ShoppingCart,
-    title: "Ventas conversacionales",
-    description: "Agentes IA que asesoran, recomiendan productos y cierran ventas dentro del chat.",
-    benefit: "+30% conversión en WhatsApp",
-    problem:
-      "Los clientes abandonan la compra por falta de asesoramiento inmediato. El 70% de los carritos en e-commerce se pierde por dudas sin resolver.",
-    solution:
-      "Implementamos agentes IA que entienden la intención de compra, recomiendan productos del catálogo en tiempo real y guían todo el proceso de checkout sin que el cliente salga del chat.",
-    benefits: [
-      "Recomendaciones personalizadas basadas en preferencias del usuario",
-      "Carrito y checkout integrado dentro de WhatsApp",
-      "Recupero automático de carritos abandonados con seguimiento",
-      "Trazabilidad completa de cada venta con métricas en tiempo real",
-    ],
-    examples: [
-      "Tienda de moda: +35% de conversión en campañas de WhatsApp",
-      "Supermercado online: checkout conversacional con lista de compras",
-      "Electrónica: recomendación cruzada de accesorios por IA",
-    ],
-    integrations: ["WhatsApp Business API", "Shopify / VTEX / Tiendanube", "Mercado Pago / Stripe", "HubSpot / Salesforce"],
-  },
-  {
-    icon: HeadphonesIcon,
-    title: "Atención al cliente 24/7",
-    description: "Resolvemos consultas frecuentes al instante y derivamos solo lo crítico a un humano.",
-    benefit: "-40% consultas repetitivas",
-    problem:
-      "El equipo de soporte se satura con preguntas repetitivas sobre horarios, precios y políticas. Los clientes esperan horas por respuestas simples.",
-    solution:
-      "Desplegamos IA generativa entrenada con tu base de conocimiento para responder al instante. Lo que requiere intervención humana se deriva con todo el contexto al agente correcto.",
-    benefits: [
-      "Respuesta inmediata 24/7 en todos los canales (WhatsApp, web, Instagram)",
-      "Hand-off al humano con historial completo de la conversación",
-      "Reducción drástica de tickets repetitivos en el help desk",
-      "Mejora continua del bot basada en métricas de satisfacción",
-    ],
-    examples: [
-      "Clínica médica: turnos, prepagas y coberturas resueltos por IA",
-      "EdTech: consultas sobre cursos, precios y contenido automatizadas",
-      "Gimnasio: horarios, planes y reservas gestionadas sin operador",
-    ],
-    integrations: ["Zendesk / Freshdesk", "Intercom", "Notion / Confluence (KB)", "Slack / Teams"],
-  },
-  {
-    icon: CalendarCheck,
-    title: "Gestión de turnos y reservas",
-    description: "Reservas, recordatorios y confirmaciones automatizadas desde el canal favorito del cliente.",
-    benefit: "-60% ausencias",
-    problem:
-      "Las ausencias y cancelaciones de último momento dejan huecos improductivos. Los clientes olvidan sus turnos y no hay sistema de recordatorio efectivo.",
-    solution:
-      "El cliente reserva, reprograma o cancela su turno en segundos vía chat conversacional. Enviamos recordatorios automáticos con confirmación y sincronizamos con tu calendario en tiempo real.",
-    benefits: [
-      "Reservas conversacionales sin formularios ni apps adicionales",
-      "Recordatorios automáticos con confirmación por parte del cliente",
-      "Reprogramación o cancelación en un solo clic desde el chat",
-      "Sincronización bidireccional con tu agenda y calendario",
-    ],
-    examples: [
-      "Consultorio médico: reservas 24/7 con recordatorios vía WhatsApp",
-      "Estética y spa: agenda completa gestionada por IA",
-      "Restaurante: reservas de mesa con confirmación automática",
-    ],
-    integrations: ["Google Calendar / Outlook", "Calendly", "Sistemas de turnos propios vía API"],
-  },
-  {
-    icon: CreditCard,
-    title: "Cobranzas inteligentes",
-    description: "Recordatorios de pago contextualizados, links de pago y conciliación dentro del chat.",
-    benefit: "+25% recupero",
-    problem:
-      "Las cobranzas tradicionales generan fricción con el cliente. Los recordatorios genéricos no se personalizan y los links de pago se pierden en el spam.",
-    solution:
-      "Segmentamos por comportamiento de pago y enviamos recordatorios con el tono adecuado para cada cliente. Generamos links de pago dinámicos y conciliamos automáticamente al confirmar.",
-    benefits: [
-      "Segmentación inteligente de morosidad por perfil de cliente",
-      "Links de pago personalizados con montos y vencimientos",
-      "Conciliación automática en el chat al recibir la confirmación",
-      "Reportes en tiempo real de recupero y cartera",
-    ],
-    examples: [
-      "Fintech: recupero de préstamos con planes de pago conversacionales",
-      "Servicios de suscripción: renovaciones automatizadas con descuentos",
-      "Colegios: cobro de cuotas con recordatorios personalizados a padres",
-    ],
-    integrations: ["Mercado Pago / Stripe / dLocal", "ERP / Core bancario", "Google Sheets / BI"],
-  },
-  {
-    icon: UserPlus,
-    title: "Onboarding y calificación de leads",
-    description: "Capturamos, calificamos y nutrimos leads automáticamente antes de pasarlos a ventas.",
-    benefit: "Leads listos para vender",
-    problem:
-      "El 80% de los leads que llegan no están calificados. Ventas pierde tiempo en seguimientos fríos y oportunidades reales se escapan por falta de velocidad.",
-    solution:
-      "Cada lead que entra es recibido por un agente IA que califica con preguntas inteligentes, asigna un score y enriquece el perfil antes de pasarlo al equipo de ventas con todo el contexto.",
-    benefits: [
-      "Captura multicanal desde web, ads y redes sociales",
-      "Calificación BANT/SQL automatizada en la conversación",
-      "Asignación inteligente al vendedor según región o producto",
-      "Nurturing automático del lead frío con seguimiento programado",
-    ],
-    examples: [
-      "Inmobiliaria: calificación de compradores con presupuesto y zona",
-      "Seguros: cotización conversacional con asesoramiento de coberturas",
-      "Agencia de viajes: armado de itinerario según preferencias del lead",
-    ],
-    integrations: ["HubSpot / Salesforce / Pipedrive", "Meta Ads / Google Ads", "Webhooks y APIs propias"],
-  },
-  {
-    icon: Truck,
-    title: "Logística y postventa",
-    description: "Seguimiento de pedidos, gestión de cambios y encuestas de satisfacción sin fricción.",
-    benefit: "NPS más alto",
-    problem:
-      "Los clientes consultan repetidamente el estado de sus pedidos saturando al equipo. Los cambios y devoluciones son lentos y las encuestas de NPS tienen baja respuesta.",
-    solution:
-      "Tus clientes consultan el estado de su pedido, gestionan cambios o devoluciones y completan encuestas NPS directamente en el chat, sin esperar a un operador humano.",
-    benefits: [
-      "Tracking de envíos en tiempo real con respuesta conversacional",
-      "Gestión completa de cambios y devoluciones desde el chat",
-      "Encuestas NPS automáticas tras la entrega",
-      "Detección temprana de incidencias con alertas proactivas",
-    ],
-    examples: [
-      "E-commerce de indumentaria: tracking y cambios vía WhatsApp",
-      "Farmacia online: seguimiento de recetas y entregas programadas",
-      "Mueblería: coordinación de entrega con reprogramación por chat",
-    ],
-    integrations: ["ERP / WMS", "Couriers (Andreani, DHL, OCA)", "Typeform / Encuestas propias"],
-  },
-];
-
-type UseCase = (typeof useCases)[number];
+const USE_CASE_ICONS = [ShoppingCart, HeadphonesIcon, CalendarCheck, CreditCard, UserPlus, Truck];
 
 const UseCasesSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const useCases = t.useCases.items.map((it, i) => ({ ...it, icon: USE_CASE_ICONS[i] }));
+  type UseCase = (typeof useCases)[number];
   const [selected, setSelected] = useState<UseCase | null>(null);
 
   return (
@@ -159,13 +28,13 @@ const UseCasesSection = () => {
       <div className="container">
         <div className="text-center mb-14">
           <p className="text-teal-light font-semibold text-sm tracking-wide uppercase mb-3 font-heading">
-            Casos de uso
+            {t.useCases.eyebrow}
           </p>
           <h2 className="font-heading font-bold text-3xl md:text-4xl max-w-2xl mx-auto text-primary-foreground">
-            Agentes IA y chatbots multicanal en acción
+            {t.useCases.title}
           </h2>
           <p className="text-primary-foreground/70 max-w-2xl mx-auto mt-4 text-base md:text-lg">
-            Soluciones concretas que automatizan procesos y generan impacto medible en tu negocio.
+            {t.useCases.sub}
           </p>
         </div>
 
@@ -190,7 +59,7 @@ const UseCasesSection = () => {
                 {useCase.benefit}
               </div>
               <span className="mt-4 text-xs font-semibold text-teal-light/80 group-hover:text-teal-light transition-colors">
-                Ver detalles →
+                {t.useCases.seeMore}
               </span>
             </button>
           ))}
@@ -217,7 +86,7 @@ const UseCasesSection = () => {
                 <div>
                   <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
                     <AlertTriangle className="w-4 h-4 text-amber-500" />
-                    El problema
+                    {t.useCases.problem}
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{selected.problem}</p>
                 </div>
@@ -225,7 +94,7 @@ const UseCasesSection = () => {
                 <div>
                   <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-2 flex items-center gap-2">
                     <Zap className="w-4 h-4 text-primary" />
-                    La solución
+                    {t.useCases.solution}
                   </h4>
                   <p className="text-sm text-muted-foreground leading-relaxed">{selected.solution}</p>
                 </div>
@@ -233,10 +102,10 @@ const UseCasesSection = () => {
                 <div>
                   <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3 flex items-center gap-2">
                     <Check className="w-4 h-4 text-primary" />
-                    Beneficios clave
+                    {t.useCases.benefits}
                   </h4>
                   <ul className="space-y-2">
-                    {selected.benefits.map((b) => (
+                    {selected.benefitsList.map((b) => (
                       <li key={b} className="flex items-start gap-2 text-sm text-muted-foreground">
                         <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
                         <span>{b}</span>
@@ -247,7 +116,7 @@ const UseCasesSection = () => {
 
                 <div>
                   <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
-                    Casos reales
+                    {t.useCases.realCases}
                   </h4>
                   <ul className="space-y-2">
                     {selected.examples.map((ex) => (
@@ -261,7 +130,7 @@ const UseCasesSection = () => {
 
                 <div>
                   <h4 className="font-heading font-semibold text-sm uppercase tracking-wide text-foreground mb-3">
-                    Integraciones disponibles
+                    {t.useCases.integrations}
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {selected.integrations.map((i) => (

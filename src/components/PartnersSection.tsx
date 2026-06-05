@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ShieldCheck, MessageCircle, Bot } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { useLanguage } from "@/i18n/LanguageContext";
 import metaLogo from "@/assets/logos/meta.png";
 import botmakerLogo from "@/assets/logos/botmaker.png";
 
@@ -10,11 +11,6 @@ type Partner = {
   src?: string;
   Icon: React.ComponentType<{ className?: string }>;
 };
-
-const partners: Partner[] = [
-  { name: "Meta", tag: "WhatsApp Business Partner", src: metaLogo, Icon: MessageCircle },
-  { name: "Botmaker", tag: "Official Partner", src: botmakerLogo, Icon: Bot },
-];
 
 const PartnerCard = ({ partner }: { partner: Partner }) => {
   const [errored, setErrored] = useState(false);
@@ -44,6 +40,11 @@ const PartnerCard = ({ partner }: { partner: Partner }) => {
 
 const PartnersSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const partners: Partner[] = [
+    { name: "Meta", tag: t.partners.meta, src: metaLogo, Icon: MessageCircle },
+    { name: "Botmaker", tag: t.partners.botmaker, src: botmakerLogo, Icon: Bot },
+  ];
   return (
     <section
       ref={ref}
@@ -53,10 +54,10 @@ const PartnersSection = () => {
         <div className="flex flex-col items-center text-center gap-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1.5 text-xs font-medium text-primary">
             <ShieldCheck className="h-4 w-4" />
-            Partners oficiales
+            {t.partners.badge}
           </div>
           <h2 className="font-heading text-2xl md:text-3xl font-bold max-w-2xl">
-            Somos partners oficiales de las plataformas líderes en mensajería y automatización
+            {t.partners.title}
           </h2>
           <div className="flex flex-wrap justify-center gap-4 mt-4">
             {partners.map((p) => (

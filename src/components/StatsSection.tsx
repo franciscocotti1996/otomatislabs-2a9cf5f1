@@ -1,13 +1,10 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
-
-const stats = [
-  { value: "+100K", label: "conversaciones gestionadas", highlight: "por mes" },
-  { value: "+30", label: "chatbots productivos en operación", highlight: "" },
-  { value: "8+", label: "años impulsando soluciones", highlight: "" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const StatsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
+  const { t } = useLanguage();
+  const stats = t.stats;
 
   return (
     <section ref={ref} className={`py-16 bg-gradient-hero transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>

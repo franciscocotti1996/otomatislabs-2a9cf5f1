@@ -1,15 +1,17 @@
 import { useState } from "react";
 import logoHorizontal from "@/assets/logo-horizontal.png";
-import { Menu, X } from "lucide-react";
-
-const navLinks = [
-  { label: "Servicios", href: "#servicios" },
-  { label: "Por qué nosotros", href: "#diferencial" },
-  { label: "Proceso", href: "#proceso" },
-];
+import { Menu, X, Languages } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const { t, toggle, lang } = useLanguage();
+
+  const navLinks = [
+    { label: t.nav.services, href: "#servicios" },
+    { label: t.nav.why, href: "#diferencial" },
+    { label: t.nav.process, href: "#proceso" },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border/50">
@@ -29,18 +31,36 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
+          <button
+            onClick={toggle}
+            aria-label={t.nav.langAria}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            <Languages className="w-4 h-4" />
+            {t.nav.langLabel}
+          </button>
           <a
             href="#contacto"
             className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
           >
-            Contactar
+            {t.nav.contact}
           </a>
         </div>
 
         {/* Mobile toggle */}
-        <button className="md:hidden p-2" onClick={() => setOpen(!open)}>
-          {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="md:hidden flex items-center gap-1">
+          <button
+            onClick={toggle}
+            aria-label={t.nav.langAria}
+            className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border text-xs font-semibold"
+          >
+            <Languages className="w-3.5 h-3.5" />
+            {t.nav.langLabel}
+          </button>
+          <button className="p-2" onClick={() => setOpen(!open)} aria-label="Menu">
+            {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
@@ -61,7 +81,7 @@ const Navbar = () => {
             onClick={() => setOpen(false)}
             className="block px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold text-center"
           >
-            Contactar
+            {t.nav.contact}
           </a>
         </div>
       )}
