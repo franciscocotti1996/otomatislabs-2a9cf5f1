@@ -41,8 +41,18 @@ const HeroSection = () => {
               {t.hero.subtitle}
             </p>
 
+            {/* CTA Button */}
+            <div className="max-w-4xl mx-auto lg:mx-0 mb-8">
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+              >
+                {t.hero.cta}
+              </a>
+            </div>
+
             {/* Channel icons */}
-            <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap">
+            <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap max-w-4xl mx-auto lg:mx-0">
               {channels.map(({ icon: Icon, label }) => (
                 <div key={label} className="flex items-center gap-2 text-muted-foreground">
                   <Icon className="w-5 h-5" />

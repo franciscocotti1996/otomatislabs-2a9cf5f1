@@ -17,6 +17,7 @@ const es = {
     subtitle:
       "En Otomatis Labs desarrollamos tecnologías de chatbots de vanguardia que permiten a las empresas automatizar interacciones y mejorar sus servicios.",
     imgAlt: "Profesional usando chatbot en smartphone",
+    cta: "Contactar",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat en App", ig: "Instagram", msg: "Messenger" },
   },
   logos: { trust: "Empresas que confían en nosotros" },
@@ -332,6 +333,7 @@ const en: typeof es = {
     subtitle:
       "At Otomatis Labs we develop cutting-edge chatbot technologies that allow companies to automate interactions and improve their services.",
     imgAlt: "Professional using a chatbot on a smartphone",
+    cta: "Contact us",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat in App", ig: "Instagram", msg: "Messenger" },
   },
   logos: { trust: "Companies that trust us" },
