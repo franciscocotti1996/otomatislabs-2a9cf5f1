@@ -6,8 +6,8 @@ const es = {
     why: "Por qué nosotros",
     process: "Proceso",
     contact: "Contactar",
-    langLabel: "EN",
-    langAria: "Switch to English",
+    langLabel: "ES",
+    langAria: "Idioma actual: Español. Cambiar a Inglés",
   },
   hero: {
     badge: "Chatbots & Agentes de IA",
@@ -321,8 +321,8 @@ const en: typeof es = {
     why: "Why us",
     process: "Process",
     contact: "Contact",
-    langLabel: "ES",
-    langAria: "Cambiar a Español",
+    langLabel: "EN",
+    langAria: "Current language: English. Switch to Spanish",
   },
   hero: {
     badge: "Chatbots & AI Agents",

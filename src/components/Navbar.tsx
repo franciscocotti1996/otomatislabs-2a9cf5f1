@@ -37,7 +37,7 @@ const Navbar = () => {
             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
           >
             <span className="text-base leading-none" aria-hidden="true">
-              {lang === "es" ? "🇺🇸" : "🇪🇸"}
+              {lang === "es" ? "🇪🇸" : "🇺🇸"}
             </span>
             {t.nav.langLabel}
           </button>
@@ -57,7 +57,7 @@ const Navbar = () => {
             className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border text-xs font-semibold"
           >
             <span className="text-sm leading-none" aria-hidden="true">
-              {lang === "es" ? "🇺🇸" : "🇪🇸"}
+              {lang === "es" ? "🇪🇸" : "🇺🇸"}
             </span>
             {t.nav.langLabel}
           </button>
