@@ -45,31 +45,83 @@ const AIAgentsSection = () => {
           </p>
         </div>
 
-        {/* Central definition card */}
-        <div className="max-w-3xl mx-auto mb-14">
-          <div className="glass-card rounded-2xl p-8 md:p-10 border border-primary/20 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
-            <div className="relative">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-primary" />
+        {/* Central definition card — creative split layout */}
+        <div className="max-w-4xl mx-auto mb-14">
+          <div className="glass-card rounded-2xl md:rounded-[2rem] border border-primary/20 relative overflow-hidden">
+            <div className="flex flex-col md:flex-row">
+              {/* Content side */}
+              <div className="md:w-3/5 p-8 md:p-10 lg:p-12 relative">
+                <div className="absolute top-0 right-0 w-48 h-48 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-primary/10 rounded-full mb-5">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <span className="text-primary font-heading font-semibold text-[10px] uppercase tracking-widest">
+                      {t.aiAgents.eyebrow}
+                    </span>
+                  </div>
+                  <h3 className="font-heading font-bold text-xl md:text-2xl lg:text-[1.65rem] leading-tight mb-4">
+                    {t.aiAgents.definition.title}
+                  </h3>
+                  <p className="text-muted-foreground text-base md:text-[0.97rem] leading-relaxed mb-8">
+                    {t.aiAgents.definition.body}
+                  </p>
+
+                  {/* Benefit micro-cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[
+                      { icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" /></svg>, label: t.aiAgents.definition.tags[0] },
+                      { icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" /></svg>, label: t.aiAgents.definition.tags[1] },
+                      { icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" /></svg>, label: t.aiAgents.definition.tags[2] },
+                      { icon: <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, label: t.aiAgents.definition.tags[3] },
+                    ].map((item) => (
+                      <div
+                        key={item.label}
+                        className="flex items-center gap-3 p-3 rounded-xl bg-background/50 border border-primary/10 hover:border-primary/30 transition-colors group/item"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary group-hover/item:bg-primary/20 transition-colors shrink-0">
+                          {item.icon}
+                        </div>
+                        <span className="text-sm font-medium text-foreground/90 leading-snug">
+                          {item.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-                <h3 className="font-heading font-bold text-xl md:text-2xl">
-                  {t.aiAgents.definition.title}
-                </h3>
               </div>
-              <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-4">
-                {t.aiAgents.definition.body}
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {t.aiAgents.definition.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20"
-                  >
-                    {tag}
-                  </span>
-                ))}
+
+              {/* Visual engine side */}
+              <div className="md:w-2/5 bg-[#041424] relative flex items-center justify-center min-h-[300px] md:min-h-full overflow-hidden">
+                {/* Orbital rings */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-40 h-40 rounded-full border border-primary/20 animate-[spin_12s_linear_infinite]" />
+                  <div className="absolute w-56 h-56 rounded-full border border-dashed border-primary/10 animate-[spin_18s_linear_infinite_reverse]" />
+                  <div className="absolute w-28 h-28 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: '3s' }} />
+                </div>
+                {/* Cross lines */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <div className="absolute w-[140%] h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent rotate-45" />
+                  <div className="absolute w-[140%] h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent -rotate-45" />
+                </div>
+                {/* Floating dots */}
+                <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse" />
+                <div className="absolute bottom-1/3 right-1/4 w-1 h-1 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: '0.7s' }} />
+                <div className="absolute top-2/3 left-1/2 w-1 h-1 rounded-full bg-white/20 animate-pulse" style={{ animationDelay: '1.2s' }} />
+
+                {/* Central core */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-primary to-primary/70 flex items-center justify-center shadow-[0_0_40px_rgba(46,169,152,0.35)]">
+                    <Brain className="w-10 h-10 text-white" />
+                  </div>
+                  <p className="mt-5 text-white/40 text-[10px] font-heading font-semibold tracking-[0.25em] uppercase">
+                    Inteligencia Activa
+                  </p>
+                  <div className="mt-2 flex gap-1">
+                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s' }} />
+                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s', animationDelay: '0.2s' }} />
+                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s', animationDelay: '0.4s' }} />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
