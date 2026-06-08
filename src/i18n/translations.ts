@@ -80,6 +80,9 @@ const es = {
     ctaButton: "Hablemos de tu caso",
     waAria: "por WhatsApp",
   },
+  floatingWhatsApp: {
+    aria: "Chatear por WhatsApp",
+  },
   process: {
     eyebrow: "Proceso",
     titleA: "Un proceso probado para entornos",
@@ -390,6 +393,9 @@ const en: typeof es = {
     ],
     ctaButton: "Let's talk about your case",
     waAria: "via WhatsApp",
+  },
+  floatingWhatsApp: {
+    aria: "Chat on WhatsApp",
   },
   process: {
     eyebrow: "Process",
