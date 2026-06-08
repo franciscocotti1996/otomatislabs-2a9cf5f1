@@ -21,12 +21,13 @@ const Navbar = () => {
 
   const navLinks = [
     { label: t.nav.services, href: "#servicios" },
+    { label: t.nav.agents, href: "#agentes-ia" },
     { label: t.nav.why, href: "#diferencial" },
     { label: t.nav.process, href: "#proceso" },
   ];
 
   useEffect(() => {
-    const ids = ["servicios", "diferencial", "proceso", "contacto"];
+    const ids = ["servicios", "agentes-ia", "diferencial", "proceso", "contacto"];
     const sections = ids
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => !!el);

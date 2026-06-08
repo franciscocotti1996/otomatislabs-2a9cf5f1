@@ -3,6 +3,7 @@ export type Lang = "es" | "en";
 const es = {
   nav: {
     services: "Servicios",
+    agents: "Agentes",
     why: "Por qué nosotros",
     process: "Proceso",
     contact: "Contactar",
@@ -365,6 +366,7 @@ const es = {
 const en: typeof es = {
   nav: {
     services: "Services",
+    agents: "Agents",
     why: "Why us",
     process: "Process",
     contact: "Contact",
