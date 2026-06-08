@@ -14,7 +14,9 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [lang, setLangState] = useState<Lang>(() => {
     if (typeof window === "undefined") return "es";
     const stored = window.localStorage.getItem("lang");
-    return stored === "en" || stored === "es" ? (stored as Lang) : "es";
+    if (stored === "en" || stored === "es") return stored as Lang;
+    const nav = (window.navigator.languages?.[0] || window.navigator.language || "es").toLowerCase();
+    return nav.startsWith("es") ? "es" : "en";
   });
 
   const setLang = (l: Lang) => {
