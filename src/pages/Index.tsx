@@ -1,4 +1,4 @@
-import Helmet from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
