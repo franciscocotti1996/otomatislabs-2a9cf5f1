@@ -46,6 +46,8 @@ const CTASection = () => {
     }
     setErrors({});
     setSubmitting(true);
+    setSubmitStatus("idle");
+    setLastSubmissionId(null);
     const submissionId = `OTL-${Date.now().toString(36).toUpperCase()}-${Math.random()
       .toString(36)
       .slice(2, 7)
@@ -56,6 +58,7 @@ const CTASection = () => {
       });
       if (error) throw error;
       setLastSubmissionId(submissionId);
+      setSubmitStatus("success");
       toast({
         title: t.cta.successTitle,
         description: `${t.cta.successDesc} ${submissionId}`,
@@ -63,6 +66,7 @@ const CTASection = () => {
       setValues({ name: "", company: "", comments: "" });
     } catch (err) {
       console.error(err);
+      setSubmitStatus("error");
       toast({
         title: t.cta.errorTitle,
         description: t.cta.errorDesc,
