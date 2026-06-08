@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
@@ -25,6 +25,16 @@ const CTASection = () => {
   const [submitting, setSubmitting] = useState(false);
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+  const successRef = useRef<HTMLDivElement>(null);
+  const errorRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (submitStatus === "success") {
+      successRef.current?.focus();
+    } else if (submitStatus === "error") {
+      errorRef.current?.focus();
+    }
+  }, [submitStatus]);
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -181,9 +191,11 @@ const CTASection = () => {
 
               {submitStatus === "success" && lastSubmissionId && (
                 <div
+                  ref={successRef}
+                  tabIndex={-1}
                   role="status"
                   aria-live="polite"
-                  className="rounded-lg border border-green-600/30 bg-green-50 p-4 text-sm"
+                  className="rounded-lg border border-green-600/30 bg-green-50 p-4 text-sm outline-none focus:ring-2 focus:ring-green-600/40"
                 >
                   <p className="font-heading font-semibold text-green-800">
                     {t.cta.successBoxTitle}
@@ -199,12 +211,14 @@ const CTASection = () => {
 
               {submitStatus === "error" && (
                 <div
+                  ref={errorRef}
+                  tabIndex={-1}
                   role="alert"
                   aria-live="assertive"
-                  className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm"
+                  className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm outline-none focus:ring-2 focus:ring-destructive/40"
                 >
                   <p className="font-heading font-semibold text-destructive">
-                    {t.cta.errorTitle}
+                    {t.cta.errorBoxTitle}
                   </p>
                   <p className="text-destructive/80 mt-1">
                     {t.cta.errorDesc}
