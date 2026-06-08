@@ -1,4 +1,5 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import { createContext, useContext, useEffect, type ReactNode } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { translations, type Lang, type Dict } from "./translations";
 import { getFormatters, type Formatters } from "./formatters";
 
@@ -13,24 +14,26 @@ type Ctx = {
 const LanguageContext = createContext<Ctx | null>(null);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "es";
-    const stored = window.localStorage.getItem("lang");
-    if (stored === "en" || stored === "es") return stored as Lang;
-    const nav = (window.navigator.languages?.[0] || window.navigator.language || "es").toLowerCase();
-    return nav.startsWith("es") ? "es" : "en";
-  });
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const lang: Lang = location.pathname.startsWith("/en") ? "en" : "es";
 
   const setLang = (l: Lang) => {
-    setLangState(l);
     if (typeof window !== "undefined") {
       window.localStorage.setItem("lang", l);
+    }
+    if (l !== lang) {
+      navigate(`/${l}${location.hash || ""}`, { replace: false });
     }
   };
 
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = lang;
+    }
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("lang", lang);
     }
   }, [lang]);
 
