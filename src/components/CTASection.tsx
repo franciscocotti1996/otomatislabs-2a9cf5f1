@@ -24,6 +24,7 @@ const CTASection = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
