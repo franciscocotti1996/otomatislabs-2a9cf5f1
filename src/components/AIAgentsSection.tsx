@@ -1,16 +1,22 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lucide-react";
+import { useState } from "react";
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
 
-const WHATSAPP_URL =
-  "https://wa.me/5491134213579?text=Hola%2C%20quiero%20solicitar%20una%20demo%20gratuita%20de%20agentes%20de%20IA";
+const WHATSAPP_PHONE = "5491134213579";
+const buildWhatsAppUrl = (message: string) =>
+  `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
 
 const AIAgentsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
   const { t } = useLanguage();
   const features = t.aiAgents.features.map((f, i) => ({ ...f, icon: FEATURE_ICONS[i] }));
+  const services = t.aiAgents.cta.services;
+  const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0].id);
+  const selectedService = services.find((s) => s.id === selectedServiceId) ?? services[0];
+  const whatsappUrl = buildWhatsAppUrl(selectedService.message);
 
   return (
     <section
@@ -95,8 +101,31 @@ const AIAgentsSection = () => {
               <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
                 {t.aiAgents.cta.body}
               </p>
+              <p className="text-sm font-medium mb-3 text-foreground/80">
+                {t.aiAgents.cta.servicePrompt}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-6">
+                {services.map((service) => {
+                  const isSelected = service.id === selectedServiceId;
+                  return (
+                    <button
+                      key={service.id}
+                      type="button"
+                      onClick={() => setSelectedServiceId(service.id)}
+                      aria-pressed={isSelected}
+                      className={`px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border transition-colors ${
+                        isSelected
+                          ? "bg-primary text-primary-foreground border-primary"
+                          : "bg-background/50 text-foreground/80 border-primary/20 hover:border-primary/50 hover:text-foreground"
+                      }`}
+                    >
+                      {service.label}
+                    </button>
+                  );
+                })}
+              </div>
               <a
-                href={WHATSAPP_URL}
+                href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
