@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import HeroServicesSection from "@/components/HeroServicesSection";
 import LogosCarousel from "@/components/LogosCarousel";
 import PartnersSection from "@/components/PartnersSection";
 import StatsSection from "@/components/StatsSection";
