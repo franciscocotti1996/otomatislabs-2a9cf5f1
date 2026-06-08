@@ -15,7 +15,7 @@ const es = {
     titleB: "chatbots multicanal",
     titleC: "potenciados por IA.",
     subtitle:
-      "En Otomatis Labs desarrollamos tecnologías de chatbots de vanguardia que permiten a las empresas automatizar interacciones y mejorar sus servicios.",
+      "En Otomatis Labs diseñamos chatbots multicanal y agentes de IA autónomos que automatizan atención, ventas y operaciones para que tu equipo se enfoque en lo que realmente importa.",
     imgAlt: "Profesional usando chatbot en smartphone",
     cta: "Contactar",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat en App", ig: "Instagram", msg: "Messenger" },
@@ -341,7 +341,7 @@ const en: typeof es = {
     titleB: "multichannel chatbots",
     titleC: "powered by AI.",
     subtitle:
-      "At Otomatis Labs we develop cutting-edge chatbot technologies that allow companies to automate interactions and improve their services.",
+      "At Otomatis Labs we design multichannel chatbots and autonomous AI agents that automate support, sales and operations so your team can focus on what really matters.",
     imgAlt: "Professional using a chatbot on a smartphone",
     cta: "Contact us",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat in App", ig: "Instagram", msg: "Messenger" },
