@@ -24,6 +24,7 @@ const CTASection = () => {
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
   const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
+  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -45,6 +46,8 @@ const CTASection = () => {
     }
     setErrors({});
     setSubmitting(true);
+    setSubmitStatus("idle");
+    setLastSubmissionId(null);
     const submissionId = `OTL-${Date.now().toString(36).toUpperCase()}-${Math.random()
       .toString(36)
       .slice(2, 7)
@@ -55,6 +58,7 @@ const CTASection = () => {
       });
       if (error) throw error;
       setLastSubmissionId(submissionId);
+      setSubmitStatus("success");
       toast({
         title: t.cta.successTitle,
         description: `${t.cta.successDesc} ${submissionId}`,
@@ -62,6 +66,7 @@ const CTASection = () => {
       setValues({ name: "", company: "", comments: "" });
     } catch (err) {
       console.error(err);
+      setSubmitStatus("error");
       toast({
         title: t.cta.errorTitle,
         description: t.cta.errorDesc,
@@ -174,20 +179,35 @@ const CTASection = () => {
                 )}
               </Button>
 
-              {lastSubmissionId && (
+              {submitStatus === "success" && lastSubmissionId && (
                 <div
                   role="status"
                   aria-live="polite"
-                  className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm"
+                  className="rounded-lg border border-green-600/30 bg-green-50 p-4 text-sm"
                 >
-                  <p className="font-heading font-semibold text-foreground">
+                  <p className="font-heading font-semibold text-green-800">
                     {t.cta.successBoxTitle}
                   </p>
-                  <p className="text-muted-foreground mt-1">
+                  <p className="text-green-700 mt-1">
                     {t.cta.successBoxDesc}{" "}
-                    <span className="font-mono font-semibold text-foreground">
+                    <span className="font-mono font-semibold text-green-900">
                       {lastSubmissionId}
                     </span>
+                  </p>
+                </div>
+              )}
+
+              {submitStatus === "error" && (
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm"
+                >
+                  <p className="font-heading font-semibold text-destructive">
+                    {t.cta.errorTitle}
+                  </p>
+                  <p className="text-destructive/80 mt-1">
+                    {t.cta.errorDesc}
                   </p>
                 </div>
               )}
