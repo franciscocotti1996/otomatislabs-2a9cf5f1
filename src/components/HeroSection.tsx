@@ -30,14 +30,14 @@ const HeroSection = () => {
             </div>
 
             {/* Headline */}
-            <h1 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl leading-tight mb-6">
+            <h1 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl leading-tight mb-6 max-w-4xl mx-auto lg:mx-0">
               {t.hero.titleA}{" "}
               <span className="text-gradient">{t.hero.titleB}</span>{" "}
               {t.hero.titleC}
             </h1>
 
             {/* Subtitle */}
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg max-w-4xl mx-auto lg:mx-0 mb-10 leading-relaxed">
               {t.hero.subtitle}
             </p>
 
