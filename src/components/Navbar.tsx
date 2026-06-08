@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logoHorizontal from "@/assets/logo-horizontal.png";
-import { Menu, X, Languages } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const Navbar = () => {
