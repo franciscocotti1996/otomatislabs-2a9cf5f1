@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet-async";
+import Helmet from "react-helmet-async";
 import { useLanguage } from "@/i18n/LanguageContext";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
@@ -8,6 +8,7 @@ import PartnersSection from "@/components/PartnersSection";
 import StatsSection from "@/components/StatsSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import AIAgentsSection from "@/components/AIAgentsSection";
+import AIAgentsFAQSection from "@/components/AIAgentsFAQSection";
 import ServicesSection from "@/components/ServicesSection";
 import ConversationalCommerceSection from "@/components/ConversationalCommerceSection";
 import ProcessSection from "@/components/ProcessSection";
