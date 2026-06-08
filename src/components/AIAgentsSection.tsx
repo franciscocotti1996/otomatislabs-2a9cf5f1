@@ -177,7 +177,7 @@ const AIAgentsSection = () => {
                     backgroundSize: "22px 22px",
                   }}
                 />
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
                 {/* Interactive node network */}
                 <div className="relative flex-1 flex items-center justify-center py-8">
@@ -215,24 +215,29 @@ const AIAgentsSection = () => {
                         </linearGradient>
                       </defs>
                       {nodes.map((node) => {
-                        const rad = (node.angle * Math.PI) / 180;
-                        const x = 130 + Math.cos(rad) * 100;
-                        const y = 130 + Math.sin(rad) * 100;
+                        const geom = NODE_GEOMETRY.find((g) => g.id === node.id)!;
                         const isActive = node.id === activeId;
+                        // Inactive lines: skip the dashFlow animation entirely — six infinite
+                        // animations on mobile is a wasted GPU/CPU budget.
+                        const lineAnim = isActive && animationsActive
+                          ? "dashFlow 1.2s linear infinite"
+                          : "none";
                         return (
                           <line
                             key={node.id}
                             x1="130"
                             y1="130"
-                            x2={x}
-                            y2={y}
+                            x2={geom.svgX}
+                            y2={geom.svgY}
                             stroke={isActive ? "url(#activeLine)" : "rgba(46,169,152,0.22)"}
                             strokeWidth={isActive ? 2 : 1}
                             strokeDasharray={isActive ? "6 4" : "2 5"}
                             strokeLinecap="round"
                             style={{
-                              animation: `dashFlow ${isActive ? "1.2s" : "6s"} linear infinite`,
-                              filter: isActive ? "drop-shadow(0 0 4px rgba(46,169,152,0.7))" : "none",
+                              animation: lineAnim,
+                              animationPlayState: playState,
+                              // drop-shadow filter is GPU-expensive on mobile — only on desktop.
+                              filter: isActive && !lite ? "drop-shadow(0 0 4px rgba(46,169,152,0.7))" : "none",
                               transition: "stroke-width 500ms cubic-bezier(0.34,1.56,0.64,1), stroke 400ms ease",
                             }}
                           />
@@ -240,7 +245,9 @@ const AIAgentsSection = () => {
                       })}
                       <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.15)" />
                       <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.08)" strokeDasharray="2 6" />
-                      {/* Data packet traveling along the active line */}
+                      {/* Data packet — SMIL <animate> is the cheapest moving-element option in SVG
+                          but still costs on low-end mobile. Render only while visible and not lite/reduced. */}
+                      {animationsActive && !lite && (
                       <circle key={`packet-${activeId}`} r="5" fill="url(#packetGlow)">
                         <animate
                           attributeName="cx"
@@ -268,24 +275,30 @@ const AIAgentsSection = () => {
                           repeatCount="indefinite"
                         />
                       </circle>
+                      )}
                     </svg>
 
                     {/* Central brain core */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
                       <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary/60 flex items-center justify-center shadow-[0_0_40px_rgba(46,169,152,0.45)] relative">
                         <Brain className="w-8 h-8 text-white" />
-                        <span className="absolute inset-0 rounded-2xl border border-primary/60 animate-ping" />
+                        {animationsActive && (
+                          <span className="absolute inset-0 rounded-2xl border border-primary/60 animate-ping" />
+                        )}
                       </div>
                     </div>
 
                     {/* Orbiting channel nodes */}
                     {nodes.map((node, idx) => {
-                      const rad = (node.angle * Math.PI) / 180;
-                      const x = 50 + Math.cos(rad) * 38.46;
-                      const y = 50 + Math.sin(rad) * 38.46;
+                      const geom = NODE_GEOMETRY.find((g) => g.id === node.id)!;
                       const isActive = node.id === activeId;
                       const isPinned = node.id === pinnedNode;
                       const Icon = node.icon;
+                      // Skip the floating idle animation in lite/reduced mode — six infinite
+                      // transform animations cost more than they're worth on weak hardware.
+                      const floatAnim = animationsActive && !lite
+                        ? `nodeFloat 4s ease-in-out ${idx * 0.4}s infinite`
+                        : "none";
                       return (
                         <button
                           key={node.id}
@@ -302,10 +315,12 @@ const AIAgentsSection = () => {
                           aria-label={node.label}
                           className="absolute group/node focus:outline-none"
                           style={{
-                            left: `${x}%`,
-                            top: `${y}%`,
-                            animation: `nodeFloat 4s ease-in-out ${idx * 0.4}s infinite`,
-                            willChange: "transform",
+                            left: `${geom.pctX}%`,
+                            top: `${geom.pctY}%`,
+                            animation: floatAnim,
+                            animationPlayState: playState,
+                            // willChange is a strong hint — apply only to the node currently animating.
+                            willChange: isActive ? "transform" : "auto",
                           }}
                         >
                           {/* Pulsing halo around active node */}
@@ -313,12 +328,21 @@ const AIAgentsSection = () => {
                             <>
                               <span
                                 className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl border-2 border-primary pointer-events-none"
-                                style={{ animation: "ringPulse 1.6s ease-out infinite" }}
+                                style={{
+                                  animation: "ringPulse 1.6s ease-out infinite",
+                                  animationPlayState: playState,
+                                }}
                               />
-                              <span
-                                className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl border-2 border-primary pointer-events-none"
-                                style={{ animation: "ringPulse 1.6s ease-out 0.8s infinite" }}
-                              />
+                              {/* Second halo layer only on desktop — doubles GPU work. */}
+                              {!lite && (
+                                <span
+                                  className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl border-2 border-primary pointer-events-none"
+                                  style={{
+                                    animation: "ringPulse 1.6s ease-out 0.8s infinite",
+                                    animationPlayState: playState,
+                                  }}
+                                />
+                              )}
                             </>
                           )}
                           {/* Click ripple */}
@@ -332,7 +356,7 @@ const AIAgentsSection = () => {
                           <div
                             className={`relative w-11 h-11 rounded-xl flex items-center justify-center border ${
                               isActive
-                                ? "bg-primary border-primary shadow-[0_0_24px_rgba(46,169,152,0.7)]"
+                                ? `bg-primary border-primary ${lite ? "" : "shadow-[0_0_24px_rgba(46,169,152,0.7)]"}`
                                 : "bg-[#0a2030] border-primary/30 hover:border-primary/70"
                             }`}
                             style={{
@@ -362,7 +386,10 @@ const AIAgentsSection = () => {
                 {/* Live activity feed */}
                 <div className="relative mx-5 mb-5 rounded-xl border border-primary/20 bg-black/30 backdrop-blur-sm p-3">
                   <div className="flex items-center gap-2 mb-1.5">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <span
+                      className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                      style={{ animationPlayState: playState }}
+                    />
                     <span className="text-[9px] font-heading font-bold tracking-[0.25em] uppercase text-primary">
                       Agente activo
                     </span>
@@ -371,7 +398,7 @@ const AIAgentsSection = () => {
                     key={feedIdx}
                     className="text-xs text-white/80 font-mono leading-snug animate-fade-in"
                   >
-                    {activityFeed[feedIdx]}
+                    {ACTIVITY_FEED[feedIdx]}
                   </p>
                 </div>
               </div>
