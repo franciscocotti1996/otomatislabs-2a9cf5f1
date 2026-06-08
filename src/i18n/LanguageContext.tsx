@@ -36,8 +36,10 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
   const toggle = () => setLang(lang === "es" ? "en" : "es");
 
+  const f = getFormatters(lang);
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang, toggle, t: translations[lang] }}>
+    <LanguageContext.Provider value={{ lang, setLang, toggle, t: translations[lang], f }}>
       {children}
     </LanguageContext.Provider>
   );
