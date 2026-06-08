@@ -338,8 +338,8 @@ const en: typeof es = {
     botmaker: "Official Partner",
   },
   stats: [
-    { value: "+100K", label: "conversations handled", highlight: "per month" },
-    { value: "+30", label: "production chatbots in operation", highlight: "" },
+    { value: "100K+", label: "conversations handled", highlight: "per month" },
+    { value: "30+", label: "chatbots running in production", highlight: "" },
     { value: "8+", label: "years driving solutions", highlight: "" },
   ],
   solutions: {
