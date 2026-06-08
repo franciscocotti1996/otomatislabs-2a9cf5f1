@@ -1,7 +1,8 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { MessageCircle, Mail, Database, ShoppingCart, Phone, Calendar } from "lucide-react";
+import { useState, useEffect } from "react";
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
 
@@ -17,6 +18,35 @@ const AIAgentsSection = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<string>(services[0].id);
   const selectedService = services.find((s) => s.id === selectedServiceId) ?? services[0];
   const whatsappUrl = buildWhatsAppUrl(selectedService.message);
+
+  // Interactive agent network
+  const nodes = [
+    { id: "wa", label: "WhatsApp", icon: MessageCircle, angle: -90 },
+    { id: "mail", label: "Email", icon: Mail, angle: -30 },
+    { id: "crm", label: "CRM", icon: Database, angle: 30 },
+    { id: "shop", label: "E-commerce", icon: ShoppingCart, angle: 90 },
+    { id: "call", label: "Llamadas", icon: Phone, angle: 150 },
+    { id: "cal", label: "Agenda", icon: Calendar, angle: 210 },
+  ];
+  const activityFeed = [
+    "→ Respondiendo consulta en WhatsApp",
+    "→ Actualizando contacto en CRM",
+    "→ Agendando reunión automáticamente",
+    "→ Enviando seguimiento por email",
+    "→ Procesando pedido de e-commerce",
+    "→ Calificando lead entrante",
+  ];
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [activeNodeIdx, setActiveNodeIdx] = useState(0);
+  const [feedIdx, setFeedIdx] = useState(0);
+
+  useEffect(() => {
+    const a = setInterval(() => setActiveNodeIdx((i) => (i + 1) % nodes.length), 1600);
+    const b = setInterval(() => setFeedIdx((i) => (i + 1) % activityFeed.length), 2200);
+    return () => { clearInterval(a); clearInterval(b); };
+  }, []);
+
+  const activeId = hoveredNode ?? nodes[activeNodeIdx].id;
 
   return (
     <section
@@ -91,36 +121,109 @@ const AIAgentsSection = () => {
               </div>
 
               {/* Visual engine side */}
-              <div className="md:w-2/5 bg-[#041424] relative flex items-center justify-center min-h-[300px] md:min-h-full overflow-hidden">
-                {/* Orbital rings */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-40 h-40 rounded-full border border-primary/20 animate-[spin_12s_linear_infinite]" />
-                  <div className="absolute w-56 h-56 rounded-full border border-dashed border-primary/10 animate-[spin_18s_linear_infinite_reverse]" />
-                  <div className="absolute w-28 h-28 rounded-full border border-primary/30 animate-ping" style={{ animationDuration: '3s' }} />
-                </div>
-                {/* Cross lines */}
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <div className="absolute w-[140%] h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent rotate-45" />
-                  <div className="absolute w-[140%] h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent -rotate-45" />
-                </div>
-                {/* Floating dots */}
-                <div className="absolute top-1/4 left-1/4 w-1.5 h-1.5 rounded-full bg-primary/60 animate-pulse" />
-                <div className="absolute bottom-1/3 right-1/4 w-1 h-1 rounded-full bg-primary/40 animate-pulse" style={{ animationDelay: '0.7s' }} />
-                <div className="absolute top-2/3 left-1/2 w-1 h-1 rounded-full bg-white/20 animate-pulse" style={{ animationDelay: '1.2s' }} />
+              <div className="md:w-2/5 bg-[#041424] relative min-h-[360px] md:min-h-full overflow-hidden flex flex-col">
+                {/* Subtle grid background */}
+                <div
+                  className="absolute inset-0 opacity-[0.07]"
+                  style={{
+                    backgroundImage:
+                      "linear-gradient(rgba(46,169,152,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(46,169,152,0.6) 1px, transparent 1px)",
+                    backgroundSize: "22px 22px",
+                  }}
+                />
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/20 rounded-full blur-3xl" />
 
-                {/* Central core */}
-                <div className="relative z-10 flex flex-col items-center">
-                  <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-primary to-primary/70 flex items-center justify-center shadow-[0_0_40px_rgba(46,169,152,0.35)]">
-                    <Brain className="w-10 h-10 text-white" />
+                {/* Interactive node network */}
+                <div className="relative flex-1 flex items-center justify-center py-8">
+                  <div className="relative w-[260px] h-[260px]">
+                    {/* SVG connection lines */}
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 260 260">
+                      {nodes.map((node) => {
+                        const rad = (node.angle * Math.PI) / 180;
+                        const x = 130 + Math.cos(rad) * 100;
+                        const y = 130 + Math.sin(rad) * 100;
+                        const isActive = node.id === activeId;
+                        return (
+                          <line
+                            key={node.id}
+                            x1="130"
+                            y1="130"
+                            x2={x}
+                            y2={y}
+                            stroke={isActive ? "#2ea998" : "rgba(46,169,152,0.18)"}
+                            strokeWidth={isActive ? 1.5 : 1}
+                            strokeDasharray={isActive ? "0" : "3 4"}
+                            className="transition-all duration-300"
+                          />
+                        );
+                      })}
+                      <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.15)" />
+                      <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.08)" strokeDasharray="2 6" />
+                    </svg>
+
+                    {/* Central brain core */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary/60 flex items-center justify-center shadow-[0_0_40px_rgba(46,169,152,0.45)] relative">
+                        <Brain className="w-8 h-8 text-white" />
+                        <span className="absolute inset-0 rounded-2xl border border-primary/60 animate-ping" />
+                      </div>
+                    </div>
+
+                    {/* Orbiting channel nodes */}
+                    {nodes.map((node) => {
+                      const rad = (node.angle * Math.PI) / 180;
+                      const x = 50 + Math.cos(rad) * 38.46;
+                      const y = 50 + Math.sin(rad) * 38.46;
+                      const isActive = node.id === activeId;
+                      const Icon = node.icon;
+                      return (
+                        <button
+                          key={node.id}
+                          type="button"
+                          onMouseEnter={() => setHoveredNode(node.id)}
+                          onMouseLeave={() => setHoveredNode(null)}
+                          onFocus={() => setHoveredNode(node.id)}
+                          onBlur={() => setHoveredNode(null)}
+                          aria-label={node.label}
+                          className="absolute -translate-x-1/2 -translate-y-1/2 group/node focus:outline-none"
+                          style={{ left: `${x}%`, top: `${y}%` }}
+                        >
+                          <div
+                            className={`w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 ${
+                              isActive
+                                ? "bg-primary border-primary scale-110 shadow-[0_0_20px_rgba(46,169,152,0.6)]"
+                                : "bg-[#0a2030] border-primary/30 hover:border-primary/70"
+                            }`}
+                          >
+                            <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-primary/80"}`} />
+                          </div>
+                          <span
+                            className={`absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap transition-colors ${
+                              isActive ? "text-primary" : "text-white/40"
+                            }`}
+                          >
+                            {node.label}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
-                  <p className="mt-5 text-white/40 text-[10px] font-heading font-semibold tracking-[0.25em] uppercase">
-                    Inteligencia Activa
+                </div>
+
+                {/* Live activity feed */}
+                <div className="relative mx-5 mb-5 rounded-xl border border-primary/20 bg-black/30 backdrop-blur-sm p-3">
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+                    <span className="text-[9px] font-heading font-bold tracking-[0.25em] uppercase text-primary">
+                      Agente activo
+                    </span>
+                  </div>
+                  <p
+                    key={feedIdx}
+                    className="text-xs text-white/80 font-mono leading-snug animate-fade-in"
+                  >
+                    {activityFeed[feedIdx]}
                   </p>
-                  <div className="mt-2 flex gap-1">
-                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s' }} />
-                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s', animationDelay: '0.2s' }} />
-                    <div className="w-1 h-1 rounded-full bg-primary animate-bounce" style={{ animationDuration: '1.2s', animationDelay: '0.4s' }} />
-                  </div>
                 </div>
               </div>
             </div>
