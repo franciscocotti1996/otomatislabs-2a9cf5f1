@@ -37,16 +37,23 @@ const AIAgentsSection = () => {
     "→ Calificando lead entrante",
   ];
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const [pinnedNode, setPinnedNode] = useState<string | null>(null);
+  const [rippleKey, setRippleKey] = useState(0);
   const [activeNodeIdx, setActiveNodeIdx] = useState(0);
   const [feedIdx, setFeedIdx] = useState(0);
 
   useEffect(() => {
+    if (hoveredNode || pinnedNode) return;
     const a = setInterval(() => setActiveNodeIdx((i) => (i + 1) % nodes.length), 1600);
     const b = setInterval(() => setFeedIdx((i) => (i + 1) % activityFeed.length), 2200);
     return () => { clearInterval(a); clearInterval(b); };
-  }, []);
+  }, [hoveredNode, pinnedNode]);
 
-  const activeId = hoveredNode ?? nodes[activeNodeIdx].id;
+  const activeId = pinnedNode ?? hoveredNode ?? nodes[activeNodeIdx].id;
+  const activeNode = nodes.find((n) => n.id === activeId) ?? nodes[0];
+  const activeRad = (activeNode.angle * Math.PI) / 180;
+  const activeTargetX = 130 + Math.cos(activeRad) * 100;
+  const activeTargetY = 130 + Math.sin(activeRad) * 100;
 
   return (
     <section
@@ -135,9 +142,39 @@ const AIAgentsSection = () => {
 
                 {/* Interactive node network */}
                 <div className="relative flex-1 flex items-center justify-center py-8">
+                  {/* Local keyframes for fluid micro-animations */}
+                  <style>{`
+                    @keyframes nodeFloat {
+                      0%,100% { transform: translate(-50%, -50%) translateY(0px); }
+                      50% { transform: translate(-50%, -50%) translateY(-4px); }
+                    }
+                    @keyframes dashFlow {
+                      to { stroke-dashoffset: -40; }
+                    }
+                    @keyframes ringPulse {
+                      0% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+                      100% { transform: translate(-50%, -50%) scale(1.9); opacity: 0; }
+                    }
+                    @keyframes clickRipple {
+                      0% { transform: translate(-50%, -50%) scale(0.6); opacity: 0.9; }
+                      100% { transform: translate(-50%, -50%) scale(2.4); opacity: 0; }
+                    }
+                  `}</style>
                   <div className="relative w-[260px] h-[260px]">
                     {/* SVG connection lines */}
-                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 260 260">
+                    <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 260 260">
+                      <defs>
+                        <radialGradient id="packetGlow">
+                          <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
+                          <stop offset="40%" stopColor="#2ea998" stopOpacity="1" />
+                          <stop offset="100%" stopColor="#2ea998" stopOpacity="0" />
+                        </radialGradient>
+                        <linearGradient id="activeLine" gradientUnits="userSpaceOnUse"
+                          x1="130" y1="130" x2={activeTargetX} y2={activeTargetY}>
+                          <stop offset="0%" stopColor="#2ea998" stopOpacity="1" />
+                          <stop offset="100%" stopColor="#2ea998" stopOpacity="0.4" />
+                        </linearGradient>
+                      </defs>
                       {nodes.map((node) => {
                         const rad = (node.angle * Math.PI) / 180;
                         const x = 130 + Math.cos(rad) * 100;
@@ -150,15 +187,48 @@ const AIAgentsSection = () => {
                             y1="130"
                             x2={x}
                             y2={y}
-                            stroke={isActive ? "#2ea998" : "rgba(46,169,152,0.18)"}
-                            strokeWidth={isActive ? 1.5 : 1}
-                            strokeDasharray={isActive ? "0" : "3 4"}
-                            className="transition-all duration-300"
+                            stroke={isActive ? "url(#activeLine)" : "rgba(46,169,152,0.22)"}
+                            strokeWidth={isActive ? 2 : 1}
+                            strokeDasharray={isActive ? "6 4" : "2 5"}
+                            strokeLinecap="round"
+                            style={{
+                              animation: `dashFlow ${isActive ? "1.2s" : "6s"} linear infinite`,
+                              filter: isActive ? "drop-shadow(0 0 4px rgba(46,169,152,0.7))" : "none",
+                              transition: "stroke-width 500ms cubic-bezier(0.34,1.56,0.64,1), stroke 400ms ease",
+                            }}
                           />
                         );
                       })}
                       <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.15)" />
                       <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.08)" strokeDasharray="2 6" />
+                      {/* Data packet traveling along the active line */}
+                      <circle key={`packet-${activeId}`} r="5" fill="url(#packetGlow)">
+                        <animate
+                          attributeName="cx"
+                          from="130"
+                          to={activeTargetX}
+                          dur="1.1s"
+                          repeatCount="indefinite"
+                          calcMode="spline"
+                          keySplines="0.4 0 0.2 1"
+                        />
+                        <animate
+                          attributeName="cy"
+                          from="130"
+                          to={activeTargetY}
+                          dur="1.1s"
+                          repeatCount="indefinite"
+                          calcMode="spline"
+                          keySplines="0.4 0 0.2 1"
+                        />
+                        <animate
+                          attributeName="opacity"
+                          values="0;1;1;0"
+                          keyTimes="0;0.15;0.85;1"
+                          dur="1.1s"
+                          repeatCount="indefinite"
+                        />
+                      </circle>
                     </svg>
 
                     {/* Central brain core */}
@@ -170,11 +240,12 @@ const AIAgentsSection = () => {
                     </div>
 
                     {/* Orbiting channel nodes */}
-                    {nodes.map((node) => {
+                    {nodes.map((node, idx) => {
                       const rad = (node.angle * Math.PI) / 180;
                       const x = 50 + Math.cos(rad) * 38.46;
                       const y = 50 + Math.sin(rad) * 38.46;
                       const isActive = node.id === activeId;
+                      const isPinned = node.id === pinnedNode;
                       const Icon = node.icon;
                       return (
                         <button
@@ -184,23 +255,63 @@ const AIAgentsSection = () => {
                           onMouseLeave={() => setHoveredNode(null)}
                           onFocus={() => setHoveredNode(node.id)}
                           onBlur={() => setHoveredNode(null)}
+                          onClick={() => {
+                            setPinnedNode((p) => (p === node.id ? null : node.id));
+                            setRippleKey((k) => k + 1);
+                          }}
+                          aria-pressed={isPinned}
                           aria-label={node.label}
-                          className="absolute -translate-x-1/2 -translate-y-1/2 group/node focus:outline-none"
-                          style={{ left: `${x}%`, top: `${y}%` }}
+                          className="absolute group/node focus:outline-none"
+                          style={{
+                            left: `${x}%`,
+                            top: `${y}%`,
+                            animation: `nodeFloat 4s ease-in-out ${idx * 0.4}s infinite`,
+                            willChange: "transform",
+                          }}
                         >
+                          {/* Pulsing halo around active node */}
+                          {isActive && (
+                            <>
+                              <span
+                                className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl border-2 border-primary pointer-events-none"
+                                style={{ animation: "ringPulse 1.6s ease-out infinite" }}
+                              />
+                              <span
+                                className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl border-2 border-primary pointer-events-none"
+                                style={{ animation: "ringPulse 1.6s ease-out 0.8s infinite" }}
+                              />
+                            </>
+                          )}
+                          {/* Click ripple */}
+                          {isPinned && (
+                            <span
+                              key={rippleKey}
+                              className="absolute left-1/2 top-1/2 w-11 h-11 rounded-xl bg-primary/40 pointer-events-none"
+                              style={{ animation: "clickRipple 0.7s ease-out forwards" }}
+                            />
+                          )}
                           <div
-                            className={`w-11 h-11 rounded-xl flex items-center justify-center border transition-all duration-300 ${
+                            className={`relative w-11 h-11 rounded-xl flex items-center justify-center border ${
                               isActive
-                                ? "bg-primary border-primary scale-110 shadow-[0_0_20px_rgba(46,169,152,0.6)]"
+                                ? "bg-primary border-primary shadow-[0_0_24px_rgba(46,169,152,0.7)]"
                                 : "bg-[#0a2030] border-primary/30 hover:border-primary/70"
                             }`}
+                            style={{
+                              transform: `translate(-50%, -50%) scale(${isPinned ? 1.2 : isActive ? 1.12 : 1})`,
+                              transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 300ms ease, border-color 300ms ease, box-shadow 400ms ease",
+                            }}
                           >
                             <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-primary/80"}`} />
                           </div>
                           <span
-                            className={`absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap transition-colors ${
+                            className={`absolute left-1/2 -translate-x-1/2 mt-7 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap ${
                               isActive ? "text-primary" : "text-white/40"
                             }`}
+                            style={{
+                              top: "50%",
+                              transform: `translate(-50%, ${isActive ? "4px" : "0"})`,
+                              transition: "transform 400ms cubic-bezier(0.34,1.56,0.64,1), color 300ms ease",
+                            }}
                           >
                             {node.label}
                           </span>
