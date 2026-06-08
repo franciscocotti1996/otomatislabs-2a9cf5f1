@@ -297,19 +297,18 @@ const AIAgentsSection = () => {
                                 : "bg-[#0a2030] border-primary/30 hover:border-primary/70"
                             }`}
                             style={{
-                              transform: `translate(-50%, -50%) scale(${isPinned ? 1.2 : isActive ? 1.12 : 1})`,
+                              transform: `scale(${isPinned ? 1.2 : isActive ? 1.12 : 1})`,
                               transition: "transform 500ms cubic-bezier(0.34, 1.56, 0.64, 1), background-color 300ms ease, border-color 300ms ease, box-shadow 400ms ease",
                             }}
                           >
                             <Icon className={`w-5 h-5 ${isActive ? "text-white" : "text-primary/80"}`} />
                           </div>
                           <span
-                            className={`absolute left-1/2 -translate-x-1/2 mt-7 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap ${
+                            className={`absolute left-1/2 top-full mt-1.5 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap ${
                               isActive ? "text-primary" : "text-white/40"
                             }`}
                             style={{
-                              top: "50%",
-                              transform: `translate(-50%, ${isActive ? "4px" : "0"})`,
+                              transform: `translate(-50%, ${isActive ? "3px" : "0"})`,
                               transition: "transform 400ms cubic-bezier(0.34,1.56,0.64,1), color 300ms ease",
                             }}
                           >
