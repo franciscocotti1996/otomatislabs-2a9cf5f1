@@ -7,6 +7,7 @@ import LogosCarousel from "@/components/LogosCarousel";
 import PartnersSection from "@/components/PartnersSection";
 import StatsSection from "@/components/StatsSection";
 import SolutionsSection from "@/components/SolutionsSection";
+import AIAgentsSection from "@/components/AIAgentsSection";
 import ServicesSection from "@/components/ServicesSection";
 import ConversationalCommerceSection from "@/components/ConversationalCommerceSection";
 import ProcessSection from "@/components/ProcessSection";
@@ -57,6 +58,7 @@ const Index = () => {
       <PartnersSection />
       <StatsSection />
       <SolutionsSection />
+      <AIAgentsSection />
       <ServicesSection />
       <ConversationalCommerceSection />
       <ProcessSection />
