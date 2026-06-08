@@ -4,16 +4,8 @@ import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lu
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
 
-const scrollToContact = (e: React.MouseEvent) => {
-  e.preventDefault();
-  const el = document.getElementById("contacto");
-  if (el) {
-    const offset = 120;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
-  }
-};
+const WHATSAPP_URL =
+  "https://wa.me/5491134213579?text=Hola%2C%20quiero%20solicitar%20una%20demo%20gratuita%20de%20agentes%20de%20IA";
 
 const AIAgentsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
@@ -104,8 +96,9 @@ const AIAgentsSection = () => {
                 {t.aiAgents.cta.body}
               </p>
               <a
-                href="#contacto"
-                onClick={scrollToContact}
+                href={WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t.aiAgents.cta.button}
