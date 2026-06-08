@@ -93,7 +93,7 @@ const Navbar = () => {
           ))}
           <a
             href="#contacto"
-            onClick={() => setOpen(false)}
+            onClick={(e) => { scrollToContact(e); setOpen(false); }}
             className="block px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold text-center"
           >
             {t.nav.contact}
