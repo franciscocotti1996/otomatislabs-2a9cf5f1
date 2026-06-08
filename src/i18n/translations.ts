@@ -90,6 +90,14 @@ const es = {
       title: "¿Listo para dejar que un agente de IA venda por vos?",
       body: "Agendá una consulta gratuita y descubrí en 30 minutos cómo reducir costos, acelerar ventas y escalar tu atención sin aumentar tu equipo.",
       button: "Quiero mi demo gratuita",
+      servicePrompt: "¿Qué te interesa explorar?",
+      services: [
+        { id: "sales", label: "Ventas automatizadas", message: "Hola, me interesa un agente de IA para automatizar mis ventas. ¿Pueden mostrarme una demo?" },
+        { id: "support", label: "Atención al cliente 24/7", message: "Hola, quiero implementar un agente de IA para atención al cliente 24/7. ¿Podemos coordinar una demo?" },
+        { id: "integrations", label: "Integración con CRM/ERP", message: "Hola, busco un agente de IA que se integre con mi CRM/ERP. Me gustaría agendar una demo." },
+        { id: "operations", label: "Automatización de operaciones", message: "Hola, quiero automatizar operaciones internas con un agente de IA. ¿Pueden mostrarme cómo funciona?" },
+        { id: "advice", label: "Necesito asesoramiento", message: "Hola, quiero asesoramiento para entender cómo un agente de IA podría ayudar a mi negocio." },
+      ],
     },
   },
   aiAgentsFaq: {
