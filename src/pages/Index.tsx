@@ -52,6 +52,7 @@ const Index = () => {
       </Helmet>
       <Navbar />
       <HeroSection />
+      <HeroServicesSection />
       <LogosCarousel />
       <PartnersSection />
       <StatsSection />
