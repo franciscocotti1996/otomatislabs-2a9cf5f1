@@ -60,6 +60,7 @@ const Index = () => {
       <StatsSection />
       <SolutionsSection />
       <AIAgentsSection />
+      <AIAgentsFAQSection />
       <ServicesSection />
       <ConversationalCommerceSection />
       <ProcessSection />
