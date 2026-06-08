@@ -67,6 +67,25 @@ const es = {
       { title: "Agentes de IA", description: "Integramos agentes de inteligencia artificial que resuelven problemas concretos de negocio de forma autónoma." },
     ],
   },
+  aiAgents: {
+    eyebrow: "Agentes de IA",
+    titleA: "Más que chatbots:",
+    titleB: "agentes autónomos que actúan por vos",
+    intro: "Los agentes de IA no solo responden preguntas: entienden el contexto, toman decisiones, ejecutan tareas complejas y se integran con tus sistemas para operar como un miembro más del equipo.",
+    definition: {
+      title: "¿Qué es un Agente de IA?",
+      body: "Un agente de IA es un sistema inteligente que percibe su entorno, razona sobre objetivos y actúa de forma autónoma para completar tareas. A diferencia de un chatbot tradicional —que sigue guiones predefinidos—, un agente puede consultar bases de datos, disparar acciones en otros sistemas y adaptar su estrategia según el resultado.",
+      tags: ["Autonomía", "Razonamiento", "Integración con APIs", "Mejora continua"],
+    },
+    features: [
+      { title: "Toma de decisiones inteligente", description: "Evalúan múltiples variables en tiempo real y eligen la mejor acción para resolver el problema del cliente, sin depender de flujos rígidos." },
+      { title: "Ejecución de tareas complejas", description: "Desde generar órdenes de compra hasta reprogramar turnos o conciliar pagos, los agentes ejecutan acciones de principio a fin." },
+      { title: "Integración total con tu stack", description: "Se conectan con tu CRM, ERP, pasarelas de pago y cualquier API para acceder a datos y actuar con información actualizada." },
+      { title: "Aprendizaje y mejora continua", description: "Cada interacción alimenta su conocimiento. Analizan conversaciones, detectan patrones y optimizan sus respuestas automáticamente." },
+      { title: "Escalado inteligente a humanos", description: "Reconocen cuándo una situación requiere intervención humana y transfieren toda la información y contexto al agente correcto." },
+      { title: "Disponibilidad 24/7 sin costos fijos", description: "Operan ininterrumpidamente manejando miles de conversaciones simultáneas sin aumentar la nómina operativa." },
+    ],
+  },
   cc: {
     eyebrow: "Conversational Commerce",
     titleA: "El ciclo del usuario es",
@@ -391,6 +410,25 @@ const en: typeof es = {
       { title: "Data & Performance", description: "Every solution is designed around business metrics. We measure, iterate and continuously optimize." },
       { title: "WhatsApp Experts", description: "We know the most relevant channel in the region. We design solutions around how users actually interact." },
       { title: "AI Agents", description: "We integrate AI agents that solve concrete business problems autonomously." },
+    ],
+  },
+  aiAgents: {
+    eyebrow: "AI Agents",
+    titleA: "More than chatbots:",
+    titleB: "autonomous agents that act for you",
+    intro: "AI agents don't just answer questions: they understand context, make decisions, execute complex tasks and integrate with your systems to operate as another member of your team.",
+    definition: {
+      title: "What is an AI Agent?",
+      body: "An AI agent is an intelligent system that perceives its environment, reasons about goals and acts autonomously to complete tasks. Unlike a traditional chatbot —which follows predefined scripts—, an agent can query databases, trigger actions in other systems and adapt its strategy based on outcomes.",
+      tags: ["Autonomy", "Reasoning", "API Integration", "Continuous Improvement"],
+    },
+    features: [
+      { title: "Intelligent Decision Making", description: "They evaluate multiple variables in real time and choose the best action to solve the customer's problem, without relying on rigid flows." },
+      { title: "Complex Task Execution", description: "From generating purchase orders to rescheduling appointments or reconciling payments, agents execute actions from start to finish." },
+      { title: "Full Stack Integration", description: "They connect to your CRM, ERP, payment gateways and any API to access data and act with up-to-date information." },
+      { title: "Continuous Learning & Improvement", description: "Every interaction feeds their knowledge. They analyze conversations, detect patterns and optimize their responses automatically." },
+      { title: "Smart Human Handoff", description: "They recognize when a situation requires human intervention and transfer all information and context to the right agent." },
+      { title: "24/7 Availability Without Fixed Costs", description: "They operate uninterrupted handling thousands of simultaneous conversations without increasing operational payroll." },
     ],
   },
   cc: {
