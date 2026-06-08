@@ -461,6 +461,14 @@ const en: typeof es = {
       title: "Ready to let an AI agent sell for you?",
       body: "Book a free consultation and discover in 30 minutes how to cut costs, accelerate sales, and scale support without expanding your team.",
       button: "Get my free demo",
+      servicePrompt: "What would you like to explore?",
+      services: [
+        { id: "sales", label: "Automated sales", message: "Hi, I'm interested in an AI agent to automate my sales. Can you show me a demo?" },
+        { id: "support", label: "24/7 customer support", message: "Hi, I want to implement an AI agent for 24/7 customer support. Can we schedule a demo?" },
+        { id: "integrations", label: "CRM/ERP integration", message: "Hi, I'm looking for an AI agent that integrates with my CRM/ERP. I'd like to book a demo." },
+        { id: "operations", label: "Operations automation", message: "Hi, I want to automate internal operations with an AI agent. Can you show me how it works?" },
+        { id: "advice", label: "I need guidance", message: "Hi, I'd like guidance on how an AI agent could help my business." },
+      ],
     },
   },
   aiAgentsFaq: {
