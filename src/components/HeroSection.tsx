@@ -24,7 +24,7 @@ const HeroSection = () => {
           {/* Left: Text content */}
           <div className="text-center lg:text-left">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-8">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
               <span className="text-sm font-medium text-primary font-heading">{t.hero.badge}</span>
             </div>
@@ -37,11 +37,9 @@ const HeroSection = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-muted-foreground text-base md:text-lg max-w-4xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg max-w-4xl mx-auto lg:mx-0 mb-8 leading-relaxed">
               {t.hero.subtitle}
             </p>
-
-            <div className="mb-12" />
 
             {/* Channel icons */}
             <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap">
