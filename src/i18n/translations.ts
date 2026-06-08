@@ -346,6 +346,16 @@ const en: typeof es = {
     cta: "Contact us",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat in App", ig: "Instagram", msg: "Messenger" },
   },
+  heroServices: {
+    eyebrow: "Services",
+    title: "Solutions designed to scale your business",
+    items: [
+      { title: "Multichannel chatbots", description: "Connect WhatsApp, Instagram, Messenger and web into a single consistent conversational experience." },
+      { title: "AI Agents", description: "Autonomous agents that understand context, make decisions and execute complex business tasks." },
+      { title: "Integrations", description: "We connect your chatbot with CRMs, ERPs, payment gateways and any API your operation needs." },
+    ],
+    cta: "See more",
+  },
   logos: { trust: "Companies that trust us" },
   partners: {
     badge: "Official partners",
