@@ -55,6 +55,7 @@ const HeroSection = () => {
             <div className="max-w-4xl mx-auto lg:mx-0 mb-8">
               <a
                 href="#contacto"
+                onClick={scrollToContact}
                 className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t.hero.cta}
