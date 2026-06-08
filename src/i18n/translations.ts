@@ -20,6 +20,16 @@ const es = {
     cta: "Contactar",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat en App", ig: "Instagram", msg: "Messenger" },
   },
+  heroServices: {
+    eyebrow: "Servicios",
+    title: "Soluciones diseñadas para escalar tu negocio",
+    items: [
+      { title: "Chatbots multicanal", description: "Conectá WhatsApp, Instagram, Messenger y web en una única experiencia conversacional consistente." },
+      { title: "Agentes de IA", description: "Agentes autónomos que entienden contexto, toman decisiones y ejecutan tareas complejas de negocio." },
+      { title: "Integraciones", description: "Conectamos tu chatbot con CRMs, ERPs, pasarelas de pago y cualquier API que tu operación necesite." },
+    ],
+    cta: "Ver más",
+  },
   logos: { trust: "Empresas que confían en nosotros" },
   partners: {
     badge: "Partners oficiales",
@@ -335,6 +345,16 @@ const en: typeof es = {
     imgAlt: "Professional using a chatbot on a smartphone",
     cta: "Contact us",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat in App", ig: "Instagram", msg: "Messenger" },
+  },
+  heroServices: {
+    eyebrow: "Services",
+    title: "Solutions designed to scale your business",
+    items: [
+      { title: "Multichannel chatbots", description: "Connect WhatsApp, Instagram, Messenger and web into a single consistent conversational experience." },
+      { title: "AI Agents", description: "Autonomous agents that understand context, make decisions and execute complex business tasks." },
+      { title: "Integrations", description: "We connect your chatbot with CRMs, ERPs, payment gateways and any API your operation needs." },
+    ],
+    cta: "See more",
   },
   logos: { trust: "Companies that trust us" },
   partners: {
