@@ -37,7 +37,7 @@ const HeroSection = () => {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mb-10 leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
               {t.hero.subtitle}
             </p>
 
