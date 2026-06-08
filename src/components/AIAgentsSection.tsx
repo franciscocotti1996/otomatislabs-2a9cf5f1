@@ -1,8 +1,19 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { Brain, Zap, Target, Workflow, Shield, TrendingUp } from "lucide-react";
+import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lucide-react";
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
+
+const scrollToContact = (e: React.MouseEvent) => {
+  e.preventDefault();
+  const el = document.getElementById("contacto");
+  if (el) {
+    const offset = 120;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+  }
+};
 
 const AIAgentsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
