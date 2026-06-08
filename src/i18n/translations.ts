@@ -20,6 +20,16 @@ const es = {
     cta: "Contactar",
     channels: { whatsapp: "WhatsApp", web: "Webchat", app: "Chat en App", ig: "Instagram", msg: "Messenger" },
   },
+  heroServices: {
+    eyebrow: "Servicios",
+    title: "Soluciones diseñadas para escalar tu negocio",
+    items: [
+      { title: "Chatbots multicanal", description: "Conectá WhatsApp, Instagram, Messenger y web en una única experiencia conversacional consistente." },
+      { title: "Agentes de IA", description: "Agentes autónomos que entienden contexto, toman decisiones y ejecutan tareas complejas de negocio." },
+      { title: "Integraciones", description: "Conectamos tu chatbot con CRMs, ERPs, pasarelas de pago y cualquier API que tu operación necesite." },
+    ],
+    cta: "Ver más",
+  },
   logos: { trust: "Empresas que confían en nosotros" },
   partners: {
     badge: "Partners oficiales",
