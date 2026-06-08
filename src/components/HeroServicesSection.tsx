@@ -26,13 +26,13 @@ const HeroServicesSection = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
           {items.map((item) => (
             <div
               key={item.title}
-              className="glass-card rounded-xl p-7 hover:shadow-xl transition-shadow group text-center md:text-left"
+              className="glass-card rounded-xl p-7 hover:shadow-xl transition-shadow group text-left"
             >
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors mx-auto md:mx-0">
+              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-5 group-hover:bg-primary/20 transition-colors">
                 <item.icon className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-heading font-semibold text-lg mb-2">{item.title}</h3>
