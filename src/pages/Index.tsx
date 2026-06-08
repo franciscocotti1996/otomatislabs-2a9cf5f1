@@ -8,6 +8,7 @@ import PartnersSection from "@/components/PartnersSection";
 import StatsSection from "@/components/StatsSection";
 import SolutionsSection from "@/components/SolutionsSection";
 import AIAgentsSection from "@/components/AIAgentsSection";
+import AIAgentsFAQSection from "@/components/AIAgentsFAQSection";
 import ServicesSection from "@/components/ServicesSection";
 import ConversationalCommerceSection from "@/components/ConversationalCommerceSection";
 import ProcessSection from "@/components/ProcessSection";
@@ -59,6 +60,7 @@ const Index = () => {
       <StatsSection />
       <SolutionsSection />
       <AIAgentsSection />
+      <AIAgentsFAQSection />
       <ServicesSection />
       <ConversationalCommerceSection />
       <ProcessSection />
