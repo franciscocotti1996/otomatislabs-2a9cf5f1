@@ -27,9 +27,9 @@ const es = {
     botmaker: "Official Partner",
   },
   stats: [
-    { value: "+100K", label: "conversaciones gestionadas", highlight: "por mes" },
-    { value: "+30", label: "chatbots productivos en operación", highlight: "" },
-    { value: "8+", label: "años impulsando soluciones", highlight: "" },
+    { value: 100, suffix: "K", label: "conversaciones gestionadas", highlight: "por mes" },
+    { value: 30, label: "chatbots productivos en operación", highlight: "" },
+    { value: 8, label: "años impulsando soluciones", highlight: "", style: "suffix-plus" as const },
   ],
   solutions: {
     eyebrow: "Soluciones",
@@ -338,9 +338,9 @@ const en: typeof es = {
     botmaker: "Official Partner",
   },
   stats: [
-    { value: "100K+", label: "conversations handled", highlight: "per month" },
-    { value: "30+", label: "chatbots running in production", highlight: "" },
-    { value: "8+", label: "years driving solutions", highlight: "" },
+    { value: 100, suffix: "K", label: "conversations handled", highlight: "per month" },
+    { value: 30, label: "chatbots running in production", highlight: "" },
+    { value: 8, label: "years driving solutions", highlight: "", style: "suffix-plus" as const },
   ],
   solutions: {
     eyebrow: "Solutions",
