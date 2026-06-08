@@ -394,6 +394,9 @@ const en: typeof es = {
     ctaButton: "Let's talk about your case",
     waAria: "via WhatsApp",
   },
+  floatingWhatsApp: {
+    aria: "Chat on WhatsApp",
+  },
   process: {
     eyebrow: "Process",
     titleA: "A proven process for",
