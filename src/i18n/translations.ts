@@ -85,6 +85,11 @@ const es = {
       { title: "Escalamiento inteligente cuando lo necesitás", description: "Detectan situaciones que requieren atención humana y transfieren todo el contexto al agente correcto. Ningún cliente queda sin respuesta, ninguna oportunidad se pierde." },
       { title: "Atención ininterrumpida sin aumentar la nómina", description: "Miles de conversaciones simultáneas, los 365 días del año, sin costos fijos adicionales. Escalá tu operación sin escalar tu equipo." },
     ],
+    cta: {
+      title: "¿Listo para dejar que un agente de IA venda por vos?",
+      body: "Agendá una consulta gratuita y descubrí en 30 minutos cómo reducir costos, acelerar ventas y escalar tu atención sin aumentar tu equipo.",
+      button: "Quiero mi demo gratuita",
+    },
   },
   cc: {
     eyebrow: "Conversational Commerce",
@@ -430,6 +435,11 @@ const en: typeof es = {
       { title: "Smart escalation when you need it", description: "They detect situations requiring human attention and transfer all context to the right agent. No customer left unanswered, no opportunity missed." },
       { title: "Uninterrupted service without expanding payroll", description: "Thousands of simultaneous conversations, 365 days a year, with no additional fixed costs. Scale your operation without scaling your team." },
     ],
+    cta: {
+      title: "Ready to let an AI agent sell for you?",
+      body: "Book a free consultation and discover in 30 minutes how to cut costs, accelerate sales, and scale support without expanding your team.",
+      button: "Get my free demo",
+    },
   },
   cc: {
     eyebrow: "Conversational Commerce",

@@ -1,8 +1,19 @@
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { Brain, Zap, Target, Workflow, Shield, TrendingUp } from "lucide-react";
+import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lucide-react";
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
+
+const scrollToContact = (e: React.MouseEvent) => {
+  e.preventDefault();
+  const el = document.getElementById("contacto");
+  if (el) {
+    const offset = 120;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+  }
+};
 
 const AIAgentsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
@@ -80,6 +91,28 @@ const AIAgentsSection = () => {
               <p className="text-sm text-muted-foreground leading-relaxed">{feature.description}</p>
             </div>
           ))}
+        </div>
+        {/* CTA */}
+        <div className="mt-14 md:mt-16 max-w-2xl mx-auto text-center">
+          <div className="glass-card rounded-2xl p-8 md:p-10 border border-primary/20 relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
+            <div className="relative">
+              <h3 className="font-heading font-bold text-xl md:text-2xl mb-3">
+                {t.aiAgents.cta.title}
+              </h3>
+              <p className="text-muted-foreground text-base md:text-lg leading-relaxed mb-6">
+                {t.aiAgents.cta.body}
+              </p>
+              <a
+                href="#contacto"
+                onClick={scrollToContact}
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+              >
+                {t.aiAgents.cta.button}
+                <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
