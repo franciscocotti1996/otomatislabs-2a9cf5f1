@@ -16,7 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const WHATSAPP_URL =
-  "https://wa.me/5491100000000?text=Hola%2C%20quiero%20hablar%20sobre%20conversational%20commerce";
+  "https://wa.me/5491134213579?text=Hola%2C%20quiero%20hablar%20sobre%20conversational%20commerce";
 
 const CYCLE_ICONS = [Megaphone, ShoppingBag, HeartHandshake];
 const ASPECT_ICONS = [Layers, MessageSquare, BarChart3, CalendarRange, Target];
