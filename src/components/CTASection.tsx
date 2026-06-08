@@ -179,20 +179,35 @@ const CTASection = () => {
                 )}
               </Button>
 
-              {lastSubmissionId && (
+              {submitStatus === "success" && lastSubmissionId && (
                 <div
                   role="status"
                   aria-live="polite"
-                  className="rounded-lg border border-primary/30 bg-primary/5 p-4 text-sm"
+                  className="rounded-lg border border-green-600/30 bg-green-50 p-4 text-sm"
                 >
-                  <p className="font-heading font-semibold text-foreground">
+                  <p className="font-heading font-semibold text-green-800">
                     {t.cta.successBoxTitle}
                   </p>
-                  <p className="text-muted-foreground mt-1">
+                  <p className="text-green-700 mt-1">
                     {t.cta.successBoxDesc}{" "}
-                    <span className="font-mono font-semibold text-foreground">
+                    <span className="font-mono font-semibold text-green-900">
                       {lastSubmissionId}
                     </span>
+                  </p>
+                </div>
+              )}
+
+              {submitStatus === "error" && (
+                <div
+                  role="alert"
+                  aria-live="assertive"
+                  className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm"
+                >
+                  <p className="font-heading font-semibold text-destructive">
+                    {t.cta.errorTitle}
+                  </p>
+                  <p className="text-destructive/80 mt-1">
+                    {t.cta.errorDesc}
                   </p>
                 </div>
               )}
