@@ -3,6 +3,16 @@ import heroPerson from "@/assets/hero-person.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 
+const scrollToContact = (e: React.MouseEvent) => {
+  e.preventDefault();
+  const el = document.getElementById("contacto");
+  if (el) {
+    const offset = 120;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+};
+
 const HeroSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
   const { t } = useLanguage();
@@ -45,6 +55,7 @@ const HeroSection = () => {
             <div className="max-w-4xl mx-auto lg:mx-0 mb-8">
               <a
                 href="#contacto"
+                onClick={scrollToContact}
                 className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
               >
                 {t.hero.cta}

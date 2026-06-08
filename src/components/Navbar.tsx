@@ -3,6 +3,16 @@ import logoHorizontal from "@/assets/logo-horizontal.png";
 import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
+const scrollToContact = (e: React.MouseEvent) => {
+  e.preventDefault();
+  const el = document.getElementById("contacto");
+  if (el) {
+    const offset = 120;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+};
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { t, toggle, lang } = useLanguage();
@@ -43,6 +53,7 @@ const Navbar = () => {
           </button>
           <a
             href="#contacto"
+            onClick={scrollToContact}
             className="px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             {t.nav.contact}
@@ -82,7 +93,7 @@ const Navbar = () => {
           ))}
           <a
             href="#contacto"
-            onClick={() => setOpen(false)}
+            onClick={(e) => { scrollToContact(e); setOpen(false); }}
             className="block px-5 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold text-center"
           >
             {t.nav.contact}
