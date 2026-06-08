@@ -2,13 +2,46 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { Brain, Zap, Target, Workflow, Shield, TrendingUp, ArrowRight } from "lucide-react";
 import { MessageCircle, Mail, Database, ShoppingCart, Phone, Calendar } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 const FEATURE_ICONS = [Brain, Zap, Target, Workflow, Shield, TrendingUp];
 
 const WHATSAPP_PHONE = "5491134213579";
 const buildWhatsAppUrl = (message: string) =>
   `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(message)}`;
+
+// Static, defined once outside the component (avoids per-render allocations).
+const NODES = [
+  { id: "wa", label: "WhatsApp", icon: MessageCircle, angle: -90 },
+  { id: "mail", label: "Email", icon: Mail, angle: -30 },
+  { id: "crm", label: "CRM", icon: Database, angle: 30 },
+  { id: "shop", label: "E-commerce", icon: ShoppingCart, angle: 90 },
+  { id: "call", label: "Llamadas", icon: Phone, angle: 150 },
+  { id: "cal", label: "Agenda", icon: Calendar, angle: 210 },
+] as const;
+
+// Precompute trig once (60 nodes wouldn't matter, 6 even less, but avoids re-doing on every render).
+const NODE_GEOMETRY = NODES.map((n) => {
+  const rad = (n.angle * Math.PI) / 180;
+  return {
+    id: n.id,
+    // SVG coordinates (260 viewBox, radius 100 from center 130,130)
+    svgX: 130 + Math.cos(rad) * 100,
+    svgY: 130 + Math.sin(rad) * 100,
+    // Percent positions inside the 260×260 wrapper (38.46 = 100/260*100)
+    pctX: 50 + Math.cos(rad) * 38.46,
+    pctY: 50 + Math.sin(rad) * 38.46,
+  };
+});
+
+const ACTIVITY_FEED = [
+  "→ Respondiendo consulta en WhatsApp",
+  "→ Actualizando contacto en CRM",
+  "→ Agendando reunión automáticamente",
+  "→ Enviando seguimiento por email",
+  "→ Procesando pedido de e-commerce",
+  "→ Calificando lead entrante",
+];
 
 const AIAgentsSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
@@ -19,41 +52,47 @@ const AIAgentsSection = () => {
   const selectedService = services.find((s) => s.id === selectedServiceId) ?? services[0];
   const whatsappUrl = buildWhatsAppUrl(selectedService.message);
 
-  // Interactive agent network
-  const nodes = [
-    { id: "wa", label: "WhatsApp", icon: MessageCircle, angle: -90 },
-    { id: "mail", label: "Email", icon: Mail, angle: -30 },
-    { id: "crm", label: "CRM", icon: Database, angle: 30 },
-    { id: "shop", label: "E-commerce", icon: ShoppingCart, angle: 90 },
-    { id: "call", label: "Llamadas", icon: Phone, angle: 150 },
-    { id: "cal", label: "Agenda", icon: Calendar, angle: 210 },
-  ];
-  const activityFeed = [
-    "→ Respondiendo consulta en WhatsApp",
-    "→ Actualizando contacto en CRM",
-    "→ Agendando reunión automáticamente",
-    "→ Enviando seguimiento por email",
-    "→ Procesando pedido de e-commerce",
-    "→ Calificando lead entrante",
-  ];
+  // Use module-level constants
+  const nodes = NODES;
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [pinnedNode, setPinnedNode] = useState<string | null>(null);
   const [rippleKey, setRippleKey] = useState(0);
   const [activeNodeIdx, setActiveNodeIdx] = useState(0);
   const [feedIdx, setFeedIdx] = useState(0);
 
+  // Detect reduced-motion + coarse pointer (mobile) — both lower the animation budget.
+  const motionMode = useMemo(() => {
+    if (typeof window === "undefined" || !window.matchMedia) {
+      return { reduced: false, lite: false };
+    }
+    return {
+      reduced: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+      lite: window.matchMedia("(hover: none), (max-width: 768px)").matches,
+    };
+  }, []);
+  const { reduced, lite } = motionMode;
+
+  // Pause cycling when the section is off-screen, the user is interacting,
+  // or reduced motion is requested. requestAnimationFrame'd intervals would be
+  // overkill here; we just gate them.
   useEffect(() => {
-    if (hoveredNode || pinnedNode) return;
-    const a = setInterval(() => setActiveNodeIdx((i) => (i + 1) % nodes.length), 1600);
-    const b = setInterval(() => setFeedIdx((i) => (i + 1) % activityFeed.length), 2200);
+    if (!isVisible || hoveredNode || pinnedNode || reduced) return;
+    const cycleMs = lite ? 2400 : 1600;
+    const feedMs = lite ? 3000 : 2200;
+    const a = window.setInterval(() => setActiveNodeIdx((i) => (i + 1) % NODES.length), cycleMs);
+    const b = window.setInterval(() => setFeedIdx((i) => (i + 1) % ACTIVITY_FEED.length), feedMs);
     return () => { clearInterval(a); clearInterval(b); };
-  }, [hoveredNode, pinnedNode]);
+  }, [isVisible, hoveredNode, pinnedNode, reduced, lite]);
 
   const activeId = pinnedNode ?? hoveredNode ?? nodes[activeNodeIdx].id;
-  const activeNode = nodes.find((n) => n.id === activeId) ?? nodes[0];
-  const activeRad = (activeNode.angle * Math.PI) / 180;
-  const activeTargetX = 130 + Math.cos(activeRad) * 100;
-  const activeTargetY = 130 + Math.sin(activeRad) * 100;
+  const activeGeom = NODE_GEOMETRY.find((g) => g.id === activeId) ?? NODE_GEOMETRY[0];
+  const activeTargetX = activeGeom.svgX;
+  const activeTargetY = activeGeom.svgY;
+
+  // Single switch to pause every CSS animation in the graph when the section
+  // is off-screen or the user prefers reduced motion. Keeps GPU/CPU idle.
+  const animationsActive = isVisible && !reduced;
+  const playState = animationsActive ? "running" : "paused";
 
   return (
     <section
