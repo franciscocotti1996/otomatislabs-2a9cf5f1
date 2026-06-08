@@ -1,6 +1,6 @@
 import { useState } from "react";
 import logoHorizontal from "@/assets/logo-horizontal.png";
-import { Menu, X, Languages } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const Navbar = () => {
@@ -36,7 +36,9 @@ const Navbar = () => {
             aria-label={t.nav.langAria}
             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
           >
-            <Languages className="w-4 h-4" />
+            <span className="text-base leading-none" aria-hidden="true">
+              {lang === "es" ? "🇺🇸" : "🇪🇸"}
+            </span>
             {t.nav.langLabel}
           </button>
           <a
@@ -54,7 +56,9 @@ const Navbar = () => {
             aria-label={t.nav.langAria}
             className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border text-xs font-semibold"
           >
-            <Languages className="w-3.5 h-3.5" />
+            <span className="text-sm leading-none" aria-hidden="true">
+              {lang === "es" ? "🇺🇸" : "🇪🇸"}
+            </span>
             {t.nav.langLabel}
           </button>
           <button className="p-2" onClick={() => setOpen(!open)} aria-label="Menu">
