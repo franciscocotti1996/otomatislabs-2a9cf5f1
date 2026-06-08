@@ -3,6 +3,16 @@ import heroPerson from "@/assets/hero-person.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 
+const scrollToContact = (e: React.MouseEvent) => {
+  e.preventDefault();
+  const el = document.getElementById("contacto");
+  if (el) {
+    const offset = 120;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
+};
+
 const HeroSection = () => {
   const { ref, isVisible } = useScrollAnimation(0.1);
   const { t } = useLanguage();
