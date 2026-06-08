@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { translations, type Lang, type Dict } from "./translations";
+import { getFormatters, type Formatters } from "./formatters";
 
 type Ctx = {
   lang: Lang;
   setLang: (l: Lang) => void;
   toggle: () => void;
   t: Dict;
+  f: Formatters;
 };
 
 const LanguageContext = createContext<Ctx | null>(null);
