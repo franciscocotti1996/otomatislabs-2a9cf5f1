@@ -72,10 +72,7 @@ const AIAgentsSection = () => {
     const lowCores = typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency > 0 && nav.hardwareConcurrency <= 4;
     const lowMem = typeof nav.deviceMemory === "number" && nav.deviceMemory <= 2;
     const saveData = !!nav.connection?.saveData;
-    // Manual override for QA: ?fallback=static
-    const forced = typeof window.location !== "undefined" &&
-      new URLSearchParams(window.location.search).get("fallback") === "static";
-    const staticMode = forced || reduced || saveData || (lite && (lowCores || lowMem));
+    const staticMode = reduced || saveData || (lite && (lowCores || lowMem));
     return { reduced, lite, staticMode };
   }, []);
   const { reduced, lite, staticMode } = motionMode;
