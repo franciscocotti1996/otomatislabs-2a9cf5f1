@@ -63,14 +63,19 @@ const AIAgentsSection = () => {
   // Detect reduced-motion + coarse pointer (mobile) — both lower the animation budget.
   const motionMode = useMemo(() => {
     if (typeof window === "undefined" || !window.matchMedia) {
-      return { reduced: false, lite: false };
+      return { reduced: false, lite: false, staticMode: false };
     }
-    return {
-      reduced: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-      lite: window.matchMedia("(hover: none), (max-width: 768px)").matches,
-    };
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lite = window.matchMedia("(hover: none), (max-width: 768px)").matches;
+    // Low-end device heuristics: very few CPU cores, low RAM, or save-data on.
+    const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+    const lowCores = typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency > 0 && nav.hardwareConcurrency <= 4;
+    const lowMem = typeof nav.deviceMemory === "number" && nav.deviceMemory <= 2;
+    const saveData = !!nav.connection?.saveData;
+    const staticMode = reduced || saveData || (lite && (lowCores || lowMem));
+    return { reduced, lite, staticMode };
   }, []);
-  const { reduced, lite } = motionMode;
+  const { reduced, lite, staticMode } = motionMode;
 
   // Pause cycling when the section is off-screen, the user is interacting,
   // or reduced motion is requested. requestAnimationFrame'd intervals would be
@@ -91,7 +96,7 @@ const AIAgentsSection = () => {
 
   // Single switch to pause every CSS animation in the graph when the section
   // is off-screen or the user prefers reduced motion. Keeps GPU/CPU idle.
-  const animationsActive = isVisible && !reduced;
+  const animationsActive = isVisible && !reduced && !staticMode;
   const playState = animationsActive ? "running" : "paused";
 
   return (
@@ -179,8 +184,48 @@ const AIAgentsSection = () => {
                 />
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
-                {/* Interactive node network */}
+                {/* Interactive node network (or static fallback) */}
                 <div className="relative flex-1 flex items-center justify-center py-8">
+                  {staticMode ? (
+                    <div className="relative w-[260px] h-[260px]" aria-label="Red de canales conectados al núcleo de IA">
+                      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 260 260" role="img">
+                        <title>Agentes IA conectados a múltiples canales</title>
+                        {NODE_GEOMETRY.map((g) => (
+                          <line
+                            key={g.id}
+                            x1="130" y1="130" x2={g.svgX} y2={g.svgY}
+                            stroke="rgba(46,169,152,0.35)" strokeWidth={1}
+                          />
+                        ))}
+                        <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.18)" />
+                        <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.1)" strokeDasharray="2 6" />
+                      </svg>
+                      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary/60 flex items-center justify-center">
+                          <Brain className="w-8 h-8 text-white" />
+                        </div>
+                      </div>
+                      {nodes.map((node) => {
+                        const geom = NODE_GEOMETRY.find((g) => g.id === node.id)!;
+                        const Icon = node.icon;
+                        return (
+                          <div
+                            key={node.id}
+                            className="absolute"
+                            style={{ left: `${geom.pctX}%`, top: `${geom.pctY}%`, transform: "translate(-50%, -50%)" }}
+                          >
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center border bg-[#0a2030] border-primary/40">
+                              <Icon className="w-5 h-5 text-primary" />
+                            </div>
+                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap text-white/60">
+                              {node.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                  <>
                   {/* Local keyframes for fluid micro-animations */}
                   <style>{`
                     @keyframes nodeFloat {
@@ -381,13 +426,15 @@ const AIAgentsSection = () => {
                       );
                     })}
                   </div>
+                  </>
+                  )}
                 </div>
 
                 {/* Live activity feed */}
                 <div className="relative mx-5 mb-5 rounded-xl border border-primary/20 bg-black/30 backdrop-blur-sm p-3">
                   <div className="flex items-center gap-2 mb-1.5">
                     <span
-                      className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"
+                      className={`w-1.5 h-1.5 rounded-full bg-primary ${staticMode ? "" : "animate-pulse"}`}
                       style={{ animationPlayState: playState }}
                     />
                     <span className="text-[9px] font-heading font-bold tracking-[0.25em] uppercase text-primary">
@@ -396,9 +443,9 @@ const AIAgentsSection = () => {
                   </div>
                   <p
                     key={feedIdx}
-                    className="text-xs text-white/80 font-mono leading-snug animate-fade-in"
+                    className={`text-xs text-white/80 font-mono leading-snug ${staticMode ? "" : "animate-fade-in"}`}
                   >
-                    {ACTIVITY_FEED[feedIdx]}
+                    {staticMode ? ACTIVITY_FEED[0] : ACTIVITY_FEED[feedIdx]}
                   </p>
                 </div>
               </div>
