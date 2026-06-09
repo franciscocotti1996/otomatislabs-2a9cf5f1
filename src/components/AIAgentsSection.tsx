@@ -63,14 +63,19 @@ const AIAgentsSection = () => {
   // Detect reduced-motion + coarse pointer (mobile) — both lower the animation budget.
   const motionMode = useMemo(() => {
     if (typeof window === "undefined" || !window.matchMedia) {
-      return { reduced: false, lite: false };
+      return { reduced: false, lite: false, staticMode: false };
     }
-    return {
-      reduced: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
-      lite: window.matchMedia("(hover: none), (max-width: 768px)").matches,
-    };
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const lite = window.matchMedia("(hover: none), (max-width: 768px)").matches;
+    // Low-end device heuristics: very few CPU cores, low RAM, or save-data on.
+    const nav = navigator as Navigator & { deviceMemory?: number; connection?: { saveData?: boolean } };
+    const lowCores = typeof nav.hardwareConcurrency === "number" && nav.hardwareConcurrency > 0 && nav.hardwareConcurrency <= 4;
+    const lowMem = typeof nav.deviceMemory === "number" && nav.deviceMemory <= 2;
+    const saveData = !!nav.connection?.saveData;
+    const staticMode = reduced || saveData || (lite && (lowCores || lowMem));
+    return { reduced, lite, staticMode };
   }, []);
-  const { reduced, lite } = motionMode;
+  const { reduced, lite, staticMode } = motionMode;
 
   // Pause cycling when the section is off-screen, the user is interacting,
   // or reduced motion is requested. requestAnimationFrame'd intervals would be
@@ -91,7 +96,7 @@ const AIAgentsSection = () => {
 
   // Single switch to pause every CSS animation in the graph when the section
   // is off-screen or the user prefers reduced motion. Keeps GPU/CPU idle.
-  const animationsActive = isVisible && !reduced;
+  const animationsActive = isVisible && !reduced && !staticMode;
   const playState = animationsActive ? "running" : "paused";
 
   return (
