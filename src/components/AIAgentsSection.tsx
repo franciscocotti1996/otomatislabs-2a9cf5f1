@@ -220,7 +220,10 @@ const AIAgentsSection = () => {
                             <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center border bg-[#0a2030] border-primary/50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
                               <Icon className="w-[18px] h-[18px] sm:w-5 sm:h-5 text-primary" />
                             </div>
-                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[9px] sm:text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap text-white/80">
+                            <span
+                              title={node.label}
+                              className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[9px] sm:text-[10px] font-heading font-semibold tracking-wider uppercase text-white/80 text-center leading-tight max-w-[64px] sm:max-w-[80px] break-words [overflow-wrap:anywhere] [hyphens:auto]"
+                            >
                               {node.label}
                             </span>
                           </div>
