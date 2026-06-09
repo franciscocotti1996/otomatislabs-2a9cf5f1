@@ -185,24 +185,27 @@ const AIAgentsSection = () => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
                 {/* Interactive node network (or static fallback) */}
-                <div className="relative flex-1 flex items-center justify-center py-8">
+                <div className="relative flex-1 flex items-center justify-center py-8 px-4">
                   {staticMode ? (
-                    <div className="relative w-[260px] h-[260px]" aria-label="Red de canales conectados al núcleo de IA">
-                      <svg className="absolute inset-0 w-full h-full" viewBox="0 0 260 260" role="img">
+                    <div
+                      className="relative w-full max-w-[260px] aspect-square mx-auto"
+                      aria-label="Red de canales conectados al núcleo de IA"
+                    >
+                      <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 260 260" role="img" preserveAspectRatio="xMidYMid meet">
                         <title>Agentes IA conectados a múltiples canales</title>
                         {NODE_GEOMETRY.map((g) => (
                           <line
                             key={g.id}
                             x1="130" y1="130" x2={g.svgX} y2={g.svgY}
-                            stroke="rgba(46,169,152,0.35)" strokeWidth={1}
+                            stroke="rgba(46,169,152,0.4)" strokeWidth={1.25} strokeLinecap="round"
                           />
                         ))}
-                        <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.18)" />
-                        <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.1)" strokeDasharray="2 6" />
+                        <circle cx="130" cy="130" r="55" fill="none" stroke="rgba(46,169,152,0.22)" />
+                        <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(46,169,152,0.14)" strokeDasharray="2 6" />
                       </svg>
                       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
-                        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary/60 flex items-center justify-center">
-                          <Brain className="w-8 h-8 text-white" />
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-primary to-primary/60 flex items-center justify-center shadow-[0_0_30px_rgba(46,169,152,0.4)]">
+                          <Brain className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
                         </div>
                       </div>
                       {nodes.map((node) => {
@@ -214,10 +217,10 @@ const AIAgentsSection = () => {
                             className="absolute"
                             style={{ left: `${geom.pctX}%`, top: `${geom.pctY}%`, transform: "translate(-50%, -50%)" }}
                           >
-                            <div className="w-11 h-11 rounded-xl flex items-center justify-center border bg-[#0a2030] border-primary/40">
-                              <Icon className="w-5 h-5 text-primary" />
+                            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl flex items-center justify-center border bg-[#0a2030] border-primary/50 shadow-[0_2px_8px_rgba(0,0,0,0.4)]">
+                              <Icon className="w-[18px] h-[18px] sm:w-5 sm:h-5 text-primary" />
                             </div>
-                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap text-white/60">
+                            <span className="absolute left-1/2 -translate-x-1/2 top-full mt-1.5 text-[9px] sm:text-[10px] font-heading font-semibold tracking-wider uppercase whitespace-nowrap text-white/80">
                               {node.label}
                             </span>
                           </div>
