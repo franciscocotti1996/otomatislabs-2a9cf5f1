@@ -88,25 +88,20 @@ describe("AIAgentsSection — responsive overflow regression", () => {
     });
   });
 
-  it("?fallback=static URL override is not honored in production code", () => {
-    // Guard against the QA override being re-introduced.
-    // Read the source file via Vite's raw import.
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const src = String(
-      // @ts-expect-error - vite raw import handled at build/test time
-      (globalThis.__AIAGENTS_SOURCE__ as string | undefined) ?? ""
-    );
-    // Fallback: if the raw import isn't wired, the test still passes by
-    // confirming the runtime behavior — staticMode stays false when
-    // reduced-motion is false and no device hints are present.
-    if (src) {
-      expect(src).not.toMatch(/fallback=static/);
-      expect(src).not.toMatch(/URLSearchParams\(window\.location\.search\)/);
-    }
+  it("?fallback=static URL override is not honored", () => {
+    // Simulate the old QA override; staticMode must stay false.
     setReducedMotion(false);
+    const originalLocation = window.location;
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: { ...originalLocation, search: "?fallback=static" },
+    });
     const { container } = renderSection();
-    // The static-only marker (aria-label) should not be present
     const staticEl = container.querySelector('[aria-label="Red de canales conectados al núcleo de IA"]');
     expect(staticEl).toBeFalsy();
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      value: originalLocation,
+    });
   });
 });
