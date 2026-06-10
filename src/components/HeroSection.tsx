@@ -74,15 +74,15 @@ const HeroSection = () => {
           </div>
 
           {/* Right: Image */}
-          <div className="hidden lg:flex justify-center">
-            <div className="relative">
+          <div className="flex justify-center order-first lg:order-last mb-8 lg:mb-0">
+            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md">
               <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-2xl" />
               <img
                 src={heroPerson}
                 alt={t.hero.imgAlt}
                 width={1024}
                 height={1024}
-                className="relative rounded-2xl shadow-2xl object-cover w-full max-w-md"
+                className="relative rounded-2xl shadow-2xl object-cover w-full aspect-[4/5] sm:aspect-square [object-position:50%_30%]"
               />
             </div>
           </div>
