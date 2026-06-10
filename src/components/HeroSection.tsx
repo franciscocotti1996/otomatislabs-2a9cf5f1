@@ -1,5 +1,12 @@
 import { MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
 import heroPerson from "@/assets/hero-person.jpg";
+import heroPersonWebp from "@/assets/hero-person.webp";
+import heroPerson400Webp from "@/assets/hero-person-400.webp";
+import heroPerson600Webp from "@/assets/hero-person-600.webp";
+import heroPerson900Webp from "@/assets/hero-person-900.webp";
+import heroPerson400Jpg from "@/assets/hero-person-400.jpg";
+import heroPerson600Jpg from "@/assets/hero-person-600.jpg";
+import heroPerson900Jpg from "@/assets/hero-person-900.jpg";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -77,13 +84,24 @@ const HeroSection = () => {
           <div className="flex justify-center order-first lg:order-last mb-8 lg:mb-0">
             <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md">
               <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-2xl" />
-              <img
-                src={heroPerson}
-                alt={t.hero.imgAlt}
-                width={1024}
-                height={1024}
-                className="relative rounded-2xl shadow-2xl object-cover w-full aspect-[4/5] sm:aspect-square [object-position:50%_30%]"
-              />
+              <picture>
+                <source
+                  type="image/webp"
+                  srcSet={`${heroPerson400Webp} 400w, ${heroPerson600Webp} 600w, ${heroPerson900Webp} 900w, ${heroPersonWebp} 1024w`}
+                  sizes="(max-width: 640px) 280px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 448px"
+                />
+                <img
+                  src={heroPerson600Jpg}
+                  srcSet={`${heroPerson400Jpg} 400w, ${heroPerson600Jpg} 600w, ${heroPerson900Jpg} 900w, ${heroPerson} 1024w`}
+                  sizes="(max-width: 640px) 280px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 448px"
+                  alt={t.hero.imgAlt}
+                  width={1024}
+                  height={1024}
+                  fetchPriority="high"
+                  decoding="async"
+                  className="relative rounded-2xl shadow-2xl object-cover w-full aspect-[4/5] sm:aspect-square [object-position:50%_30%]"
+                />
+              </picture>
             </div>
           </div>
         </div>
