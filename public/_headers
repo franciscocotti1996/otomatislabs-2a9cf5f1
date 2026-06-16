@@ -1,0 +1,25 @@
+# Cache-Control headers for Cloudflare Pages / Lovable CDN
+# Vite hashed assets (JS, CSS, images) — immutable forever
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# HTML documents — never cache, always revalidate
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Public images without content hashes — cache 1 day
+/og-image.jpg
+  Cache-Control: public, max-age=86400
+
+/favicon.ico
+  Cache-Control: public, max-age=86400
+
+/placeholder.svg
+  Cache-Control: public, max-age=86400
+
+# Static text assets — cache 1 week
+/robots.txt
+  Cache-Control: public, max-age=604800
+
+/sitemap.xml
+  Cache-Control: public, max-age=604800
