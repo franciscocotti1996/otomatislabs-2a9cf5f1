@@ -53,7 +53,12 @@ const AIAgentsSection = () => {
   const whatsappUrl = buildWhatsAppUrl(selectedService.message);
 
   // Use module-level constants
-  const nodes = NODES;
+  const nodeLabels = t.aiAgents.nodeLabels;
+  const nodes = useMemo(
+    () => NODES.map((n) => ({ ...n, label: nodeLabels[n.id] ?? n.label })),
+    [nodeLabels]
+  );
+  const activityFeed = t.aiAgents.liveFeed.items;
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [pinnedNode, setPinnedNode] = useState<string | null>(null);
   const [rippleKey, setRippleKey] = useState(0);
@@ -444,14 +449,14 @@ const AIAgentsSection = () => {
                       style={{ animationPlayState: playState }}
                     />
                     <span className="text-[9px] font-heading font-bold tracking-[0.25em] uppercase text-primary">
-                      Agente activo
+                      {t.aiAgents.liveFeed.activeLabel}
                     </span>
                   </div>
                   <p
                     key={feedIdx}
                     className={`text-xs text-white/80 font-mono leading-snug ${staticMode ? "" : "animate-fade-in"}`}
                   >
-                    {staticMode ? ACTIVITY_FEED[0] : ACTIVITY_FEED[feedIdx]}
+                    {staticMode ? activityFeed[0] : activityFeed[feedIdx]}
                   </p>
                 </div>
               </div>
