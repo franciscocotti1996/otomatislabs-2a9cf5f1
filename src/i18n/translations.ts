@@ -118,6 +118,10 @@ const es = {
         "→ Calificando lead entrante",
       ],
     },
+    network: {
+      ariaLabel: "Red de canales conectados al núcleo de IA",
+      title: "Agentes IA conectados a múltiples canales",
+    },
   },
   aiAgentsFaq: {
     eyebrow: "FAQ",
@@ -388,6 +392,30 @@ const es = {
     process: "Proceso",
     contact: "Contacto",
   },
+  testimonials: {
+    eyebrow: "Testimonios",
+    title: "Lo que dicen nuestros clientes",
+    items: [
+      {
+        quote: "Otomatis Labs transformó nuestra atención al cliente. En 3 meses redujimos un 40% las consultas repetitivas gracias al chatbot en WhatsApp.",
+        name: "Carlos Méndez",
+        role: "Director de Operaciones",
+        company: "FinServ Latam",
+      },
+      {
+        quote: "El equipo entendió nuestro negocio desde el día uno. La implementación fue rápida y los resultados superaron nuestras expectativas.",
+        name: "María José Rivera",
+        role: "Head of Customer Experience",
+        company: "RetailMax",
+      },
+      {
+        quote: "Los agentes de IA que desarrollaron automatizan procesos que antes tomaban horas. Es un cambio real en nuestra productividad.",
+        name: "Andrés Gutiérrez",
+        role: "CTO",
+        company: "LogiTech Solutions",
+      },
+    ],
+  },
 };
 
 const en: typeof es = {
@@ -507,6 +535,10 @@ const en: typeof es = {
         "→ Processing e-commerce order",
         "→ Qualifying incoming lead",
       ],
+    },
+    network: {
+      ariaLabel: "Network of channels connected to the AI core",
+      title: "AI agents connected to multiple channels",
     },
   },
   aiAgentsFaq: {
@@ -777,6 +809,30 @@ const en: typeof es = {
     services: "Services",
     process: "Process",
     contact: "Contact",
+  },
+  testimonials: {
+    eyebrow: "Testimonials",
+    title: "What our clients say",
+    items: [
+      {
+        quote: "Otomatis Labs transformed our customer service. In 3 months we cut repetitive inquiries by 40% thanks to the WhatsApp chatbot.",
+        name: "Carlos Méndez",
+        role: "Operations Director",
+        company: "FinServ Latam",
+      },
+      {
+        quote: "The team understood our business from day one. Implementation was fast and results exceeded our expectations.",
+        name: "María José Rivera",
+        role: "Head of Customer Experience",
+        company: "RetailMax",
+      },
+      {
+        quote: "The AI agents they built automate processes that used to take hours. It's a real shift in our productivity.",
+        name: "Andrés Gutiérrez",
+        role: "CTO",
+        company: "LogiTech Solutions",
+      },
+    ],
   },
 };
 
