@@ -810,6 +810,30 @@ const en: typeof es = {
     process: "Process",
     contact: "Contact",
   },
+  testimonials: {
+    eyebrow: "Testimonials",
+    title: "What our clients say",
+    items: [
+      {
+        quote: "Otomatis Labs transformed our customer service. In 3 months we cut repetitive inquiries by 40% thanks to the WhatsApp chatbot.",
+        name: "Carlos Méndez",
+        role: "Operations Director",
+        company: "FinServ Latam",
+      },
+      {
+        quote: "The team understood our business from day one. Implementation was fast and results exceeded our expectations.",
+        name: "María José Rivera",
+        role: "Head of Customer Experience",
+        company: "RetailMax",
+      },
+      {
+        quote: "The AI agents they built automate processes that used to take hours. It's a real shift in our productivity.",
+        name: "Andrés Gutiérrez",
+        role: "CTO",
+        company: "LogiTech Solutions",
+      },
+    ],
+  },
 };
 
 export const translations = { es, en };
