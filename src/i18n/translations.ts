@@ -392,6 +392,30 @@ const es = {
     process: "Proceso",
     contact: "Contacto",
   },
+  testimonials: {
+    eyebrow: "Testimonios",
+    title: "Lo que dicen nuestros clientes",
+    items: [
+      {
+        quote: "Otomatis Labs transformó nuestra atención al cliente. En 3 meses redujimos un 40% las consultas repetitivas gracias al chatbot en WhatsApp.",
+        name: "Carlos Méndez",
+        role: "Director de Operaciones",
+        company: "FinServ Latam",
+      },
+      {
+        quote: "El equipo entendió nuestro negocio desde el día uno. La implementación fue rápida y los resultados superaron nuestras expectativas.",
+        name: "María José Rivera",
+        role: "Head of Customer Experience",
+        company: "RetailMax",
+      },
+      {
+        quote: "Los agentes de IA que desarrollaron automatizan procesos que antes tomaban horas. Es un cambio real en nuestra productividad.",
+        name: "Andrés Gutiérrez",
+        role: "CTO",
+        company: "LogiTech Solutions",
+      },
+    ],
+  },
 };
 
 const en: typeof es = {
