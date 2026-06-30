@@ -194,10 +194,10 @@ const AIAgentsSection = () => {
                   {staticMode ? (
                     <div
                       className="relative w-full max-w-[260px] aspect-square mx-auto"
-                      aria-label="Red de canales conectados al núcleo de IA"
+                      aria-label={t.aiAgents.network.ariaLabel}
                     >
                       <svg className="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 260 260" role="img" preserveAspectRatio="xMidYMid meet">
-                        <title>Agentes IA conectados a múltiples canales</title>
+                        <title>{t.aiAgents.network.title}</title>
                         {NODE_GEOMETRY.map((g) => (
                           <line
                             key={g.id}
