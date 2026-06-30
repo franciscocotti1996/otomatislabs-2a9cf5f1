@@ -118,6 +118,10 @@ const es = {
         "→ Calificando lead entrante",
       ],
     },
+    network: {
+      ariaLabel: "Red de canales conectados al núcleo de IA",
+      title: "Agentes IA conectados a múltiples canales",
+    },
   },
   aiAgentsFaq: {
     eyebrow: "FAQ",
@@ -507,6 +511,10 @@ const en: typeof es = {
         "→ Processing e-commerce order",
         "→ Qualifying incoming lead",
       ],
+    },
+    network: {
+      ariaLabel: "Network of channels connected to the AI core",
+      title: "AI agents connected to multiple channels",
     },
   },
   aiAgentsFaq: {
