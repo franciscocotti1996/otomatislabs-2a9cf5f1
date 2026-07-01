@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { toast } from "sonner";
 
 type ContactValues = { name: string; company: string; comments: string };
 
@@ -48,7 +49,8 @@ const CTASection = () => {
       `${t.cta.company}: ${company}\n` +
       `${t.cta.comments}: ${comments}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+    toast.success(t.cta.successTitle, { description: t.cta.waRedirect });
+    setTimeout(() => window.open(url, "_blank", "noopener,noreferrer"), 600);
   };
 
   return (

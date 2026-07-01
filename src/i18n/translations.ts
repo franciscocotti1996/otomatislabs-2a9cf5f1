@@ -372,6 +372,7 @@ const es = {
     successBoxTitle: "¡Gracias por escribirnos!",
     successBoxDesc: "Tu mensaje fue enviado correctamente y nuestro equipo ya lo está revisando. Te contactaremos a la brevedad. ID de seguimiento:",
     errorBoxTitle: "No pudimos enviar tu mensaje",
+    waRedirect: "Te redirigimos a WhatsApp para completar el envío...",
     err: {
       name: "Ingresá tu nombre",
       nameMax: "Máximo 100 caracteres",
@@ -790,6 +791,7 @@ const en: typeof es = {
     successBoxTitle: "Thanks for reaching out!",
     successBoxDesc: "Your message was sent successfully and our team is already reviewing it. We'll be in touch shortly. Tracking ID:",
     errorBoxTitle: "We couldn't send your message",
+    waRedirect: "Redirecting you to WhatsApp to complete the send...",
     err: {
       name: "Enter your name",
       nameMax: "Max 100 characters",
