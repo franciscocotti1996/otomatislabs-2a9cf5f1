@@ -1,16 +1,16 @@
-import { useState, useRef, useEffect } from "react";
-import { Send, Loader2 } from "lucide-react";
+import { useState } from "react";
+import { Send } from "lucide-react";
 import { z } from "zod";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { toast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 type ContactValues = { name: string; company: string; comments: string };
+
+const WHATSAPP_NUMBER = "5491134213579";
 
 const CTASection = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -22,19 +22,6 @@ const CTASection = () => {
   });
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
-  const [submitting, setSubmitting] = useState(false);
-  const [lastSubmissionId, setLastSubmissionId] = useState<string | null>(null);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-  const successRef = useRef<HTMLDivElement>(null);
-  const errorRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (submitStatus === "success") {
-      successRef.current?.focus();
-    } else if (submitStatus === "error") {
-      errorRef.current?.focus();
-    }
-  }, [submitStatus]);
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -42,7 +29,7 @@ const CTASection = () => {
     setValues((v) => ({ ...v, [field]: e.target.value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const parsed = contactSchema.safeParse(values);
     if (!parsed.success) {
@@ -55,36 +42,13 @@ const CTASection = () => {
       return;
     }
     setErrors({});
-    setSubmitting(true);
-    setSubmitStatus("idle");
-    setLastSubmissionId(null);
-    const submissionId = `OTL-${Date.now().toString(36).toUpperCase()}-${Math.random()
-      .toString(36)
-      .slice(2, 7)
-      .toUpperCase()}`;
-    try {
-      const { error } = await supabase.functions.invoke("send-contact-email", {
-        body: { ...parsed.data, submissionId },
-      });
-      if (error) throw error;
-      setLastSubmissionId(submissionId);
-      setSubmitStatus("success");
-      toast({
-        title: t.cta.successTitle,
-        description: `${t.cta.successDesc} ${submissionId}`,
-      });
-      setValues({ name: "", company: "", comments: "" });
-    } catch (err) {
-      console.error(err);
-      setSubmitStatus("error");
-      toast({
-        title: t.cta.errorTitle,
-        description: t.cta.errorDesc,
-        variant: "destructive",
-      });
-    } finally {
-      setSubmitting(false);
-    }
+    const { name, company, comments } = parsed.data;
+    const message =
+      `${t.cta.name}: ${name}\n` +
+      `${t.cta.company}: ${company}\n` +
+      `${t.cta.comments}: ${comments}`;
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -175,56 +139,10 @@ const CTASection = () => {
               <Button
                 type="submit"
                 size="lg"
-                disabled={submitting}
                 className="w-full font-heading font-semibold"
               >
-                {submitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" /> {t.cta.sending}
-                  </>
-                ) : (
-                  <>
-                    {t.cta.send} <Send className="w-4 h-4" />
-                  </>
-                )}
+                {t.cta.send} <Send className="w-4 h-4" />
               </Button>
-
-              {submitStatus === "success" && lastSubmissionId && (
-                <div
-                  ref={successRef}
-                  tabIndex={-1}
-                  role="status"
-                  aria-live="polite"
-                  className="rounded-lg border border-green-600/30 bg-green-50 p-4 text-sm outline-none focus:ring-2 focus:ring-green-600/40"
-                >
-                  <p className="font-heading font-semibold text-green-800">
-                    {t.cta.successBoxTitle}
-                  </p>
-                  <p className="text-green-700 mt-1">
-                    {t.cta.successBoxDesc}{" "}
-                    <span className="font-mono font-semibold text-green-900">
-                      {lastSubmissionId}
-                    </span>
-                  </p>
-                </div>
-              )}
-
-              {submitStatus === "error" && (
-                <div
-                  ref={errorRef}
-                  tabIndex={-1}
-                  role="alert"
-                  aria-live="assertive"
-                  className="rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm outline-none focus:ring-2 focus:ring-destructive/40"
-                >
-                  <p className="font-heading font-semibold text-destructive">
-                    {t.cta.errorBoxTitle}
-                  </p>
-                  <p className="text-destructive/80 mt-1">
-                    {t.cta.errorDesc}
-                  </p>
-                </div>
-              )}
             </form>
           </div>
         </div>
