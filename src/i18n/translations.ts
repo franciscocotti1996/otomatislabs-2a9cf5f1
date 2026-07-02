@@ -795,6 +795,9 @@ const en: typeof es = {
     successBoxDesc: "Your message was sent successfully and our team is already reviewing it. We'll be in touch shortly. Tracking ID:",
     errorBoxTitle: "We couldn't send your message",
     waRedirect: "Redirecting you to WhatsApp to complete the send...",
+    waGreeting: "Hi Otomatis Labs! 👋",
+    waIntro: "I'd like to learn more about your chatbots and AI agents. Here are my details:",
+    waClosing: "Looking forward to your reply. Thanks!",
     err: {
       name: "Enter your name",
       nameMax: "Max 100 characters",
