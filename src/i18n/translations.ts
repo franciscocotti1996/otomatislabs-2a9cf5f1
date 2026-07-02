@@ -802,6 +802,10 @@ const en: typeof es = {
     waGreeting: "Hi Otomatis Labs! 👋",
     waIntro: "I'd like to learn more about your chatbots and AI agents. Here are my details:",
     waClosing: "Looking forward to your reply. Thanks!",
+    previewTitle: "Message preview",
+    previewDesc: "Review the message before opening it in WhatsApp.",
+    previewEdit: "Edit",
+    previewConfirm: "Open WhatsApp",
     err: {
       name: "Enter your name",
       nameMax: "Max 100 characters",
