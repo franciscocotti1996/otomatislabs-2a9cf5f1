@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Send } from "lucide-react";
+import { Send, Loader2 } from "lucide-react";
 import { z } from "zod";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { Button } from "@/components/ui/button";
@@ -23,6 +23,7 @@ const CTASection = () => {
   });
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
+  const [submitting, setSubmitting] = useState(false);
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -43,6 +44,7 @@ const CTASection = () => {
       return;
     }
     setErrors({});
+    setSubmitting(true);
     const { name, company, comments } = parsed.data;
     const message =
       `${t.cta.name}: ${name}\n` +
@@ -50,7 +52,10 @@ const CTASection = () => {
       `${t.cta.comments}: ${comments}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     toast.success(t.cta.successTitle, { description: t.cta.waRedirect });
-    setTimeout(() => window.open(url, "_blank", "noopener,noreferrer"), 600);
+    setTimeout(() => {
+      window.open(url, "_blank", "noopener,noreferrer");
+      setSubmitting(false);
+    }, 600);
   };
 
   return (
@@ -142,8 +147,18 @@ const CTASection = () => {
                 type="submit"
                 size="lg"
                 className="w-full font-heading font-semibold"
+                disabled={submitting}
+                aria-busy={submitting}
               >
-                {t.cta.send} <Send className="w-4 h-4" />
+                {submitting ? (
+                  <>
+                    {t.cta.sending} <Loader2 className="w-4 h-4 animate-spin" />
+                  </>
+                ) : (
+                  <>
+                    {t.cta.send} <Send className="w-4 h-4" />
+                  </>
+                )}
               </Button>
             </form>
           </div>
