@@ -376,6 +376,10 @@ const es = {
     waGreeting: "¡Hola Otomatis Labs! 👋",
     waIntro: "Me gustaría conocer más sobre sus chatbots y agentes de IA. Les dejo mis datos:",
     waClosing: "¡Quedo atento/a a su respuesta. Gracias!",
+    previewTitle: "Vista previa del mensaje",
+    previewDesc: "Revisá el mensaje antes de abrirlo en WhatsApp.",
+    previewEdit: "Editar",
+    previewConfirm: "Abrir WhatsApp",
     err: {
       name: "Ingresá tu nombre",
       nameMax: "Máximo 100 caracteres",
@@ -798,6 +802,10 @@ const en: typeof es = {
     waGreeting: "Hi Otomatis Labs! 👋",
     waIntro: "I'd like to learn more about your chatbots and AI agents. Here are my details:",
     waClosing: "Looking forward to your reply. Thanks!",
+    previewTitle: "Message preview",
+    previewDesc: "Review the message before opening it in WhatsApp.",
+    previewEdit: "Edit",
+    previewConfirm: "Open WhatsApp",
     err: {
       name: "Enter your name",
       nameMax: "Max 100 characters",
