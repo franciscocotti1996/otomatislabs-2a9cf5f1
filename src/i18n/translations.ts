@@ -376,6 +376,10 @@ const es = {
     waGreeting: "¡Hola Otomatis Labs! 👋",
     waIntro: "Me gustaría conocer más sobre sus chatbots y agentes de IA. Les dejo mis datos:",
     waClosing: "¡Quedo atento/a a su respuesta. Gracias!",
+    previewTitle: "Vista previa del mensaje",
+    previewDesc: "Revisá el mensaje antes de abrirlo en WhatsApp.",
+    previewEdit: "Editar",
+    previewConfirm: "Abrir WhatsApp",
     err: {
       name: "Ingresá tu nombre",
       nameMax: "Máximo 100 caracteres",
