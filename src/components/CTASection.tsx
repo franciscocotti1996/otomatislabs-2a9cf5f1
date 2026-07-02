@@ -47,9 +47,12 @@ const CTASection = () => {
     setSubmitting(true);
     const { name, company, comments } = parsed.data;
     const message =
-      `${t.cta.name}: ${name}\n` +
-      `${t.cta.company}: ${company}\n` +
-      `${t.cta.comments}: ${comments}`;
+      `${t.cta.waGreeting}\n\n` +
+      `${t.cta.waIntro}\n\n` +
+      `• ${t.cta.name}: ${name}\n` +
+      `• ${t.cta.company}: ${company}\n` +
+      `• ${t.cta.comments}: ${comments}\n\n` +
+      `${t.cta.waClosing}`;
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
     toast.success(t.cta.successTitle, { description: t.cta.waRedirect });
     setTimeout(() => {
