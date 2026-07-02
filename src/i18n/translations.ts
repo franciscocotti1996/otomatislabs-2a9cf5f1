@@ -373,6 +373,9 @@ const es = {
     successBoxDesc: "Tu mensaje fue enviado correctamente y nuestro equipo ya lo está revisando. Te contactaremos a la brevedad. ID de seguimiento:",
     errorBoxTitle: "No pudimos enviar tu mensaje",
     waRedirect: "Te redirigimos a WhatsApp para completar el envío...",
+    waGreeting: "¡Hola Otomatis Labs! 👋",
+    waIntro: "Me gustaría conocer más sobre sus chatbots y agentes de IA. Les dejo mis datos:",
+    waClosing: "¡Quedo atento/a a su respuesta. Gracias!",
     err: {
       name: "Ingresá tu nombre",
       nameMax: "Máximo 100 caracteres",
