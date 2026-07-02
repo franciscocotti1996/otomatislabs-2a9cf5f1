@@ -6,6 +6,14 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { toast } from "sonner";
 
@@ -24,6 +32,8 @@ const CTASection = () => {
   const [values, setValues] = useState<ContactValues>({ name: "", company: "", comments: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof ContactValues, string>>>({});
   const [submitting, setSubmitting] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewMessage, setPreviewMessage] = useState("");
 
   const handleChange = (field: keyof ContactValues) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -44,7 +54,6 @@ const CTASection = () => {
       return;
     }
     setErrors({});
-    setSubmitting(true);
     const { name, company, comments } = parsed.data;
     const message =
       `${t.cta.waGreeting}\n\n` +
@@ -53,12 +62,19 @@ const CTASection = () => {
       `• ${t.cta.company}: ${company}\n` +
       `• ${t.cta.comments}: ${comments}\n\n` +
       `${t.cta.waClosing}`;
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+    setPreviewMessage(message);
+    setPreviewOpen(true);
+  };
+
+  const handleConfirmSend = () => {
+    setSubmitting(true);
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(previewMessage)}`;
     toast.success(t.cta.successTitle, { description: t.cta.waRedirect });
     setTimeout(() => {
       window.open(url, "_blank", "noopener,noreferrer");
       setSubmitting(false);
-    }, 600);
+      setPreviewOpen(false);
+    }, 400);
   };
 
   return (
@@ -167,6 +183,45 @@ const CTASection = () => {
           </div>
         </div>
       </div>
+
+      <Dialog open={previewOpen} onOpenChange={setPreviewOpen}>
+        <DialogContent className="max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="font-heading">{t.cta.previewTitle}</DialogTitle>
+            <DialogDescription>{t.cta.previewDesc}</DialogDescription>
+          </DialogHeader>
+          <pre className="whitespace-pre-wrap break-words rounded-md border bg-muted/50 p-4 text-sm font-body max-h-[50vh] overflow-y-auto">
+            {previewMessage}
+          </pre>
+          <DialogFooter className="gap-2 sm:gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setPreviewOpen(false)}
+              disabled={submitting}
+            >
+              {t.cta.previewEdit}
+            </Button>
+            <Button
+              type="button"
+              onClick={handleConfirmSend}
+              disabled={submitting}
+              aria-busy={submitting}
+              className="font-heading font-semibold"
+            >
+              {submitting ? (
+                <>
+                  {t.cta.sending} <Loader2 className="w-4 h-4 animate-spin" />
+                </>
+              ) : (
+                <>
+                  {t.cta.previewConfirm} <Send className="w-4 h-4" />
+                </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
