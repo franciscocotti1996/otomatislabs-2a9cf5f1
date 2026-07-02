@@ -373,6 +373,9 @@ const es = {
     successBoxDesc: "Tu mensaje fue enviado correctamente y nuestro equipo ya lo está revisando. Te contactaremos a la brevedad. ID de seguimiento:",
     errorBoxTitle: "No pudimos enviar tu mensaje",
     waRedirect: "Te redirigimos a WhatsApp para completar el envío...",
+    waGreeting: "¡Hola Otomatis Labs! 👋",
+    waIntro: "Me gustaría conocer más sobre sus chatbots y agentes de IA. Les dejo mis datos:",
+    waClosing: "¡Quedo atento/a a su respuesta. Gracias!",
     err: {
       name: "Ingresá tu nombre",
       nameMax: "Máximo 100 caracteres",
@@ -792,6 +795,9 @@ const en: typeof es = {
     successBoxDesc: "Your message was sent successfully and our team is already reviewing it. We'll be in touch shortly. Tracking ID:",
     errorBoxTitle: "We couldn't send your message",
     waRedirect: "Redirecting you to WhatsApp to complete the send...",
+    waGreeting: "Hi Otomatis Labs! 👋",
+    waIntro: "I'd like to learn more about your chatbots and AI agents. Here are my details:",
+    waClosing: "Looking forward to your reply. Thanks!",
     err: {
       name: "Enter your name",
       nameMax: "Max 100 characters",
