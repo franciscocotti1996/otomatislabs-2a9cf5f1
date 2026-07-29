@@ -22,14 +22,16 @@ const Index = () => {
   const { lang } = useLanguage();
   const siteUrl = "https://otomatislabs.com";
   const canonical = `${siteUrl}/${lang}`;
+  const ogImage =
+    "https://storage.googleapis.com/gpt-engineer-file-uploads/NapTWNYi0RSobKtZq6ILtQo0m2I2/social-images/social-1780964625231-logo-13_(1).webp";
   const title =
     lang === "es"
       ? "Otomatis Labs — Chatbots Multicanal & Agentes de IA"
       : "Otomatis Labs — Multichannel Chatbots & AI Agents";
   const description =
     lang === "es"
-      ? "Otomatis Labs desarrolla chatbots multicanales y soluciones con agentes de IA para automatizar la relación con tus clientes."
-      : "Otomatis Labs builds multichannel chatbots and AI agent solutions to automate customer interactions.";
+      ? "Chatbots multicanal y agentes de IA que automatizan atención, ventas y operaciones. Integraciones con WhatsApp, web, CRM y e-commerce."
+      : "Multichannel chatbots and AI agents that automate support, sales and operations. Integrations with WhatsApp, web, CRM and e-commerce.";
   const ogLocale = lang === "es" ? "es_ES" : "en_US";
   const ogLocaleAlt = lang === "es" ? "en_US" : "es_ES";
 
@@ -46,10 +48,30 @@ const Index = () => {
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Otomatis Labs" />
         <meta property="og:locale" content={ogLocale} />
         <meta property="og:locale:alternate" content={ogLocaleAlt} />
+        <meta property="og:image" content={ogImage} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={title} />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+        <meta name="twitter:image:alt" content={title} />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Otomatis Labs",
+            url: canonical,
+            inLanguage: lang,
+            description,
+            publisher: { "@type": "Organization", name: "Otomatis Labs", url: siteUrl },
+          })}
+        </script>
       </Helmet>
       <Navbar />
       <HeroSection />
