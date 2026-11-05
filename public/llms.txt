@@ -1,0 +1,25 @@
+# Otomatis Labs
+> Consultora argentina especializada en chatbots multicanal y agentes de IA para empresas de Latinoamérica. Partner oficial de Meta (WhatsApp Business) y Botmaker.
+
+## Qué hacemos
+- Chatbots multicanal: WhatsApp, Instagram, Messenger, webchat y chat en app.
+- Agentes de IA autónomos que ejecutan acciones en sistemas del cliente (consultas de stock, órdenes, turnos, cobros).
+- Integraciones con CRM, ERP, pasarelas de pago y APIs propias del cliente.
+- Conversational commerce: catálogo, asesoramiento, carrito y pago dentro del chat.
+
+## Casos de uso
+Ventas conversacionales, atención al cliente 24/7, gestión de turnos y reservas, cobranzas, calificación de leads, logística y postventa.
+
+## Proceso
+Discovery → Diseño conversacional y arquitectura → Desarrollo e implementación → Mejora continua basada en datos.
+
+## Datos
+- +100.000 conversaciones gestionadas por mes.
+- +30 chatbots en producción.
+- 8+ años de experiencia.
+- Clientes: Bull Market, Inviu, Capital Markets, Keko, Legión Extranjera, nocnoc.
+
+## Contacto
+- Web: https://otomatislabs.com/es (English: https://otomatislabs.com/en)
+- WhatsApp: https://wa.me/5491134213579
+- LinkedIn: https://www.linkedin.com/company/otomatis-labs/
