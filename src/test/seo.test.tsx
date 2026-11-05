@@ -33,8 +33,9 @@ describe("index.html static head", () => {
     const desc = metaContent("name", "description");
     expect(desc).toBeTruthy();
     expect(desc).not.toMatch(/Lovable Generated Project/i);
-    expect(desc!.length).toBeGreaterThan(50);
-    expect(desc!.length).toBeLessThanOrEqual(170);
+    if (!desc) throw new Error("Missing description");
+    expect(desc.length).toBeGreaterThan(50);
+    expect(desc.length).toBeLessThanOrEqual(170);
   });
 
   it("has required Open Graph and Twitter tags", () => {
@@ -52,6 +53,24 @@ describe("index.html static head", () => {
     expect(dupes(attrs("meta", "name"))).toEqual([]);
     expect(dupes(attrs("meta", "property"))).toEqual([]);
   });
+
+  it("hosts both social image tags on the primary domain", () => {
+    expect(metaContent("property", "og:image")).toBe(`${SITE}/og-image.jpg`);
+    expect(metaContent("name", "twitter:image")).toBe(`${SITE}/og-image.jpg`);
+  });
+
+  it("declares one Organization with a same-domain logo", () => {
+    const schemas = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+      .map((match) => JSON.parse(match[1]));
+    const organizations = schemas.filter((schema) => schema["@type"] === "Organization");
+    expect(organizations).toHaveLength(1);
+    expect(organizations[0].logo).toBe(`${SITE}/logo.png`);
+    expect(organizations[0]["@id"]).toBe(`${SITE}/#organization`);
+  });
+
+  it("uses Argentine Spanish as the static social locale", () => {
+    expect(metaContent("property", "og:locale")).toBe("es_AR");
+  });
 });
 
 const headTags = () => {
@@ -68,7 +87,7 @@ const headTags = () => {
 };
 
 const renderRoute = async (route: string) => {
-  document.head.innerHTML = "";
+  document.head.innerHTML = html.match(/<head>([\s\S]*?)<\/head>/)?.[1] ?? "";
   render(
     <HelmetProvider>
       <MemoryRouter initialEntries={[route]}>
@@ -78,7 +97,7 @@ const renderRoute = async (route: string) => {
       </MemoryRouter>
     </HelmetProvider>,
   );
-  await waitFor(() => expect(document.head.querySelector("title")).toBeTruthy());
+  await waitFor(() => expect(document.head.querySelector('link[rel="canonical"]')?.getAttribute("href")).toBe(`${SITE}${route}`));
   return headTags();
 };
 
@@ -120,17 +139,23 @@ describe.each([
     expect(head.meta("property", "og:url")).toEqual([`${SITE}${route}`]);
     expect(head.meta("property", "og:title")[0]).toBe(head.titles[0]);
     expect(head.meta("property", "og:type")).toEqual(["website"]);
-    expect(head.meta("property", "og:image")[0]).toMatch(/^https:\/\//);
+    expect(head.meta("property", "og:image")).toEqual([`${SITE}/og-image.jpg`]);
     expect(head.meta("property", "og:image:alt")[0]).toBeTruthy();
-    expect(head.meta("property", "og:locale")).toEqual([lang === "es" ? "es_ES" : "en_US"]);
-    expect(head.meta("property", "og:locale:alternate")).toEqual([alt === "es" ? "es_ES" : "en_US"]);
+    expect(head.meta("property", "og:locale")).toEqual([lang === "es" ? "es_AR" : "en_US"]);
+    expect(head.meta("property", "og:locale:alternate")).toEqual([alt === "es" ? "es_AR" : "en_US"]);
     expect(head.meta("name", "twitter:card")).toEqual(["summary_large_image"]);
-    expect(head.meta("name", "twitter:image")[0]).toMatch(/^https:\/\//);
+    expect(head.meta("name", "twitter:image")).toEqual([`${SITE}/og-image.jpg`]);
   });
 
   it("does not duplicate any head tag", async () => {
     const head = await renderRoute(route);
     expect(dupes(head.metaKeys)).toEqual([]);
     expect(head.canonicals).toHaveLength(1);
+    const schemas = [...document.head.querySelectorAll('script[type="application/ld+json"]')]
+      .map((script) => JSON.parse(script.textContent ?? "{}"));
+    expect(schemas.filter((schema) => schema["@type"] === "Organization")).toHaveLength(1);
+    expect(schemas.find((schema) => schema["@type"] === "WebSite")?.publisher).toEqual({
+      "@id": `${SITE}/#organization`,
+    });
   });
 });

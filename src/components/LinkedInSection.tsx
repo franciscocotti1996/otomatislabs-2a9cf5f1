@@ -38,7 +38,7 @@ const LinkedInSection = () => {
             className="bg-[#0077b5] hover:bg-[#005285] text-white font-heading font-semibold px-8"
           >
             <a
-              href="https://www.linkedin.com/company/otomatis-labs/?viewAsMember=true"
+              href="https://www.linkedin.com/company/otomatis-labs/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 leading-none"

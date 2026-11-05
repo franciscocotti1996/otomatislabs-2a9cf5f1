@@ -22,8 +22,7 @@ const Index = () => {
   const { lang } = useLanguage();
   const siteUrl = "https://otomatislabs.com";
   const canonical = `${siteUrl}/${lang}`;
-  const ogImage =
-    "https://storage.googleapis.com/gpt-engineer-file-uploads/NapTWNYi0RSobKtZq6ILtQo0m2I2/social-images/social-1780964625231-logo-13_(1).webp";
+  const ogImage = `${siteUrl}/og-image.jpg`;
   const title =
     lang === "es"
       ? "Otomatis Labs — Chatbots Multicanal & Agentes de IA"
@@ -32,8 +31,8 @@ const Index = () => {
     lang === "es"
       ? "Chatbots multicanal y agentes de IA que automatizan atención, ventas y operaciones. Integraciones con WhatsApp, web, CRM y e-commerce."
       : "Multichannel chatbots and AI agents that automate support, sales and operations. Integrations with WhatsApp, web, CRM and e-commerce.";
-  const ogLocale = lang === "es" ? "es_ES" : "en_US";
-  const ogLocaleAlt = lang === "es" ? "en_US" : "es_ES";
+  const ogLocale = lang === "es" ? "es_AR" : "en_US";
+  const ogLocaleAlt = lang === "es" ? "en_US" : "es_AR";
 
   return (
     <div className="min-h-screen">
@@ -69,7 +68,7 @@ const Index = () => {
             url: canonical,
             inLanguage: lang,
             description,
-            publisher: { "@type": "Organization", name: "Otomatis Labs", url: siteUrl },
+            publisher: { "@id": `${siteUrl}/#organization` },
           })}
         </script>
       </Helmet>
