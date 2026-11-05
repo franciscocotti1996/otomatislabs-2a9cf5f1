@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import logoHorizontal from "@/assets/logo-horizontal.png";
 import { Menu, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const scrollToContact = (e: React.MouseEvent) => {
@@ -17,7 +18,7 @@ const scrollToContact = (e: React.MouseEvent) => {
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
-  const { t, toggle, lang } = useLanguage();
+  const { t, toggle } = useLanguage();
 
   const navLinks = [
     { label: t.nav.services, href: "#servicios" },
@@ -83,16 +84,14 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <button
+          <Button
+            variant="outline"
             onClick={toggle}
             aria-label={t.nav.langAria}
             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-lg border border-border text-sm font-semibold text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
           >
-            <span className="text-base leading-none" aria-hidden="true">
-              {lang === "es" ? "🇪🇸" : "🇺🇸"}
-            </span>
             {t.nav.langLabel}
-          </button>
+          </Button>
           <a
             href="#contacto"
             onClick={scrollToContact}
@@ -107,16 +106,15 @@ const Navbar = () => {
 
         {/* Mobile toggle */}
         <div className="md:hidden flex items-center gap-1">
-          <button
+          <Button
+            variant="outline"
+            size="sm"
             onClick={toggle}
             aria-label={t.nav.langAria}
             className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-md border border-border text-xs font-semibold"
           >
-            <span className="text-sm leading-none" aria-hidden="true">
-              {lang === "es" ? "🇪🇸" : "🇺🇸"}
-            </span>
             {t.nav.langLabel}
-          </button>
+          </Button>
           <button className="p-2" onClick={() => setOpen(!open)} aria-label="Menu">
             {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>

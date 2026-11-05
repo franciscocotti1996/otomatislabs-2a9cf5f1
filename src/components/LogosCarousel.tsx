@@ -12,7 +12,6 @@ type Logo = { name: string; src?: string };
 
 const logos: Logo[] = [
   { name: "BullMarket", src: bullMarket },
-  { name: "Respaldar" },
   { name: "Inviu", src: inviu },
   { name: "Capital Markets", src: capitalMarkets },
   { name: "Keko", src: keko },
