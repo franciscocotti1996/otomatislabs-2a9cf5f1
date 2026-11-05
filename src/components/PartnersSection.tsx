@@ -2,7 +2,7 @@ import { useState } from "react";
 import { ShieldCheck, MessageCircle, Bot } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import metaLogo from "@/assets/logos/meta.webp.asset.json";
+import metaLogo from "@/assets/logos/meta.png";
 import botmakerLogo from "@/assets/logos/botmaker.png";
 
 type Partner = {
@@ -42,7 +42,7 @@ const PartnersSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const partners: Partner[] = [
-    { name: "Meta", tag: t.partners.meta, src: metaLogo.url, Icon: MessageCircle },
+    { name: "Meta", tag: t.partners.meta, src: metaLogo, Icon: MessageCircle },
     { name: "Botmaker", tag: t.partners.botmaker, src: botmakerLogo, Icon: Bot },
   ];
   return (
