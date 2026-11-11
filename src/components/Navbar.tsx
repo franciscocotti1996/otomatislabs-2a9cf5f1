@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import logoHorizontal from "@/assets/logo-horizontal.png";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages } from "@/lib/responsive-images";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -65,7 +66,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-card/90 backdrop-blur-md border-b border-border/50">
       <div className="container flex items-center justify-between h-20 md:h-28">
         <a href="#" className="flex items-center">
-          <img src={logoHorizontal} alt="Otomatis Labs" className="h-14 md:h-20" />
+          <ResponsiveImage asset={responsiveImages.brand} sizes="(min-width: 768px) 131px, 92px" loading="eager" alt="Otomatis Labs" className="h-14 md:h-20 w-auto" />
         </a>
 
         {/* Desktop */}

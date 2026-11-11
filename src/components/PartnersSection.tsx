@@ -2,13 +2,14 @@ import { useState } from "react";
 import { ShieldCheck, MessageCircle, Bot } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import metaLogo from "@/assets/logos/meta.png";
-import botmakerLogo from "@/assets/logos/botmaker.png";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages, type ResponsiveImageAsset } from "@/lib/responsive-images";
 
 type Partner = {
   name: string;
   tag: string;
-  src?: string;
+  asset: ResponsiveImageAsset;
+  sizes: string;
   Icon: React.ComponentType<{ className?: string }>;
 };
 
@@ -17,9 +18,10 @@ const PartnerCard = ({ partner }: { partner: Partner }) => {
   const { Icon } = partner;
   return (
     <div className="flex items-center gap-4 rounded-2xl border border-border/60 bg-card/50 backdrop-blur px-6 py-4 hover:border-primary/40 hover:shadow-lg transition-all">
-      {partner.src && !errored ? (
-        <img
-          src={partner.src}
+      {!errored ? (
+        <ResponsiveImage
+          asset={partner.asset}
+          sizes={partner.sizes}
           alt={partner.name}
           onError={() => setErrored(true)}
           className="h-10 w-auto object-contain"
@@ -42,8 +44,8 @@ const PartnersSection = () => {
   const { ref, isVisible } = useScrollAnimation();
   const { t } = useLanguage();
   const partners: Partner[] = [
-    { name: "Meta", tag: t.partners.meta, src: metaLogo, Icon: MessageCircle },
-    { name: "Botmaker", tag: t.partners.botmaker, src: botmakerLogo, Icon: Bot },
+    { name: "Meta", tag: t.partners.meta, asset: responsiveImages.meta, sizes: "72px", Icon: MessageCircle },
+    { name: "Botmaker", tag: t.partners.botmaker, asset: responsiveImages.botmaker, sizes: "133px", Icon: Bot },
   ];
   return (
     <section
