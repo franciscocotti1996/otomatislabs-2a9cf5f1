@@ -10,6 +10,11 @@
 Browser checks and all 19 targeted tests pass. Preview build reports build OK after restoring the required Cloud client package.
 # Responsive image optimization
 
+# Homepage Hero redesign
+
+- [ ] Redesign only the Hero in Spanish and English, preserving the brand and using a conceptual AI-agent visual.
+- [ ] Verify mobile/desktop layout and both existing CTA destinations.
+
 - [x] Convert remaining displayed photos and logos to smaller modern formats with responsive variants.
 - [x] Preserve image appearance, both languages, routing, dependencies and contact logic.
 - [x] Verify rendered images on mobile and desktop and run existing tests.
