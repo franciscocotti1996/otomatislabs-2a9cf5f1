@@ -1,5 +1,6 @@
 import { Bot, Layers, Zap, BarChart3, MessageSquare, Brain } from "lucide-react";
-import teamCollab from "@/assets/team-collab.jpg";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages } from "@/lib/responsive-images";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
 
@@ -25,11 +26,10 @@ const ServicesSection = () => {
           <div className="hidden lg:block">
             <div className="relative">
               <div className="absolute -inset-3 bg-primary/10 rounded-2xl blur-xl" />
-              <img
-                src={teamCollab}
+              <ResponsiveImage
+                asset={responsiveImages.team}
+                sizes="(min-width: 1400px) 616px, (min-width: 1024px) calc((100vw - 112px) / 2), 100vw"
                 alt={t.services.imgAlt}
-                width={1280}
-                height={720}
                 loading="lazy"
                 className="relative rounded-2xl shadow-lg object-cover w-full h-64 object-center"
               />

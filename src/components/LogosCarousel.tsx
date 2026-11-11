@@ -1,30 +1,27 @@
 import { useState } from "react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import bullMarket from "@/assets/logos/bull-market.png";
-import capitalMarkets from "@/assets/logos/capital-markets.png";
-import inviu from "@/assets/logos/inviu.png";
-import keko from "@/assets/logos/keko.webp";
-import legion from "@/assets/logos/legion.png";
-import nocnoc from "@/assets/logos/nocnoc.png";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages, type ResponsiveImageAsset } from "@/lib/responsive-images";
 
-type Logo = { name: string; src?: string };
+type Logo = { name: string; asset: ResponsiveImageAsset; sizes: string };
 
 const logos: Logo[] = [
-  { name: "BullMarket", src: bullMarket },
-  { name: "Inviu", src: inviu },
-  { name: "Capital Markets", src: capitalMarkets },
-  { name: "Keko", src: keko },
-  { name: "Legión Extranjera", src: legion },
-  { name: "nocnoc", src: nocnoc },
+  { name: "BullMarket", asset: responsiveImages.bullMarket, sizes: "148px" },
+  { name: "Inviu", asset: responsiveImages.inviu, sizes: "(min-width: 768px) 91px, 69px" },
+  { name: "Capital Markets", asset: responsiveImages.capitalMarkets, sizes: "(min-width: 768px) 64px, 48px" },
+  { name: "Keko", asset: responsiveImages.keko, sizes: "(min-width: 768px) 148px, 122px" },
+  { name: "Legión Extranjera", asset: responsiveImages.legion, sizes: "148px" },
+  { name: "nocnoc", asset: responsiveImages.nocnoc, sizes: "148px" },
 ];
 
 const LogoItem = ({ logo }: { logo: Logo }) => {
   const [errored, setErrored] = useState(false);
-  if (logo.src && !errored) {
+  if (!errored) {
     return (
-      <img
-        src={logo.src}
+      <ResponsiveImage
+        asset={logo.asset}
+        sizes={logo.sizes}
         alt={logo.name}
         onError={() => setErrored(true)}
         className="h-12 md:h-16 w-auto max-w-[180px] object-contain opacity-60 hover:opacity-100 grayscale hover:grayscale-0 transition-all px-4"

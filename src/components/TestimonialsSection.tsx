@@ -1,11 +1,10 @@
 import { Quote } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/use-scroll-animation";
 import { useLanguage } from "@/i18n/LanguageContext";
-import testimonial1 from "@/assets/testimonial-1.jpg";
-import testimonial2 from "@/assets/testimonial-2.jpg";
-import testimonial3 from "@/assets/testimonial-3.jpg";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages } from "@/lib/responsive-images";
 
-const IMAGES = [testimonial1, testimonial2, testimonial3];
+const IMAGES = [responsiveImages.testimonial1, responsiveImages.testimonial2, responsiveImages.testimonial3];
 
 const TestimonialsSection = () => {
   const { ref, isVisible } = useScrollAnimation();
@@ -38,14 +37,13 @@ const TestimonialsSection = () => {
                 "{item.quote}"
               </p>
               <div className="flex items-center gap-3">
-                <img
-                  src={item.image}
+                {item.image && <ResponsiveImage
+                  asset={item.image}
+                  sizes="44px"
                   alt={item.name}
-                  width={512}
-                  height={512}
                   loading="lazy"
                   className="w-11 h-11 rounded-full object-cover"
-                />
+                />}
                 <div>
                   <p className="text-sm font-semibold text-primary-foreground">{item.name}</p>
                   <p className="text-xs text-primary-foreground/60">

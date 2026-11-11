@@ -1,4 +1,5 @@
-import logoHorizontal from "@/assets/logo-horizontal.png";
+import ResponsiveImage from "@/components/ResponsiveImage";
+import { responsiveImages } from "@/lib/responsive-images";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const WHATSAPP_URL =
@@ -9,7 +10,7 @@ const Footer = () => {
   return (
     <footer className="py-10 bg-gradient-hero">
       <div className="container flex flex-col md:flex-row items-center justify-between gap-6">
-        <img src={logoHorizontal} alt="Otomatis Labs" className="h-8" />
+        <ResponsiveImage asset={responsiveImages.brand} sizes="53px" alt="Otomatis Labs" className="h-8 w-auto" />
         <p className="text-sm text-primary-foreground/70">
           © {new Date().getFullYear()} Otomatis Labs. {t.footer.rights}
         </p>
