@@ -1,0 +1,66 @@
+.hero-agent-visual {
+  aspect-ratio: 5 / 4;
+  width: 100%;
+  max-width: 540px;
+  position: relative;
+  margin-inline: auto;
+}
+
+.hero-agent-node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 26%;
+  height: 25%;
+  border: 1px solid hsl(var(--border));
+  border-radius: 8px;
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.hero-agent-whatsapp { left: 0; top: 12%; }
+.hero-agent-crm { right: 0; top: 12%; }
+.hero-agent-systems { left: 35%; bottom: 3%; width: 30%; }
+.hero-agent-core {
+  left: 34%;
+  top: 32%;
+  width: 32%;
+  height: 30%;
+  border-color: hsl(var(--primary) / 0.4);
+  background: hsl(var(--navy));
+  color: hsl(var(--primary-foreground));
+}
+.hero-agent-core::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1px solid hsl(var(--primary) / 0.2);
+  border-radius: 14px;
+}
+.hero-agent-flow {
+  stroke-dasharray: 4 14;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-agent-visual.is-visible .hero-agent-flow {
+    animation: hero-agent-flow 8s linear infinite;
+  }
+  .hero-intro {
+    animation: hero-intro 500ms ease-out both;
+  }
+}
+@keyframes hero-agent-flow {
+  to { stroke-dashoffset: -144; }
+}
+@keyframes hero-intro {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 359px) {
+  .hero-agent-node { font-size: 11px; gap: 5px; }
+}

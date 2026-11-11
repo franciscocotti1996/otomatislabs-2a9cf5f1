@@ -1,13 +1,6 @@
-import { MessageCircle, Globe, Smartphone, Instagram, Send } from "lucide-react";
-import heroPerson from "@/assets/hero-person.jpg";
-import heroPersonWebp from "@/assets/hero-person.webp";
-import heroPerson400Webp from "@/assets/hero-person-400.webp";
-import heroPerson600Webp from "@/assets/hero-person-600.webp";
-import heroPerson900Webp from "@/assets/hero-person-900.webp";
-import heroPerson400Jpg from "@/assets/hero-person-400.jpg";
-import heroPerson600Jpg from "@/assets/hero-person-600.jpg";
-import heroPerson900Jpg from "@/assets/hero-person-900.jpg";
-import { useScrollAnimation } from "@/hooks/use-scroll-animation";
+import { ArrowRight, MessageCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import HeroAgentVisual from "@/components/HeroAgentVisual";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const scrollToContact = (e: React.MouseEvent) => {
@@ -16,94 +9,40 @@ const scrollToContact = (e: React.MouseEvent) => {
   if (el) {
     const offset = 120;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top, behavior: "smooth" });
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
   }
 };
 
 const HeroSection = () => {
-  const { ref, isVisible } = useScrollAnimation(0.1);
   const { t } = useLanguage();
-  const channels = [
-    { icon: MessageCircle, label: t.hero.channels.whatsapp },
-    { icon: Globe, label: t.hero.channels.web },
-    { icon: Smartphone, label: t.hero.channels.app },
-    { icon: Instagram, label: t.hero.channels.ig },
-    { icon: Send, label: t.hero.channels.msg },
-  ];
 
   return (
-    <section ref={ref} className={`pt-28 md:pt-36 pb-16 md:pb-24 relative overflow-hidden transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0 is-visible" : "opacity-0 translate-y-8"}`}>
-      {/* Decorative circle */}
-      <div className="absolute top-20 right-0 w-64 h-64 md:w-96 md:h-96 rounded-full border border-primary/10 opacity-50 translate-x-1/3" />
-
-      <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Left: Text content */}
-          <div className="text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/30 bg-primary/5 mb-6">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-              <span className="text-sm font-medium text-primary font-heading">{t.hero.badge}</span>
-            </div>
-
-            {/* Headline */}
-            <h1 className="font-heading font-bold text-3xl md:text-5xl lg:text-6xl leading-tight mb-6 max-w-4xl mx-auto lg:mx-0">
+    <section aria-labelledby="hero-title" className="is-visible pt-28 md:pt-40 pb-8 md:pb-12">
+      <div className="container">
+        <div className="hero-intro grid grid-cols-1 lg:grid-cols-[1.15fr_1fr] gap-6 lg:gap-12 items-center">
+          <div className="min-w-0">
+            <p className="font-heading text-sm font-semibold text-primary mb-5">Otomatis Labs <span className="text-muted-foreground font-normal">/ {t.hero.badge}</span></p>
+            <h1 id="hero-title" className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-[1.15] mb-6 max-w-2xl">
               {t.hero.titleA}{" "}
-              <span className="text-gradient">{t.hero.titleB}</span>{" "}
+              <span className="text-primary">{t.hero.titleB}</span>{" "}
               {t.hero.titleC}
             </h1>
 
-            {/* Subtitle */}
-            <p className="text-muted-foreground text-base md:text-lg max-w-4xl mx-auto lg:mx-0 mb-8 leading-relaxed">
+            <p className="text-muted-foreground text-base md:text-lg max-w-xl mb-8 leading-relaxed">
               {t.hero.subtitle}
             </p>
 
-            {/* CTA Button */}
-            <div className="max-w-4xl mx-auto lg:mx-0 mb-8">
-              <a
-                href="#contacto"
-                onClick={scrollToContact}
-                className="inline-flex items-center justify-center px-6 py-3 rounded-lg bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-              >
-                {t.hero.cta}
-              </a>
-            </div>
-
-            {/* Channel icons */}
-            <div className="flex items-center justify-center lg:justify-start gap-6 md:gap-8 flex-wrap max-w-4xl mx-auto lg:mx-0">
-              {channels.map(({ icon: Icon, label }) => (
-                <div key={label} className="flex items-center gap-2 text-muted-foreground">
-                  <Icon className="w-5 h-5" />
-                  <span className="text-sm font-medium">{label}</span>
-                </div>
-              ))}
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 items-stretch sm:items-center">
+              <Button asChild size="lg" className="h-auto min-h-12 px-5 py-3 whitespace-normal text-center">
+                <a href="#contacto" onClick={scrollToContact}><MessageCircle aria-hidden="true" />{t.hero.cta}</a>
+              </Button>
+              <Button asChild variant="link" className="h-auto min-h-12 px-0 sm:px-2 py-3 whitespace-normal text-center text-foreground">
+                <a href="#agentes-ia">{t.hero.secondaryCta}<ArrowRight aria-hidden="true" /></a>
+              </Button>
             </div>
           </div>
-
-          {/* Right: Image */}
-          <div className="flex justify-center order-first lg:order-last mb-8 lg:mb-0">
-            <div className="relative w-full max-w-[280px] sm:max-w-sm md:max-w-md">
-              <div className="absolute -inset-4 bg-primary/10 rounded-2xl blur-2xl" />
-              <picture>
-                <source
-                  type="image/webp"
-                  srcSet={`${heroPerson400Webp} 400w, ${heroPerson600Webp} 600w, ${heroPerson900Webp} 900w, ${heroPersonWebp} 1024w`}
-                  sizes="(max-width: 640px) 280px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 448px"
-                />
-                <img
-                  src={heroPerson600Jpg}
-                  srcSet={`${heroPerson400Jpg} 400w, ${heroPerson600Jpg} 600w, ${heroPerson900Jpg} 900w, ${heroPerson} 1024w`}
-                  sizes="(max-width: 640px) 280px, (max-width: 768px) 384px, (max-width: 1024px) 448px, 448px"
-                  alt={t.hero.imgAlt}
-                  width={1024}
-                  height={1024}
-                  fetchPriority="high"
-                  decoding="async"
-                  className="relative rounded-2xl shadow-2xl object-cover w-full aspect-[4/5] sm:aspect-square [object-position:50%_30%]"
-                />
-              </picture>
-            </div>
-          </div>
+          <HeroAgentVisual />
         </div>
       </div>
     </section>
